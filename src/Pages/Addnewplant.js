@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import Navbar from '../Components/Navbar';
+import {useNavigate} from "react-router-dom";
 import {Grid, TextField, Paper, Typography} from '@material-ui/core'
 import Button from '@mui/material/Button';
 import Axios from 'axios';
@@ -9,6 +10,7 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import FormControl from '@mui/material/FormControl';
 function Addnewplant(){
+    const navigate = useNavigate();
     const paperStyle={padding:20,height:'90vh',width:900,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const paperinside={height:'60vh',width:600,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const [plantname,setPlantname]=useState("")
@@ -57,6 +59,7 @@ function Addnewplant(){
                 higherpH: higherpH
             }
             ])
+            navigate("/myplant");
         })
     }
     return(
