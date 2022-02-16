@@ -3,6 +3,11 @@ import Navbar from '../Components/Navbar';
 import {Grid, TextField, Paper, Typography} from '@material-ui/core'
 import Button from '@mui/material/Button';
 import Axios from 'axios';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import FormControl from '@mui/material/FormControl';
 function Addnewplant(){
     const paperStyle={padding:20,height:'90vh',width:900,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const paperinside={height:'60vh',width:600,margin:"10px auto",backgroundColor: '#f5f5f5'}
@@ -15,6 +20,15 @@ function Addnewplant(){
     const [higherhumid,setHigherhumid]=useState("")
     const [lowerpH,setLowerpH]=useState("")
     const [higherpH,setHigherpH]=useState("")
+    const plantstage = [
+        'Seeding stage',
+        'Vegetation period',
+        'Flowering period',
+        'Lateflowering',
+      ];
+  const handleChange = (event) => {
+    setStage(event.target.value);
+  };
     const [plantsList, setPlantsList] = useState([])
     const addPlant = () => {
         Axios.post('http://localhost:3001/createplant',{
@@ -53,7 +67,9 @@ function Addnewplant(){
                 <h2 className="app-front" style={{color:'#008000'}}>Add New Plant</h2>
                 <Grid container spacing={3}>
                     <Grid item xs={12} ><TextField id="outlined-basic" label="Plant name" variant="outlined" onChange={(e) => setPlantname(e.target.value)}/></Grid>
-                    <Grid item xs={12} ><TextField id="outlined-basic" label="Stage" variant="outlined" onChange={(e) => setStage(e.target.value)}/></Grid>
+                    <Grid item xs={12} ><FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Stage</InputLabel><Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={stage} label="Stage" input={<OutlinedInput label="Stage" />}onChange={handleChange}>
+                    {plantstage.map((plantstage) => (<MenuItem key={plantstage} value={plantstage}>{plantstage}</MenuItem>))}
+                    </Select></FormControl></Grid>
                 </Grid> 
                 <Paper elevation={0} style={paperinside}>
                 <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
