@@ -68,8 +68,7 @@ function Addnewplant(){
                 <Grid container spacing={3}>
                     <Grid item xs={12} ><TextField id="outlined-basic" label="Plant name" variant="outlined" onChange={(e) => setPlantname(e.target.value)}/></Grid>
                     <Grid item xs={12} ><FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Stage</InputLabel><Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={stage} label="Stage" input={<OutlinedInput label="Stage" />}onChange={handleChange}>
-                    {plantstage.map((plantstage) => (<MenuItem key={plantstage} value={plantstage}>{plantstage}</MenuItem>))}
-                    </Select></FormControl></Grid>
+                    {plantstage.map((plantstage) => (<MenuItem key={plantstage} value={plantstage}>{plantstage}</MenuItem>))}</Select></FormControl></Grid>
                 </Grid> 
                 <Paper elevation={0} style={paperinside}>
                 <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
