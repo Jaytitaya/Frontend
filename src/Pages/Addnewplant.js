@@ -27,7 +27,8 @@ function Addnewplant(){
             higherhumid: higherhumid,
             lowerpH: lowerpH,
             higherpH: higherpH
-        }).then(() => {
+            
+        },{ withCredentials: true }).then(() => {
             setPlantsList([
                 ...plantsList,
             {

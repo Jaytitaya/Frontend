@@ -16,7 +16,7 @@ const Myplant=()=>{
     const {username} = useContext(LoginContext);
     const [plantsList, setPlantsList] = useState([])
     const getPlants = () =>{
-        Axios.get('http://localhost:3001/plants').then((response)=>{
+        Axios.get('http://localhost:3001/plants', { withCredentials: true }).then((response)=>{
             setPlantsList(response.data);
         });
     }
