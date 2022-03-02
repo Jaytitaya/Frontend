@@ -23,8 +23,8 @@ function Addnewplant(){
     const [inputtime,setInputtime]=useState([{opentime:'',closetime:''},])
     const [plantname,setPlantname]=useState("")
     const [stage,setStage]=useState("")
-    const [opentime,setOpentime]=useState("")
-    const [closetime,setClosetime]=useState("")
+    //const [opentime,setOpentime]=useState("")
+    //const [closetime,setClosetime]=useState("")
     const [lowertemp,setLowertemp]=useState("")
     const [highertemp,setHighertemp]=useState("")
     const [lowerhumid,setLowerhumid]=useState("")
@@ -42,7 +42,7 @@ function Addnewplant(){
   };
   const handleChangeInput = (index, event)=>{
     const values = [...inputtime];
-    values[index][event.target.label]= event.target.value;
+    values[index][event.target.name]= event.target.value;
     setInputtime(values);
   }
   const handleAddTime = () => {
@@ -59,8 +59,8 @@ function Addnewplant(){
             plantname: plantname,
             stage: stage,
             inputtime: inputtime,
-            opentime: opentime,
-            closetime: closetime,
+            //opentime: opentime,
+            //closetime: closetime,
             lowertemp: lowertemp,
             highertemp: highertemp,
             lowerhumid: lowerhumid,
@@ -75,8 +75,8 @@ function Addnewplant(){
                 plantname: plantname,
                 stage: stage,
                 inputtime: inputtime,
-                opentime: opentime,
-                closetime: closetime,
+                //opentime: opentime,
+                //closetime: closetime,
                 lowertemp: lowertemp,
                 highertemp: highertemp,
                 lowerhumid: lowerhumid,
@@ -106,9 +106,9 @@ function Addnewplant(){
                     <form onSubmit={addPlant}>{inputtime.map((inputtime,index)=>(
                     <div key={index}>
                     <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
-                    <Grid item xs={3} md={4}> <TextField id="time" label="Open time" type="time"  defaultValue="00:00" InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} value={inputtime.opentime} onChange={event => handleChangeInput(index,event)}/></Grid>
+                    <Grid item xs={3} md={4}> <TextField id="time" label="Open time" type="time" name="opentime" InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }}  onChange={event => handleChangeInput(index,event)}/></Grid>
                     <Grid item xs={1}><Typography style={{color:'#008000'}}>-</Typography></Grid>
-                    <Grid item xs={3} md={4}> <TextField id="time" label="Close time" type="time" defaultValue="00:00" InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setClosetime(e.target.value)}/></Grid>
+                    <Grid item xs={3} md={4}> <TextField id="time" label="Close time" type="time"  name="closetime" InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }}  onChange={event => handleChangeInput(index,event)}/></Grid>
                     <Grid item xs={1}><IconButton style={{color:'green'}} onClick={()=>handleRemoveTime(index)}><RemoveCircleOutlineIcon/></IconButton></Grid>
                     <Grid item xs={1}><IconButton style={{color:'green'}} onClick={()=>handleAddTime()}><AddCircleOutlineIcon/></IconButton></Grid>
                     </Grid>
