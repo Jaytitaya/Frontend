@@ -25,7 +25,6 @@ function Addnewplant(){
     const [stage,setStage]=useState("")
     const [opentime,setOpentime]=useState("")
     const [closetime,setClosetime]=useState("")
-    const [openclosetime,setOpenclosetime]=useState("")
     const [lowertemp,setLowertemp]=useState("")
     const [highertemp,setHighertemp]=useState("")
     const [lowerhumid,setLowerhumid]=useState("")
@@ -41,7 +40,7 @@ function Addnewplant(){
   const handleChange = (event) => {
     setStage(event.target.value);
   };
-  const handleChangeInput = (index, event )=>{
+  const handleChangeInput = (index, event)=>{
     const values = [...inputtime];
     values[index][event.target.label]= event.target.value;
     setInputtime(values);
@@ -62,7 +61,6 @@ function Addnewplant(){
             inputtime: inputtime,
             opentime: opentime,
             closetime: closetime,
-            openclosetime: openclosetime,
             lowertemp: lowertemp,
             highertemp: highertemp,
             lowerhumid: lowerhumid,
@@ -79,7 +77,6 @@ function Addnewplant(){
                 inputtime: inputtime,
                 opentime: opentime,
                 closetime: closetime,
-                openclosetime: openclosetime,
                 lowertemp: lowertemp,
                 highertemp: highertemp,
                 lowerhumid: lowerhumid,
@@ -108,7 +105,7 @@ function Addnewplant(){
                     <Grid item xs={3} ><img className="homephoto" src="/light.png" /></Grid>
                     <form onSubmit={addPlant}>{inputtime.map((inputtime,index)=>(
                     <div key={index}>
-                        <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
+                    <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
                     <Grid item xs={3} md={4}> <TextField id="time" label="Open time" type="time"  defaultValue="00:00" InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} value={inputtime.opentime} onChange={event => handleChangeInput(index,event)}/></Grid>
                     <Grid item xs={1}><Typography style={{color:'#008000'}}>-</Typography></Grid>
                     <Grid item xs={3} md={4}> <TextField id="time" label="Close time" type="time" defaultValue="00:00" InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setClosetime(e.target.value)}/></Grid>
