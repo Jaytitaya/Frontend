@@ -20,7 +20,7 @@ function Addnewplant(){
     const navigate = useNavigate();
     const paperStyle={padding:20,height:'90vh',width:900,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const paperinside={height:'60vh',width:600,margin:"10px auto",backgroundColor: '#f5f5f5'}
-    const [inputtime,setInputtime]=useState([{opentime:'',closetime:''},{opentime:'',closetime:''},])
+    const [inputtime,setInputtime]=useState([{opentime:'',closetime:''},])
     const [plantname,setPlantname]=useState("")
     const [stage,setStage]=useState("")
     const [opentime,setOpentime]=useState("")
