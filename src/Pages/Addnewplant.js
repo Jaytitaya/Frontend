@@ -9,6 +9,9 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import FormControl from '@mui/material/FormControl';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import IconButton from '@mui/material/IconButton';
 //import 'antd/dist/antd.css';
 //import { TimePicker } from 'antd';
 
@@ -17,6 +20,7 @@ function Addnewplant(){
     const navigate = useNavigate();
     const paperStyle={padding:20,height:'90vh',width:900,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const paperinside={height:'60vh',width:600,margin:"10px auto",backgroundColor: '#f5f5f5'}
+    const [inputtime,setInputtime]=useState([{opentime:'',closetime:''},])
     const [plantname,setPlantname]=useState("")
     const [stage,setStage]=useState("")
     const [opentime,setOpentime]=useState("")
@@ -37,6 +41,9 @@ function Addnewplant(){
   const handleChange = (event) => {
     setStage(event.target.value);
   };
+  const handleChangeInput = (index, event )=>{
+    console.log(index, event.target.name)
+  }
     const [plantsList, setPlantsList] = useState([])
     const addPlant = () => {
         Axios.post('http://localhost:3001/createplant',{
@@ -86,10 +93,17 @@ function Addnewplant(){
                 <Paper elevation={0} style={paperinside}>
                 <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
                     <Grid item xs={3} ><img className="homephoto" src="/light.png" /></Grid>
-                    <Grid item xs={3} ><input type="time" id="appt" name="appt" min="09:00" max="18:00" required onChange={(e) => setOpentime(e.target.value)}></input></Grid>
+                    <form>{inputtime.map((inputtime,index)=>(
+                    <div key={index}>
+                        <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
+                    <Grid item xs={3} md={4}> <TextField id="time" label="Open time" type="time"  InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setOpentime(e.target.value)}/></Grid>
                     <Grid item xs={1}><Typography style={{color:'#008000'}}>-</Typography></Grid>
-                    <Grid item xs={3} ><input type="time" id="appt" name="appt" min="09:00" max="18:00" required onChange={(e) => setClosetime(e.target.value)}></input></Grid>
-                    <Grid item xs={1} md={5}><TextField id="outlined-basic" label="Open time - Close time" variant="outlined" onChange={(e) => setOpenclosetime(e.target.value)}/></Grid>
+                    <Grid item xs={3} md={4}> <TextField id="time" label="Close time" type="time" InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setClosetime(e.target.value)}/></Grid>
+                    <Grid item xs={1}><IconButton style={{color:'green'}}><RemoveCircleOutlineIcon/></IconButton></Grid>
+                    <Grid item xs={1}><IconButton style={{color:'green'}}><AddCircleOutlineIcon/></IconButton></Grid>
+                    </Grid>
+                    </div>))}
+                    </form>
                 </Grid>
                 <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
                     <Grid item xs={3} ><img className="app-light-photo" src="/Temp.png" /></Grid>
