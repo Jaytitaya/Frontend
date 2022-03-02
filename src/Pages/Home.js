@@ -20,7 +20,7 @@ const Home=()=>{
     background-color:#ffffff;
     border: 4px solid #008000;
     border-radius: 8px;
-    padding: 20px 35px;
+    padding: 20px 35px ;
     cursor: pointer;
     transition: ease background-color 250ms;
     &:hover{
@@ -31,7 +31,7 @@ const Home=()=>{
     border: 4px solid #008000;
     border-radius: 8px;
     margin-top: 2rem;
-    padding: 0px 53px;
+    padding: 0px 53px ;
     cursor: pointer;
     transition: ease background-color 250ms;
     &:hover{
