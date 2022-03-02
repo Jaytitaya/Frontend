@@ -9,12 +9,18 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import FormControl from '@mui/material/FormControl';
+//import 'antd/dist/antd.css';
+//import { TimePicker } from 'antd';
+
 function Addnewplant(){
+    const format = 'HH:mm';
     const navigate = useNavigate();
     const paperStyle={padding:20,height:'90vh',width:900,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const paperinside={height:'60vh',width:600,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const [plantname,setPlantname]=useState("")
     const [stage,setStage]=useState("")
+    const [opentime,setOpentime]=useState("")
+    const [closetime,setClosetime]=useState("")
     const [openclosetime,setOpenclosetime]=useState("")
     const [lowertemp,setLowertemp]=useState("")
     const [highertemp,setHighertemp]=useState("")
@@ -36,6 +42,8 @@ function Addnewplant(){
         Axios.post('http://localhost:3001/createplant',{
             plantname: plantname,
             stage: stage,
+            opentime: opentime,
+            closetime: closetime,
             openclosetime: openclosetime,
             lowertemp: lowertemp,
             highertemp: highertemp,
@@ -50,6 +58,8 @@ function Addnewplant(){
             {
                 plantname: plantname,
                 stage: stage,
+                opentime: opentime,
+                closetime: closetime,
                 openclosetime: openclosetime,
                 lowertemp: lowertemp,
                 highertemp: highertemp,
@@ -76,6 +86,9 @@ function Addnewplant(){
                 <Paper elevation={0} style={paperinside}>
                 <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
                     <Grid item xs={3} ><img className="homephoto" src="/light.png" /></Grid>
+                    <Grid item xs={3} ><input type="time" id="appt" name="appt" min="09:00" max="18:00" required onChange={(e) => setOpentime(e.target.value)}></input></Grid>
+                    <Grid item xs={1}><Typography style={{color:'#008000'}}>-</Typography></Grid>
+                    <Grid item xs={3} ><input type="time" id="appt" name="appt" min="09:00" max="18:00" required onChange={(e) => setClosetime(e.target.value)}></input></Grid>
                     <Grid item xs={1} md={5}><TextField id="outlined-basic" label="Open time - Close time" variant="outlined" onChange={(e) => setOpenclosetime(e.target.value)}/></Grid>
                 </Grid>
                 <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
