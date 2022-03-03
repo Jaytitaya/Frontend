@@ -36,7 +36,6 @@ const Myplant=()=>{
                         </div>
                         <div className="card-body">
                             <p>Stage:{val.stage}</p>
-                            <p>Light Open time - Close time:{val.openclosetime}</p>
                             <p>Temperature:{val.lowertemp}-{val.highertemp}Celsius</p>
                             <p>Humidity:{val.lowerhumid}-{val.higherhumid}%</p>
                             <p>pH:{val.lowerpH}-{val.higherpH}</p>
