@@ -8,6 +8,10 @@ import Addnewplant from './Pages/Addnewplant';
 import Myplant from './Pages/Myplant';
 import Card from './Components/Card';
 import Home from './Pages/Home';
+import Light from './Pages/Light';
+import Temp from './Pages/Temp';
+import Humid from './Pages/Humid';
+import PH from './Pages/PH';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
 const LoginContext = React.createContext();
@@ -28,6 +32,10 @@ function App() {
         <Route exact path="/signup" element={<Signup/>}/>
         <Route exact path="/addnewplant" element={<Addnewplant/>}/>
         <Route exact path="/home" element={<Home/>}/>
+        <Route exact path="/light" element={<Light/>}/>
+        <Route exact path="/temp" element={<Temp/>}/>
+        <Route exact path="/humid" element={<Humid/>}/>
+        <Route exact path="/pH" element={<PH/>}/>
         <Route exact path="/myplant" element={<Myplant/>}/>
         <Route exact path="/card" element={<Card/>}/>
       </Routes>

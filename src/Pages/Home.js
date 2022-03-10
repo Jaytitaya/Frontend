@@ -55,16 +55,16 @@ const Home=()=>{
             <h2 className="app-front" style={{color:'#008000'}}>Home</h2>
             <Grid container spacing={2} >
                 <Grid item xs={6}>
-                    <Button ><img className="homephoto" src="/light.png" /></Button>
+                    <Button onClick={()=>{navigate("/light")}}><img className="homephoto" src="/light.png" /></Button>
                 </Grid>
                 <Grid item xs={6}>
-                    <ButtonTemp ><img className="homephoto" src="/Temp.png" /></ButtonTemp>
+                    <ButtonTemp onClick={()=>{navigate("/temp")}}><img className="homephoto" src="/Temp.png" /></ButtonTemp>
                 </Grid>
                 <Grid item xs={6}>
-                    <ButtonHumid ><img className="homephoto" src="/Humidity.png" /></ButtonHumid>
+                    <ButtonHumid onClick={()=>{navigate("/humid")}}><img className="homephoto" src="/Humidity.png" /></ButtonHumid>
                 </Grid>
                 <Grid item xs={6}>
-                    <ButtonpH ><h2 className="app-front" style={{color:'#008000'}}>pH</h2></ButtonpH>
+                    <ButtonpH onClick={()=>{navigate("/pH")}}><h2 className="app-front" style={{color:'#008000'}}>pH</h2></ButtonpH>
                 </Grid>
             </Grid>
             </Paper>
