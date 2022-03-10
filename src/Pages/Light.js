@@ -17,6 +17,9 @@ function Light(){
                     <h2 className="app-front" style={{color:'#008000'}}>Light</h2>
                 </Grid>
             </Grid>
+            <Grid container spacing={2} justifyContent="center">
+                <c>State :</c>
+            </Grid>
             </Paper>
         </Grid>
     )
