@@ -23,8 +23,8 @@ function Addnewplant(){
     const [inputtime,setInputtime]=useState([{opentime:'',closetime:''},])
     const [plantname,setPlantname]=useState("")
     const [stage,setStage]=useState("")
-    //const [opentime,setOpentime]=useState("")
-    //const [closetime,setClosetime]=useState("")
+    const [opentime,setOpentime]=useState("")
+    const [closetime,setClosetime]=useState("")
     const [lowertemp,setLowertemp]=useState("")
     const [highertemp,setHighertemp]=useState("")
     const [lowerhumid,setLowerhumid]=useState("")
@@ -45,19 +45,21 @@ function Addnewplant(){
     values[index][event.target.name]= event.target.value;
     setInputtime(values);
   }
-  const handleAddTime = () => {
-      setInputtime([...inputtime,{opentime:'',closetime:''}])
-  }
-  const handleRemoveTime = (index) =>{
-    const values = [...inputtime];
-    values.splice(index,1);
-    setInputtime(values);
-  }
+  //const handleAddTime = () => {
+  //    setInputtime([...inputtime,{opentime:'',closetime:''}])
+  //}
+  //const handleRemoveTime = (index) =>{
+  //  const values = [...inputtime];
+  //  values.splice(index,1);
+  //  setInputtime(values);
+  //}
     const [plantsList, setPlantsList] = useState([])
     const addPlant = () => {
         Axios.post('http://localhost:3001/createplant',{
             plantname: plantname,
             stage: stage,
+            opentime: opentime,
+            closetime: closetime,
             inputtime: inputtime,
             lowertemp: lowertemp,
             highertemp: highertemp,
@@ -72,6 +74,8 @@ function Addnewplant(){
             {
                 plantname: plantname,
                 stage: stage,
+                opentime: opentime,
+                closetime: closetime,
                 inputtime: inputtime,
                 lowertemp: lowertemp,
                 highertemp: highertemp,
@@ -102,11 +106,10 @@ function Addnewplant(){
                     <form onSubmit={addPlant}>{inputtime.map((inputtime,index)=>(
                     <div key={index}>
                     <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
-                    <Grid item xs={3} md={4}> <TextField id="time" label="Open time" type="time" name="opentime"  InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }}  onChange={event => handleChangeInput(index,event)}/></Grid>
+                    <Grid item xs={3} md={4}> <TextField id="time" label="Open time" type="time" name="opentime"  InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setOpentime(e.target.value)}/></Grid>
                     <Grid item xs={1}><Typography style={{color:'#008000'}}>-</Typography></Grid>
-                    <Grid item xs={3} md={4}> <TextField id="time" label="Close time" type="time" name="closetime"  InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }}  onChange={event => handleChangeInput(index,event)}/></Grid>
-                    <Grid item xs={1}><IconButton style={{color:'green'}} onClick={()=>handleRemoveTime(index)}><RemoveCircleOutlineIcon/></IconButton></Grid>
-                    <Grid item xs={1}><IconButton style={{color:'green'}} onClick={()=>handleAddTime()}><AddCircleOutlineIcon/></IconButton></Grid>
+                    <Grid item xs={3} md={4}> <TextField id="time" label="Close time" type="time" name="closetime"  InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }}  onChange={(e) => setClosetime(e.target.value)}/></Grid>
+                    
                     </Grid>
                     </div>))}
                     </form>
