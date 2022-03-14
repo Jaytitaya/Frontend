@@ -106,9 +106,9 @@ function Addnewplant(){
                     <form onSubmit={addPlant}>{inputtime.map((inputtime,index)=>(
                     <div key={index}>
                     <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
-                    <Grid item xs={3} md={4}> <TextField id="time" label="Open time" type="time" name="opentime"  InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setOpentime(e.target.value)}/></Grid>
-                    <Grid item xs={1}><Typography style={{color:'#008000'}}>-</Typography></Grid>
-                    <Grid item xs={3} md={4}> <TextField id="time" label="Close time" type="time" name="closetime"  InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }}  onChange={(e) => setClosetime(e.target.value)}/></Grid>
+                    <Grid item xs={5} md={6}> <TextField id="time" label="Open time" type="time" name="opentime"  InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setOpentime(e.target.value)}/></Grid>
+                    <Grid item xs={1} ><Typography style={{color:'#008000'}}>-</Typography></Grid>
+                    <Grid item xs={5} md={4}> <TextField id="time" label="Close time" type="time" name="closetime"  InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }}  onChange={(e) => setClosetime(e.target.value)}/></Grid>
                     
                     </Grid>
                     </div>))}
