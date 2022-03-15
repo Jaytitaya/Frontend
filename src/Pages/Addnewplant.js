@@ -40,11 +40,11 @@ function Addnewplant(){
   const handleChange = (event) => {
     setStage(event.target.value);
   };
-  const handleChangeInput = (index, event)=>{
-    const values = [...inputtime];
-    values[index][event.target.name]= event.target.value;
-    setInputtime(values);
-  }
+  //const handleChangeInput = (index, event)=>{
+  //  const values = [...inputtime];
+  //  values[index][event.target.name]= event.target.value;
+  //  setInputtime(values);
+  //}
   //const handleAddTime = () => {
   //    setInputtime([...inputtime,{opentime:'',closetime:''}])
   //}

@@ -1,7 +1,7 @@
 import React,{useState,useContext,useEffect} from 'react';
 import Navbar from '../Components/Navbar';
-import {Grid, Paper} from '@material-ui/core'
-import {Avatar} from '@material-ui/core'
+import {Grid, Paper} from '@material-ui/core';
+import {Avatar} from '@material-ui/core';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {useNavigate} from "react-router-dom";
