@@ -23,10 +23,17 @@ const Myplant=()=>{
     //const {username} = useContext(LoginContext);
     const [plantsList, setPlantsList] = useState([]);
     const plantnames = [];
+    const [stage,setStage]=useState("")
     const [pname, setPname] = useState([]);
     const [names, setNames] = useState("");
+    const plantstage = [
+        'Seeding stage',
+        'Vegetation period',
+        'Flowering period',
+        'Lateflowering',
+      ];
     const handleChange = (event) => {
-        setNames(event.target.value);
+        setStage(event.target.value);
       };
 
     //useEffect(()=>{
@@ -44,8 +51,11 @@ const Myplant=()=>{
     //},[]); 
 
     const getPlants = () =>{
-        Axios.get('http://localhost:3001/plants', { withCredentials: true }).then((response)=>{
+        Axios.post('http://localhost:3001/stage', {
+            stage : stage
+         }).then((response)=>{
             setPlantsList(response.data);
+            
         });
     }
 
@@ -55,9 +65,9 @@ const Myplant=()=>{
             <h2 className="app-front" style={{color:'#008000'}}>My Plant</h2>
             <Grid container spacing={3} direction="row" justifyContent="center" alignItems="center">
             <Grid item xs={3} md={2} >
-                <FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Plant</InputLabel>
-                    <Select style={{minWidth: '200px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={names}  label="Plant" input={<OutlinedInput label="Plant" />} onChange={handleChange}>
-                        {plantnames.map((plantnames) => (<MenuItem key={plantnames} value={plantnames}>{plantnames}</MenuItem>))}
+                <FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Stage</InputLabel>
+                    <Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={stage} label="Stage" input={<OutlinedInput label="Stage" />}onChange={handleChange}>
+                        {plantstage.map((plantstage) => (<MenuItem key={plantstage} value={plantstage}>{plantstage}</MenuItem>))}
                     </Select>
                 </FormControl>
             </Grid>
@@ -80,7 +90,7 @@ const Myplant=()=>{
                     </div>
         
                     <div className="btn">
-                        <Avatar onClick={()=>{navigate("/addnewplant")}} style={avatarStyle} ><EditIcon/></Avatar>
+                        <Avatar style={avatarStyle} ><EditIcon/></Avatar>
                         <Avatar style={avatarStyle} ><DeleteIcon/></Avatar>
                     </div>
                 </div>
