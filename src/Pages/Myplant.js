@@ -13,11 +13,11 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import FormControl from '@mui/material/FormControl';
-
+import IconButton from '@mui/material/IconButton';
 
 
 const Myplant=()=>{
-    const avatarStyle={backgroundColor:'green', width:40, height:56, cursor: 'pointer'}
+    const avatarStyle={backgroundColor:'green', width:40, height:56}
     const navigate = useNavigate();
     //const {username} = localStorage.username;
     //const {username} = useContext(LoginContext);
@@ -53,10 +53,18 @@ const Myplant=()=>{
     const getPlants = () =>{
         Axios.post('http://localhost:3001/stage', {
             stage : stage
-         }).then((response)=>{
+         },{ withCredentials: true }).then((response)=>{
             setPlantsList(response.data);
             
         });
+    }
+
+    function deleteData(ID){
+        //event.preventDefault();
+        Axios.delete(`http://localhost:3001/plantlist/${ID}`,{
+        }).then((result)=>{
+            console.log(result)
+        }).catch(err=>console.log(err))
     }
 
     return(
@@ -90,8 +98,8 @@ const Myplant=()=>{
                     </div>
         
                     <div className="btn">
-                        <Avatar style={avatarStyle} ><EditIcon/></Avatar>
-                        <Avatar style={avatarStyle} ><DeleteIcon/></Avatar>
+                        <IconButton><EditIcon/></IconButton>
+                        <IconButton onClick={()=>deleteData(val.ID)}><DeleteIcon/></IconButton>
                     </div>
                 </div>
                 
