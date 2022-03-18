@@ -11,7 +11,7 @@ function Light(){
         
         <Grid align='center'>
             <Navbar/>
-            <Paper elevation={5} style={paperStyle}>
+            <Paper elevation={0} style={paperStyle}>
             <Grid container spacing={2} justifyContent="center" >
                 <Grid item xs={2} >
                     <img className="homephoto" src="/light.png" />
@@ -21,7 +21,7 @@ function Light(){
                 </Grid>
             </Grid>
             <Grid container spacing={3} direction="row" justifyContent="center" alignItems="center" >
-                <Grid item xs={3} md={3}><TextField id="outlined-basic" label="Plant name" variant="outlined" onChange={(e) => setPlantname(e.target.value)}/></Grid>
+                <Grid item xs={3} md={4}><TextField id="outlined-basic" label="Plant name" variant="outlined" onChange={(e) => setPlantname(e.target.value)}/></Grid>
                 <Grid item xs={3} md={2}><Button  variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show information</Button></Grid>
             </Grid>
             <Grid container spacing={2} justifyContent="center">
