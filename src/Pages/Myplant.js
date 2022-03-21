@@ -59,11 +59,14 @@ const Myplant=()=>{
         });
     }
 
-    function deleteData(ID){
+    const deleteData=(id)=>{
         //event.preventDefault();
-        Axios.delete(`http://localhost:3001/plantlist/${ID}`,{
-        }).then((result)=>{
-            console.log(result)
+        Axios.delete(`http://localhost:3001/delete/${id}`).then((result)=>{
+            setPlantsList(
+                plantsList.filter((val)=>{
+                    return val.id != id;
+                })
+            )
         }).catch(err=>console.log(err))
     }
 
@@ -96,10 +99,9 @@ const Myplant=()=>{
                             <p>pH:{val.lowerpH}-{val.higherpH}</p>
                         </div>
                     </div>
-        
                     <div className="btn">
                         <IconButton><EditIcon/></IconButton>
-                        <IconButton onClick={()=>deleteData(val.ID)}><DeleteIcon/></IconButton>
+                        <IconButton onClick={()=>deleteData(val.id)}><DeleteIcon/></IconButton>
                     </div>
                 </div>
                 
