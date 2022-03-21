@@ -123,14 +123,18 @@ const Myplant=()=>{
                         </div>
                         <Dialog PaperProps={{ sx: { width: "100%", height: "70%" } }} open={open} onClose={handleClose}>
                             <DialogTitle>Edit Information</DialogTitle>
-                            <DialogContent PaperProps={{  }} >
+                            <DialogContent  >
                             
-                                <p><TextField style ={{width: '40%'}} required id="outlined-required" label="Plant name" defaultValue={val.plantname}/></p> 
-                                <p>Stage:<TextField style ={{width: '50%' ,height:'30%'}} required id="outlined-required" label="Stage" defaultValue={val.stage}/></p>
-                                <p>open time - close time:<TextField style ={{width: '20%'}} required id="outlined-required" label="open time" defaultValue={val.opentime}/>-<TextField style ={{width: '20%'}} required id="outlined-required" label="close time" defaultValue={val.closetime}/></p>
-                                <p>Temperature: <TextField style ={{width: '20%'}} required id="outlined-required" label="Temperature" defaultValue={val.lowertemp}/>-<TextField style ={{width: '20%'}} required id="outlined-required" label="Temperature" defaultValue={val.highertemp}/>Celsius</p>
-                                <p>Humidity:<TextField style ={{width: '20%'}} required id="outlined-required" label="Humidity" defaultValue={val.lowerhumid}/>-<TextField style ={{width: '20%'}} required id="outlined-required" label="Humidity" defaultValue={val.higherhumid}/> %</p>
-                                <p>pH:<TextField style ={{width: '20%'}} required id="outlined-required" label="pH" defaultValue={val.lowerpH}/>-<TextField style ={{width: '20%'}} required id="outlined-required" label="pH" defaultValue={val.higherpH}/></p>
+                                <p><TextField style ={{width: '30%'}} required id="outlined-required" label="Plant name" defaultValue={val.plantname}/></p> 
+                                <p>Stage :<FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Stage</InputLabel>
+                    <Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={stage} defaultValue={val.stage} label="Stage" input={<OutlinedInput label="Stage" />}onChange={handleChange}>
+                        {plantstage.map((plantstage) => (<MenuItem key={plantstage} value={plantstage}>{plantstage}</MenuItem>))}
+                    </Select>
+                </FormControl></p>
+                                <p>open time - close time :<TextField style ={{width: '20%'}} required id="outlined-required" label="open time" defaultValue={val.opentime}/>-<TextField style ={{width: '20%'}} required id="outlined-required" label="close time" defaultValue={val.closetime}/></p>
+                                <p>Temperature : <TextField style ={{width: '20%'}} required id="outlined-required" label="Temperature" defaultValue={val.lowertemp}/>-<TextField style ={{width: '20%'}} required id="outlined-required" label="Temperature" defaultValue={val.highertemp}/>Celsius</p>
+                                <p>Humidity :<TextField style ={{width: '20%'}} required id="outlined-required" label="Humidity" defaultValue={val.lowerhumid}/>-<TextField style ={{width: '20%'}} required id="outlined-required" label="Humidity" defaultValue={val.higherhumid}/> %</p>
+                                <p>pH :<TextField style ={{width: '20%'}} required id="outlined-required" label="pH" defaultValue={val.lowerpH}/>-<TextField style ={{width: '20%'}} required id="outlined-required" label="pH" defaultValue={val.higherpH}/></p>
                                 <FormControlLabel value="on" control={<Checkbox />} label="The plant is in this stage" labelPlacement="The plant is in this stage" />
                             
                             </DialogContent>
