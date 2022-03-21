@@ -61,7 +61,7 @@ const Myplant=()=>{
 
     const deleteData=(id)=>{
         //event.preventDefault();
-        Axios.delete(`http://localhost:3001/delete/${id}`).then((result)=>{
+        Axios.delete(`http://localhost:3001/delete/${id}`,{ withCredentials: true }).then((result)=>{
             setPlantsList(
                 plantsList.filter((val)=>{
                     return val.id != id;
