@@ -14,7 +14,9 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
-
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import { grey } from '@mui/material/colors';
+import SvgIcon from '@mui/material/SvgIcon';
 
 const Myplant=()=>{
     const avatarStyle={backgroundColor:'green', width:40, height:56}
@@ -36,6 +38,12 @@ const Myplant=()=>{
         setStage(event.target.value);
       };
 
+    function Icon(props){
+        const selectstage = props;
+        if (selectstage == "on"){
+            return <CheckBoxIcon sx={{ color: grey[50] }}/>;
+        }
+    }
     //useEffect(()=>{
         //Axios.get('http://localhost:3001/plants', { withCredentials: true }).then((response)=>{
         //    setPname(response.result);
@@ -92,16 +100,17 @@ const Myplant=()=>{
                             <h3>{val.plantname}</h3>
                         </div>
                         <div className="card-body">
-                            <p>Stage:{val.stage}</p>
+                            <p>{Icon(val.selectstage)} Stage:{val.stage}</p>
                             <p>open time - close time:{val.opentime}-{val.closetime}</p>
                             <p>Temperature:{val.lowertemp}-{val.highertemp}Celsius</p>
                             <p>Humidity:{val.lowerhumid}-{val.higherhumid}%</p>
                             <p>pH:{val.lowerpH}-{val.higherpH}</p>
                         </div>
                     </div>
+                    
                     <div className="btn">
-                        <IconButton><EditIcon/></IconButton>
-                        <IconButton onClick={()=>deleteData(val.id)}><DeleteIcon/></IconButton>
+                        <IconButton><EditIcon sx={{ color: grey[50] }}/></IconButton>
+                        <IconButton onClick={()=>deleteData(val.id)}><DeleteIcon sx={{ color: grey[50] }}/></IconButton>
                     </div>
                 </div>
                 
