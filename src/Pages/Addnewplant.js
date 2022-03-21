@@ -135,7 +135,7 @@ function Addnewplant(){
                     <Grid item xs={2} md={3}><TextField id="outlined-basic" label="pH value" variant="outlined" onChange={(e) => setLowerpH(e.target.value)}/></Grid>
                     <Grid item xs={1}><Typography style={{color:'#008000'}}>-</Typography></Grid>
                     <Grid item xs={2} md={3}><TextField id="outlined-basic" label="pH value" variant="outlined" onChange={(e) => setHigherpH(e.target.value)}/></Grid>
-                    <Grid item xs={12}><FormControlLabel value="on" control={<Checkbox />} label="Use this stage" labelPlacement="end"/></Grid>
+                    <Grid item xs={12}><FormControlLabel value="on" control={<Checkbox />} label="Use this stage" labelPlacement="Use this stage"/></Grid>
                     <Grid item xs={12}><Button onClick={addPlant} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '300px' }}>Save</Button></Grid>                  
                 </Grid>
                 </Paper>
