@@ -121,17 +121,17 @@ const Myplant=()=>{
                             <p>Humidity:{val.lowerhumid}-{val.higherhumid}%</p>
                             <p>pH:{val.lowerpH}-{val.higherpH}</p>
                         </div>
-                        <Dialog PaperProps={{ sx: { width: "100%", height: "70%" } }} open={open} onClose={handleClose}>
+                        <Dialog PaperProps={{ sx: { width: "100%", height: "77%" } }} open={open} onClose={handleClose}>
                             <DialogTitle>Edit Information</DialogTitle>
                             <DialogContent  >
                             
                                 <p><TextField style ={{width: '30%'}} required id="outlined-required" label="Plant name" defaultValue={val.plantname}/></p> 
                                 <p>Stage :<FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Stage</InputLabel>
-                    <Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={stage} defaultValue={val.stage} label="Stage" input={<OutlinedInput label="Stage" />}onChange={handleChange}>
-                        {plantstage.map((plantstage) => (<MenuItem key={plantstage} value={plantstage}>{plantstage}</MenuItem>))}
-                    </Select>
-                </FormControl></p>
-                                <p>open time - close time :<TextField style ={{width: '20%'}} required id="outlined-required" label="open time" defaultValue={val.opentime}/>-<TextField style ={{width: '20%'}} required id="outlined-required" label="close time" defaultValue={val.closetime}/></p>
+                                    <Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={stage} defaultValue={val.stage} label="Stage" input={<OutlinedInput label="Stage" />}onChange={handleChange}>
+                                    {plantstage.map((plantstage) => (<MenuItem key={plantstage} value={plantstage}>{plantstage}</MenuItem>))}
+                                    </Select>
+                                    </FormControl></p>
+                                <p>open time - close time :<TextField id="time" label="Open time" type="time" name="opentime" defaultValue={val.opentime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} />-<TextField id="time" label="Close time" type="time" name="closetime" defaultValue={val.closetime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }}/></p>
                                 <p>Temperature : <TextField style ={{width: '20%'}} required id="outlined-required" label="Temperature" defaultValue={val.lowertemp}/>-<TextField style ={{width: '20%'}} required id="outlined-required" label="Temperature" defaultValue={val.highertemp}/>Celsius</p>
                                 <p>Humidity :<TextField style ={{width: '20%'}} required id="outlined-required" label="Humidity" defaultValue={val.lowerhumid}/>-<TextField style ={{width: '20%'}} required id="outlined-required" label="Humidity" defaultValue={val.higherhumid}/> %</p>
                                 <p>pH :<TextField style ={{width: '20%'}} required id="outlined-required" label="pH" defaultValue={val.lowerpH}/>-<TextField style ={{width: '20%'}} required id="outlined-required" label="pH" defaultValue={val.higherpH}/></p>
