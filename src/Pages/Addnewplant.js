@@ -32,7 +32,7 @@ function Addnewplant(){
     const [higherhumid,setHigherhumid]=useState("")
     const [lowerpH,setLowerpH]=useState("")
     const [higherpH,setHigherpH]=useState("")
-    const [selectstage,setSelectstage]=useState("")
+    const [selectstage,setSelectstage]= useState("off")
     const plantstage = [
         'Seeding stage',
         'Vegetation period',
@@ -42,6 +42,9 @@ function Addnewplant(){
   const handleChange = (event) => {
     setStage(event.target.value);
   };
+  const handleClickStage = () => {
+    setSelectstage("on");
+};
   //const handleChangeInput = (index, event)=>{
   //  const values = [...inputtime];
   //  values[index][event.target.name]= event.target.value;
@@ -137,7 +140,7 @@ function Addnewplant(){
                     <Grid item xs={2} md={3}><TextField id="outlined-basic" label="pH value" variant="outlined" onChange={(e) => setLowerpH(e.target.value)}/></Grid>
                     <Grid item xs={1}><Typography style={{color:'#008000'}}>-</Typography></Grid>
                     <Grid item xs={2} md={3}><TextField id="outlined-basic" label="pH value" variant="outlined" onChange={(e) => setHigherpH(e.target.value)}/></Grid>
-                    <Grid item xs={12}><FormControlLabel value="on" control={<Checkbox />} label="The plant is in this stage" labelPlacement="The plant is in this stage" onChange={(e) => setSelectstage(e.target.value)}/></Grid>
+                    <Grid item xs={12}><FormControlLabel onClick={handleClickStage}  control={<Checkbox />} label="The plant is in this stage" labelPlacement="The plant is in this stage" onChange={(e) => setSelectstage(e.target.value)}/></Grid>
                     <Grid item xs={12}><Button onClick={addPlant} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '300px' }}>Save</Button></Grid>                  
                 </Grid>
                 </Paper>

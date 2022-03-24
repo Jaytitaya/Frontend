@@ -36,6 +36,7 @@ const Myplant=()=>{
     const [stage,setStage]=useState("")
     const [pname, setPname] = useState([]);
     const [names, setNames] = useState("");
+    const [selectstage,setSelectstage]= useState("off")
     const plantstage = [
         'Seeding stage',
         'Vegetation period',
@@ -58,6 +59,9 @@ const Myplant=()=>{
     };
     const handleClose = () => {
         setOpen(false);
+    };
+    const handleClickStage = () => {
+        setSelectstage("on");
     };
     //useEffect(()=>{
         //Axios.get('http://localhost:3001/plants', { withCredentials: true }).then((response)=>{
@@ -135,7 +139,7 @@ const Myplant=()=>{
                                 <p>Temperature : <TextField style ={{width: '20%'}} required id="outlined-required" label="Temperature" defaultValue={val.lowertemp}/>-<TextField style ={{width: '20%'}} required id="outlined-required" label="Temperature" defaultValue={val.highertemp}/>Celsius</p>
                                 <p>Humidity :<TextField style ={{width: '20%'}} required id="outlined-required" label="Humidity" defaultValue={val.lowerhumid}/>-<TextField style ={{width: '20%'}} required id="outlined-required" label="Humidity" defaultValue={val.higherhumid}/> %</p>
                                 <p>pH :<TextField style ={{width: '20%'}} required id="outlined-required" label="pH" defaultValue={val.lowerpH}/>-<TextField style ={{width: '20%'}} required id="outlined-required" label="pH" defaultValue={val.higherpH}/></p>
-                                <FormControlLabel value="on" control={<Checkbox />} label="The plant is in this stage" labelPlacement="The plant is in this stage" />
+                                <FormControlLabel onClick={handleClickStage} control={<Checkbox />} label="The plant is in this stage" labelPlacement="The plant is in this stage" />
                             
                             </DialogContent>
                             <DialogActions>
