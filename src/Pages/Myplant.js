@@ -59,6 +59,15 @@ const Myplant=()=>{
         setNewStage(event.target.value);
     };
 
+    function checkorigin(props){
+        const selectstage = props;
+        if (selectstage == "on"){
+            return <Checkbox defaultChecked/>;
+        }else{
+            return <Checkbox />;
+        }
+    }
+
     function Icon(props){
         const selectstage = props;
         if (selectstage == "on"){
@@ -178,17 +187,17 @@ const Myplant=()=>{
                             <DialogTitle className="Dialog-Title">Edit Information</DialogTitle>
                             <DialogContent>
                             
-                                <p><TextField style ={{width: '30%'}} required id="outlined-required" label="Plant name" defaultValue={val.plantname} onChange={(e) => setNewPlantname(e.target.value)}/></p> 
+                                <p><TextField style ={{width: '30%'}} id="outlined-required" label="Plant name" defaultValue={val.plantname} onChange={(e) => setNewPlantname(e.target.value)}/></p> 
                                 <p>Stage :<FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Stage</InputLabel>
                                     <Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={newStage} defaultValue={val.stage} label="Stage" input={<OutlinedInput label="Stage" />}onChange={handleNewChange}>
                                     {plantstage.map((plantstage) => (<MenuItem key={plantstage} value={plantstage}>{plantstage}</MenuItem>))}
                                     </Select>
                                     </FormControl></p>
                                 <p>open time - close time :<TextField id="time" label="Open time" type="time" name="opentime" defaultValue={val.opentime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewOpentime(e.target.value)} />-<TextField id="time" label="Close time" type="time" name="closetime" defaultValue={val.closetime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewClosetime(e.target.value)}/></p>
-                                <p>Temperature : <TextField style ={{width: '20%'}} required id="outlined-required" label="Temperature" defaultValue={val.lowertemp} onChange={(e) => setNewLowertemp(e.target.value)}/>-<TextField style ={{width: '20%'}} required id="outlined-required" label="Temperature" defaultValue={val.highertemp} onChange={(e) => setNewHighertemp(e.target.value)}/>Celsius</p>
-                                <p>Humidity :<TextField style ={{width: '20%'}} required id="outlined-required" label="Humidity" defaultValue={val.lowerhumid} onChange={(e) => setNewLowerhumid(e.target.value)}/>-<TextField style ={{width: '20%'}} required id="outlined-required" label="Humidity" defaultValue={val.higherhumid} onChange={(e) => setNewHigherhumid(e.target.value)}/> %</p>
-                                <p>pH :<TextField style ={{width: '20%'}} required id="outlined-required" label="pH" defaultValue={val.lowerpH} onChange={(e) => setNewLowerpH(e.target.value)}/>-<TextField style ={{width: '20%'}} required id="outlined-required" label="pH" defaultValue={val.higherpH} onChange={(e) => setNewHigherpH(e.target.value)}/></p>
-                                <FormControlLabel onClick={handleClickStage} control={<Checkbox />} label="The plant is in this stage" labelPlacement="The plant is in this stage" />
+                                <p>Temperature : <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.lowertemp} onChange={(e) => setNewLowertemp(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.highertemp} onChange={(e) => setNewHighertemp(e.target.value)}/>Celsius</p>
+                                <p>Humidity :<TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.lowerhumid} onChange={(e) => setNewLowerhumid(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.higherhumid} onChange={(e) => setNewHigherhumid(e.target.value)}/> %</p>
+                                <p>pH :<TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.lowerpH} onChange={(e) => setNewLowerpH(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.higherpH} onChange={(e) => setNewHigherpH(e.target.value)}/></p>
+                                <FormControlLabel onClick={handleClickStage}  control={checkorigin(val.selectstage)} label="The plant is in this stage" labelPlacement="The plant is in this stage" />
                             
                             </DialogContent>
                             <DialogActions >

@@ -9,9 +9,6 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import FormControl from '@mui/material/FormControl';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import IconButton from '@mui/material/IconButton';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 //import 'antd/dist/antd.css';
@@ -140,7 +137,7 @@ function Addnewplant(){
                     <Grid item xs={2} md={3}><TextField id="outlined-basic" label="pH value" variant="outlined" onChange={(e) => setLowerpH(e.target.value)}/></Grid>
                     <Grid item xs={1}><Typography style={{color:'#008000'}}>-</Typography></Grid>
                     <Grid item xs={2} md={3}><TextField id="outlined-basic" label="pH value" variant="outlined" onChange={(e) => setHigherpH(e.target.value)}/></Grid>
-                    <Grid item xs={12}><FormControlLabel onClick={handleClickStage}  control={<Checkbox />} label="The plant is in this stage" labelPlacement="The plant is in this stage" onChange={(e) => setSelectstage(e.target.value)}/></Grid>
+                    <Grid item xs={12}><FormControlLabel onClick={handleClickStage}  control={<Checkbox/>} label="The plant is in this stage" labelPlacement="The plant is in this stage" onChange={(e) => setSelectstage(e.target.value)}/></Grid>
                     <Grid item xs={12}><Button onClick={addPlant} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '300px' }}>Save</Button></Grid>                  
                 </Grid>
                 </Paper>
