@@ -2,11 +2,15 @@ import React,{useState} from 'react';
 import Navbar from '../Components/Navbar';
 import {Grid, TextField, Paper, Typography} from '@material-ui/core';
 import Button from '@mui/material/Button';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Switch from '@mui/material/Switch';
 
 import Axios from 'axios';
 
 function Light(){
     const paperStyle={padding:20,height:'90vh',width:700,margin:"10px auto",backgroundColor: '#f5f5f5'}
+    const paperStyle2={padding:20,height:'30vh',width:400,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const [plantname,setPlantname]=useState("")
     return(
         
@@ -21,13 +25,25 @@ function Light(){
                     <h2 className="app-front" style={{color:'#008000'}}>Light</h2>
                 </Grid>
             </Grid>
-            <Grid container spacing={3} direction="row" justifyContent="center" alignItems="center" >
-                <Grid item xs={3} md={4}><TextField id="outlined-basic" label="Plant name" variant="outlined" onChange={(e) => setPlantname(e.target.value)}/></Grid>
-                <Grid item xs={3} md={2}><Button  variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show information</Button></Grid>
-            </Grid>
-            <Grid container spacing={2} justifyContent="center">
+            <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center" >
+                <Grid item xs={12} md={4}><TextField id="outlined-basic" label="Plant name" variant="outlined" onChange={(e) => setPlantname(e.target.value)}/></Grid>
+                <Grid item xs={12} md={4}><Button  variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show information</Button></Grid>
                 <c>State :</c>
+                <Paper elevation={6} style={paperStyle2}>
+                <Grid container spacing={2} direction="column" justifyContent="flex-start" alignItems="center" >
+                    <Grid item xs={12}><FormControlLabel control={<Checkbox defaultChecked/>} label="Set according to plant setting" labelPlacement="Set according to plant setting" /></Grid>
+                    <Grid item xs={12}><FormControlLabel control={<Checkbox/>} label="Set according to user" labelPlacement="Set according to user" /></Grid>
+                </Grid>
+                <Grid container spacing={5} direction="row" justifyContent="center" alignItems="center" >
+                <Grid className="clight" item xs={5} md={3}>Light</Grid>
+                <FormControlLabel control={<Switch />} label="On" />
+                </Grid>
+                <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center" >
+                <Button variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '100px' }}>Save</Button>
+                </Grid>
+                </Paper>
             </Grid>
+            
             </Paper>
         </Grid>
     )
