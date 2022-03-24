@@ -179,7 +179,7 @@ const Myplant=()=>{
                         <div className="card-body">
                             <p> Stage:{val.stage}</p>
                             <p>open time - close time:{val.opentime}-{val.closetime}</p>
-                            <p>Temperature:{val.lowertemp}-{val.highertemp}Celsius</p>
+                            <p>Temperature:{val.lowertemp}-{val.highertemp}°C</p>
                             <p>Humidity:{val.lowerhumid}-{val.higherhumid}%</p>
                             <p>pH:{val.lowerpH}-{val.higherpH}</p>
                         </div>
@@ -194,7 +194,7 @@ const Myplant=()=>{
                                     </Select>
                                     </FormControl></p>
                                 <p>open time - close time :<TextField id="time" label="Open time" type="time" name="opentime" defaultValue={val.opentime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewOpentime(e.target.value)} />-<TextField id="time" label="Close time" type="time" name="closetime" defaultValue={val.closetime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewClosetime(e.target.value)}/></p>
-                                <p>Temperature : <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.lowertemp} onChange={(e) => setNewLowertemp(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.highertemp} onChange={(e) => setNewHighertemp(e.target.value)}/>Celsius</p>
+                                <p>Temperature : <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.lowertemp} onChange={(e) => setNewLowertemp(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.highertemp} onChange={(e) => setNewHighertemp(e.target.value)}/>°C</p>
                                 <p>Humidity :<TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.lowerhumid} onChange={(e) => setNewLowerhumid(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.higherhumid} onChange={(e) => setNewHigherhumid(e.target.value)}/> %</p>
                                 <p>pH :<TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.lowerpH} onChange={(e) => setNewLowerpH(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.higherpH} onChange={(e) => setNewHigherpH(e.target.value)}/></p>
                                 <FormControlLabel onClick={handleClickStage}  control={checkorigin(val.selectstage)} label="The plant is in this stage" labelPlacement="The plant is in this stage" />

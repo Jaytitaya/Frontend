@@ -123,7 +123,7 @@ function Addnewplant(){
                     <Grid item xs={3} md={3}><TextField id="outlined-basic" label="Temperature" variant="outlined" onChange={(e) => setLowertemp(e.target.value)}/></Grid>
                     <Grid item xs={1}><Typography style={{color:'#008000'}}>-</Typography></Grid>
                     <Grid item xs={3} md={3}><TextField id="outlined-basic" label="Temperature" variant="outlined" onChange={(e) => setHighertemp(e.target.value)}/></Grid>
-                    <Grid item xs={2} ><Typography style={{color:'#008000'}}>Celsius</Typography></Grid> 
+                    <Grid item xs={2} ><Typography style={{color:'#008000'}}>°C</Typography></Grid> 
                 </Grid>
                 <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
                     <Grid item xs={3} ><img className="app-light-photo" src="/Humidity.png" /></Grid>
