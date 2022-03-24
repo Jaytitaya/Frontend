@@ -31,8 +31,8 @@ function Light(){
                 <c>State :</c>
                 <Paper elevation={6} style={paperStyle2}>
                 <Grid container spacing={2} direction="column" justifyContent="flex-start" alignItems="center" >
-                    <Grid item xs={12}><FormControlLabel control={<Checkbox defaultChecked/>} label="Set according to plant setting" labelPlacement="Set according to plant setting" /></Grid>
-                    <Grid item xs={12}><FormControlLabel control={<Checkbox/>} label="Set according to user" labelPlacement="Set according to user" /></Grid>
+                    <Grid item xs={12}><FormControlLabel control={<Checkbox />} label="Auto control" labelPlacement="Auto control" /></Grid>
+                    <Grid item xs={12}><FormControlLabel control={<Checkbox/>} label="Manual control" labelPlacement="Manual control" /></Grid>
                 </Grid>
                 <Grid container spacing={5} direction="row" justifyContent="center" alignItems="center" >
                 <Grid className="clight" item xs={5} md={3}>Light</Grid>
