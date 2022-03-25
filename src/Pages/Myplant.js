@@ -47,6 +47,7 @@ const Myplant=()=>{
     const [newHigherhumid,setNewHigherhumid]= useState("");
     const [newLowerpH,setNewLowerpH]= useState("");
     const [newHigherpH,setNewHigherpH]= useState("");
+    const [state,setState]= useState("");
     const plantstage = [
         'Seeding stage',
         'Vegetation period',
@@ -79,29 +80,34 @@ const Myplant=()=>{
 
     const handleClickOpen = (props) => {
         const id = props;
-        
+        setState(id);
+
         Axios.post('http://localhost:3001/plantid', {
             id : id
          },{ withCredentials: true }).then((response)=>{
-            setUpdatePlantsList(response.data);
+             //console.log(response.data[0])
+            setNewOpentime(response.data[0].opentime);
+            setNewClosetime(response.data[0].closetime);
+            setNewLowertemp(response.data[0].lowertemp);
+            setNewHighertemp(response.data[0].highertemp);
+            setNewLowerhumid(response.data[0].lowerhumid); 
+            setNewHigherhumid(response.data[0].higherhumid);
+            setNewLowerpH(response.data[0].lowerpH);
+            setNewHigherpH(response.data[0].higherpH);
+            setNewSelectstage(response.data[0].selectstage);
             
         });
-       console.log(updateplantsList);
-       console.log(updateplantsList[0].opentime)
-       setNewOpentime(updateplantsList[0].opentime);
-       setNewClosetime(updateplantsList[0].closetime);
-       setNewLowertemp(updateplantsList[0].lowertemp);
-       setNewHighertemp(updateplantsList[0].highertemp);
-       setNewLowerhumid(updateplantsList[0].lowerhumid); 
-       setNewHigherhumid(updateplantsList[0].higherhumid);
-       setNewLowerpH(updateplantsList[0].lowerpH);
-       setNewHigherpH(updateplantsList[0].higherpH);
-       setNewSelectstage(updateplantsList[0].selectstage);
-       console.log(newHighertemp);
-       setOpen(true);
+       //console.log(updateplantsList);
+       //console.log(updateplantsList[0].opentime)
+       
+       //console.log(newHighertemp);
+       
+       //setOpen(true);
     };
+    //console.log(newOpentime,newClosetime,newLowertemp,newHighertemp)
     const handleClose = () => {
         setOpen(false);
+        setState("");
     };
     const handleClickStage = (props) => {
         const selectstage = props
@@ -168,7 +174,7 @@ const Myplant=()=>{
                 : val;
             }))
         });
-        setOpen(false);
+        setState("");
     };
 
     const deleteData=(id)=>{
@@ -217,32 +223,33 @@ const Myplant=()=>{
                         <IconButton onClick={()=>deleteData(val.id)}><DeleteIcon sx={{ color: grey[50] }}/></IconButton>
                     </div>
                 </div>
-                </div>
-                )
-            })}
-
-            {updateplantsList.map((value,key)=>{
-                return(
-                        <Dialog PaperProps={{ sx: { width: "100%", height: "77%" } }} open={open} onClose={handleClose}>
+                
+               
+                <Dialog PaperProps={{ sx: { width: "100%", height: "77%" } }} open={val.id===state} onClose={handleClose}>
                             <DialogTitle className="Dialog-Title">Edit Information</DialogTitle>
                             <DialogContent>
                             
-                                <h3>{value.plantname}</h3> 
-                                <p>Stage : {value.stage}</p>
-                                <p>open time - close time : <TextField id="time" label="Open time" type="time" name="opentime" defaultValue={value.opentime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewOpentime(e.target.value)} /> - <TextField id="time" label="Close time" type="time" name="closetime" defaultValue={value.closetime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewClosetime(e.target.value)}/></p>
-                                <p>Temperature : <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={value.lowertemp} onChange={(e) => setNewLowertemp(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={value.highertemp} onChange={(e) => setNewHighertemp(e.target.value)}/> °C</p>
-                                <p>Humidity : <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={value.lowerhumid} onChange={(e) => setNewLowerhumid(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={value.higherhumid} onChange={(e) => setNewHigherhumid(e.target.value)}/> %</p>
-                                <p>pH : <TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={value.lowerpH}  onChange={(e) => setNewLowerpH(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={value.higherpH}  onChange={(e) => setNewHigherpH(e.target.value)}/></p>
-                                <FormControlLabel onClick={()=>handleClickStage(value.selectstage)}  control={checkorigin(value.selectstage)} label="The plant is in this stage" labelPlacement="The plant is in this stage" />
+                                <h3>{val.plantname}</h3> 
+                                <p>Stage : {val.stage}</p>
+                                <p>open time - close time : <TextField id="time" label="Open time" type="time" name="opentime" defaultValue={val.opentime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewOpentime(e.target.value)} /> - <TextField id="time" label="Close time" type="time" name="closetime" defaultValue={val.closetime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewClosetime(e.target.value)}/></p>
+                                <p>Temperature : <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.lowertemp} onChange={(e) => setNewLowertemp(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.highertemp} onChange={(e) => setNewHighertemp(e.target.value)}/> °C</p>
+                                <p>Humidity : <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.lowerhumid} onChange={(e) => setNewLowerhumid(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.higherhumid} onChange={(e) => setNewHigherhumid(e.target.value)}/> %</p>
+                                <p>pH : <TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.lowerpH}  onChange={(e) => setNewLowerpH(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.higherpH}  onChange={(e) => setNewHigherpH(e.target.value)}/></p>
+                                <FormControlLabel onClick={()=>handleClickStage(val.selectstage)}  control={checkorigin(val.selectstage)} label="The plant is in this stage" labelPlacement="The plant is in this stage" />
                             
                             </DialogContent>
                             <DialogActions >
                                 <Button onClick={handleClose}>Cancel</Button>
-                                <Button onClick={()=>handleUpdate(value.id)}>Save</Button>
+                                <Button onClick={()=>handleUpdate(val.id)}>Save</Button>
                             </DialogActions>
                         </Dialog>
-                    
-            )})}
+                
+                </div>
+                
+                )
+            })}
+
+            
                 
             
         </Grid> 
