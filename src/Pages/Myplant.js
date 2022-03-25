@@ -82,21 +82,20 @@ const Myplant=()=>{
         const id = props;
         setState(id);
 
-        Axios.post('http://localhost:3001/plantid', {
-            id : id
-         },{ withCredentials: true }).then((response)=>{
-             //console.log(response.data[0])
-            setNewOpentime(response.data[0].opentime);
-            setNewClosetime(response.data[0].closetime);
-            setNewLowertemp(response.data[0].lowertemp);
-            setNewHighertemp(response.data[0].highertemp);
-            setNewLowerhumid(response.data[0].lowerhumid); 
-            setNewHigherhumid(response.data[0].higherhumid);
-            setNewLowerpH(response.data[0].lowerpH);
-            setNewHigherpH(response.data[0].higherpH);
-            setNewSelectstage(response.data[0].selectstage);
-            
-        });
+        plantsList.map((val) => {
+            const isSelected = val.id === id
+            if (isSelected) {
+              setNewOpentime(val.opentime)
+              setNewClosetime(val.closetime)
+              setNewLowertemp(val.lowertemp)
+              setNewHighertemp(val.highertemp)
+              setNewLowerhumid(val.lowerhumid)
+              setNewHigherhumid(val.higherhumid)
+              setNewLowerpH(val.lowerpH)
+              setNewHigherpH(val.higherpH)
+              setNewSelectstage(val.selectstage)
+            }
+        })
        //console.log(updateplantsList);
        //console.log(updateplantsList[0].opentime)
        
