@@ -5,12 +5,13 @@ import Button from '@mui/material/Button';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Switch from '@mui/material/Switch';
+import SwitchUnstyled, { switchUnstyledClasses } from '@mui/base/SwitchUnstyled';
 
 import Axios from 'axios';
 
 function Light(){
     const paperStyle={padding:20,height:'90vh',width:700,margin:"10px auto",backgroundColor: '#f5f5f5'}
-    const paperStyle2={padding:20,height:'30vh',width:400,margin:"10px auto",backgroundColor: '#f5f5f5'}
+    const paperStyle2={padding:20,height:'25vh',width:300,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const [plantname,setPlantname]=useState("")
     return(
         
@@ -30,17 +31,20 @@ function Light(){
                 <Grid item xs={12} md={4}><Button  variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show information</Button></Grid>
                 <c>State :</c>
                 <Paper elevation={6} style={paperStyle2}>
-                <Grid container spacing={2} direction="column" justifyContent="flex-start" alignItems="center" >
-                    <Grid item xs={12}><FormControlLabel control={<Checkbox />} label="Auto control" labelPlacement="Auto control" /></Grid>
-                    <Grid item xs={12}><FormControlLabel control={<Checkbox/>} label="Manual control" labelPlacement="Manual control" /></Grid>
-                </Grid>
-                <Grid container spacing={5} direction="row" justifyContent="center" alignItems="center" >
-                <Grid className="clight" item xs={5} md={3}>Light</Grid>
-                <FormControlLabel control={<Switch />} label="On" />
-                </Grid>
-                <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center" >
-                <Button variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '100px' }}>Save</Button>
-                </Grid>
+                    
+                    <Grid container spacing={2} direction="row" justifyContent="center" alignItems="center" >
+                        <p>Auto control</p><Switch /><p>Manual control </p>
+                    </Grid>
+                    
+                    <Grid  container spacing={5} direction="row" justifyContent="center" alignItems="center" >
+                        <Grid className="clight" item xs={5} md={3}>Light</Grid>
+                        <p>Off </p><FormControlLabel control={<Switch />} label="On" />
+                    </Grid>
+
+                    <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center" >
+                        <Button variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '100px' }}>Save</Button>
+                    </Grid>
+                
                 </Paper>
             </Grid>
             

@@ -110,9 +110,7 @@ const Myplant=()=>{
     const handleUpdate = (id) => {
         Axios.put("http://localhost:3001/update",
             {
-                plantname: newPlantname, 
                 id:id, 
-                stage: newStage, 
                 opentime: newOpentime,
                 closetime: newClosetime,
                 lowertemp: newLowertemp,
@@ -127,8 +125,8 @@ const Myplant=()=>{
                 return val.id == id? 
                 {
                     id: val.id, 
-                    plantname: newPlantname,
-                    stage: newStage, 
+                    plantname: val.plantname,
+                    stage: val.stage, 
                     opentime: newOpentime,
                     closetime: newClosetime,
                     lowertemp: newLowertemp,
@@ -142,6 +140,7 @@ const Myplant=()=>{
                 : val;
             }))
         });
+        setOpen(false);
     };
 
     const deleteData=(id)=>{
@@ -177,7 +176,7 @@ const Myplant=()=>{
                             <h3>{val.plantname}</h3>
                         </div>
                         <div className="card-body">
-                            <p> Stage:{val.stage}</p>
+                            <p>Stage:{val.stage}</p>
                             <p>open time - close time:{val.opentime}-{val.closetime}</p>
                             <p>Temperature:{val.lowertemp}-{val.highertemp}°C</p>
                             <p>Humidity:{val.lowerhumid}-{val.higherhumid}%</p>
@@ -187,16 +186,12 @@ const Myplant=()=>{
                             <DialogTitle className="Dialog-Title">Edit Information</DialogTitle>
                             <DialogContent>
                             
-                                <p><TextField style ={{width: '30%'}} id="outlined-required" label="Plant name" defaultValue={val.plantname} onChange={(e) => setNewPlantname(e.target.value)}/></p> 
-                                <p>Stage :<FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Stage</InputLabel>
-                                    <Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={newStage} defaultValue={val.stage} label="Stage" input={<OutlinedInput label="Stage" />}onChange={handleNewChange}>
-                                    {plantstage.map((plantstage) => (<MenuItem key={plantstage} value={plantstage}>{plantstage}</MenuItem>))}
-                                    </Select>
-                                    </FormControl></p>
-                                <p>open time - close time :<TextField id="time" label="Open time" type="time" name="opentime" defaultValue={val.opentime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewOpentime(e.target.value)} />-<TextField id="time" label="Close time" type="time" name="closetime" defaultValue={val.closetime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewClosetime(e.target.value)}/></p>
-                                <p>Temperature : <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.lowertemp} onChange={(e) => setNewLowertemp(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.highertemp} onChange={(e) => setNewHighertemp(e.target.value)}/>°C</p>
-                                <p>Humidity :<TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.lowerhumid} onChange={(e) => setNewLowerhumid(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.higherhumid} onChange={(e) => setNewHigherhumid(e.target.value)}/> %</p>
-                                <p>pH :<TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.lowerpH} onChange={(e) => setNewLowerpH(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.higherpH} onChange={(e) => setNewHigherpH(e.target.value)}/></p>
+                                <h3>{val.plantname}</h3> 
+                                <p>Stage : {val.stage}</p>
+                                <p>open time - close time : <TextField id="time" label="Open time" type="time" name="opentime" defaultValue={val.opentime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewOpentime(e.target.value)} />-<TextField id="time" label="Close time" type="time" name="closetime" defaultValue={val.closetime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewClosetime(e.target.value)}/></p>
+                                <p>Temperature : <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.lowertemp} onChange={(e) => setNewLowertemp(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.highertemp} onChange={(e) => setNewHighertemp(e.target.value)}/> °C</p>
+                                <p>Humidity : <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.lowerhumid} onChange={(e) => setNewLowerhumid(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.higherhumid} onChange={(e) => setNewHigherhumid(e.target.value)}/> %</p>
+                                <p>pH : <TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.lowerpH} onChange={(e) => setNewLowerpH(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.higherpH} onChange={(e) => setNewHigherpH(e.target.value)}/></p>
                                 <FormControlLabel onClick={handleClickStage}  control={checkorigin(val.selectstage)} label="The plant is in this stage" labelPlacement="The plant is in this stage" />
                             
                             </DialogContent>
