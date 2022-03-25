@@ -103,8 +103,14 @@ const Myplant=()=>{
     const handleClose = () => {
         setOpen(false);
     };
-    const handleClickStage = () => {
-        setNewSelectstage("on");
+    const handleClickStage = (props) => {
+        const selectstage = props
+        if (selectstage == "on"){
+            return setNewSelectstage("off");
+        }else{
+            return setNewSelectstage("on");
+        }
+        
     };
     //useEffect(()=>{
         //Axios.get('http://localhost:3001/plants', { withCredentials: true }).then((response)=>{
@@ -227,7 +233,7 @@ const Myplant=()=>{
                                 <p>Temperature : <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.lowertemp} onChange={(e) => setNewLowertemp(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.highertemp} onChange={(e) => setNewHighertemp(e.target.value)}/> °C</p>
                                 <p>Humidity : <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.lowerhumid} onChange={(e) => setNewLowerhumid(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.higherhumid} onChange={(e) => setNewHigherhumid(e.target.value)}/> %</p>
                                 <p>pH : <TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.lowerpH} onChange={(e) => setNewLowerpH(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.higherpH} onChange={(e) => setNewHigherpH(e.target.value)}/></p>
-                                <FormControlLabel onClick={handleClickStage}  control={checkorigin(val.selectstage)} label="The plant is in this stage" labelPlacement="The plant is in this stage" />
+                                <FormControlLabel onClick={()=>handleClickStage(val.selectstage)}  control={checkorigin(val.selectstage)} label="The plant is in this stage" labelPlacement="The plant is in this stage" />
                             
                             </DialogContent>
                             <DialogActions >
