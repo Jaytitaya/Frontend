@@ -31,6 +31,7 @@ const Myplant=()=>{
     //const {username} = localStorage.username;
     //const {username} = useContext(LoginContext);
     const [plantsList, setPlantsList] = useState([]);
+    const [updateplantsList, setUpdatePlantsList] = useState([]);
     const plantnames = [];
     const [stage,setStage]=useState("")
     const [pname, setPname] = useState([]);
@@ -75,8 +76,18 @@ const Myplant=()=>{
         }
     }
     const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => {
+
+    const handleClickOpen = (props) => {
+        const id = props;
         setOpen(true);
+        Axios.post('http://localhost:3001/plantid', {
+            id : id
+         },{ withCredentials: true }).then((response)=>{
+            setUpdatePlantsList(response.data);
+            
+        });
+       
+        
     };
     const handleClose = () => {
         setOpen(false);
@@ -182,6 +193,18 @@ const Myplant=()=>{
                             <p>Humidity : {val.lowerhumid}-{val.higherhumid} %</p>
                             <p>pH : {val.lowerpH}-{val.higherpH}</p>
                         </div>
+            
+                    <div className="btn">
+                        <p>{Icon(val.selectstage)}</p>
+                        <IconButton onClick={()=>handleClickOpen(val.id)}><EditIcon sx={{ color: grey[50] }}/></IconButton>
+                        <IconButton onClick={()=>deleteData(val.id)}><DeleteIcon sx={{ color: grey[50] }}/></IconButton>
+                    </div>
+                </div>
+                </div>
+                )
+            })}
+                {updateplantsList.map((val,key)=>{
+                    return(
                         <Dialog PaperProps={{ sx: { width: "100%", height: "77%" } }} open={open} onClose={handleClose}>
                             <DialogTitle className="Dialog-Title">Edit Information</DialogTitle>
                             <DialogContent>
@@ -200,17 +223,11 @@ const Myplant=()=>{
                                 <Button onClick={()=>handleUpdate(val.id)}>Save</Button>
                             </DialogActions>
                         </Dialog>
-                    </div>
                     
-                    <div className="btn">
-                        <p>{Icon(val.selectstage)}</p>
-                        <IconButton onClick={handleClickOpen}><EditIcon sx={{ color: grey[50] }}/></IconButton>
-                        <IconButton onClick={()=>deleteData(val.id)}><DeleteIcon sx={{ color: grey[50] }}/></IconButton>
-                    </div>
-                </div>
+                    
+                )})}
                 
-            )
-        })}
+            
         </Grid> 
     )
 
