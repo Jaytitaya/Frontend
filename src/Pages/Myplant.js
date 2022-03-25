@@ -176,11 +176,11 @@ const Myplant=()=>{
                             <h3>{val.plantname}</h3>
                         </div>
                         <div className="card-body">
-                            <p>Stage:{val.stage}</p>
-                            <p>open time - close time:{val.opentime}-{val.closetime}</p>
-                            <p>Temperature:{val.lowertemp}-{val.highertemp}°C</p>
-                            <p>Humidity:{val.lowerhumid}-{val.higherhumid}%</p>
-                            <p>pH:{val.lowerpH}-{val.higherpH}</p>
+                            <p>Stage : {val.stage}</p>
+                            <p>open time - close time : {val.opentime}-{val.closetime}</p>
+                            <p>Temperature : {val.lowertemp}-{val.highertemp} °C</p>
+                            <p>Humidity : {val.lowerhumid}-{val.higherhumid} %</p>
+                            <p>pH : {val.lowerpH}-{val.higherpH}</p>
                         </div>
                         <Dialog PaperProps={{ sx: { width: "100%", height: "77%" } }} open={open} onClose={handleClose}>
                             <DialogTitle className="Dialog-Title">Edit Information</DialogTitle>
