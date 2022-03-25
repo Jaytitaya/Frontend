@@ -79,15 +79,26 @@ const Myplant=()=>{
 
     const handleClickOpen = (props) => {
         const id = props;
-        setOpen(true);
+        
         Axios.post('http://localhost:3001/plantid', {
             id : id
          },{ withCredentials: true }).then((response)=>{
             setUpdatePlantsList(response.data);
             
         });
-       
-        
+       console.log(updateplantsList);
+       console.log(updateplantsList[0].opentime)
+       setNewOpentime(updateplantsList[0].opentime);
+       setNewClosetime(updateplantsList[0].closetime);
+       setNewLowertemp(updateplantsList[0].lowertemp);
+       setNewHighertemp(updateplantsList[0].highertemp);
+       setNewLowerhumid(updateplantsList[0].lowerhumid); 
+       setNewHigherhumid(updateplantsList[0].higherhumid);
+       setNewLowerpH(updateplantsList[0].lowerpH);
+       setNewHigherpH(updateplantsList[0].higherpH);
+       setNewSelectstage(updateplantsList[0].selectstage);
+       console.log(newHighertemp);
+       setOpen(true);
     };
     const handleClose = () => {
         setOpen(false);
@@ -203,8 +214,9 @@ const Myplant=()=>{
                 </div>
                 )
             })}
-                {updateplantsList.map((val,key)=>{
-                    return(
+
+            {updateplantsList.map((val,key)=>{
+                return(
                         <Dialog PaperProps={{ sx: { width: "100%", height: "77%" } }} open={open} onClose={handleClose}>
                             <DialogTitle className="Dialog-Title">Edit Information</DialogTitle>
                             <DialogContent>
@@ -224,8 +236,7 @@ const Myplant=()=>{
                             </DialogActions>
                         </Dialog>
                     
-                    
-                )})}
+            )})}
                 
             
         </Grid> 
