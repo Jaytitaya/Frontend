@@ -30,6 +30,7 @@ function Addnewplant(){
     const [lowerpH,setLowerpH]=useState("")
     const [higherpH,setHigherpH]=useState("")
     const [selectstage,setSelectstage]= useState("off")
+    const [registerplantStatus, setRegisterPlantStatus]=useState("")
     const plantstage = [
         'Seeding stage',
         'Vegetation period',
@@ -71,7 +72,15 @@ function Addnewplant(){
             higherpH: higherpH,
             selectstage: selectstage
             
-        },{ withCredentials: true }).then(() => {
+        })
+        .then((response)=>{
+            if(response.data.message){
+                setRegisterPlantStatus(response.data.message);
+            }else{
+                navigate("/myplant")
+            }
+        })
+        .then(() => {
             setPlantsList([
                 ...plantsList,
             {
@@ -90,7 +99,7 @@ function Addnewplant(){
             }
             ])
             console.log("inputtime",inputtime);
-            navigate("/myplant");
+            
         })
     }
     return(
@@ -139,6 +148,7 @@ function Addnewplant(){
                     <Grid item xs={2} md={3}><TextField id="outlined-basic" label="pH value" variant="outlined" onChange={(e) => setHigherpH(e.target.value)}/></Grid>
                     <Grid item xs={12}><FormControlLabel onClick={handleClickStage}  control={<Checkbox/>} label="The plant is in this stage" labelPlacement="The plant is in this stage" onChange={(e) => setSelectstage(e.target.value)}/></Grid>
                     <Grid item xs={12}><Button onClick={addPlant} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '300px' }}>Save</Button></Grid>                  
+                    <Grid item xs={12}><b>{registerplantStatus}</b></Grid>
                 </Grid>
                 </Paper>
                   

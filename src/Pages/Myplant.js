@@ -62,7 +62,7 @@ const Myplant=()=>{
 
     function checkorigin(props){
         const selectstage = props;
-        if (selectstage == "on"){
+        if (selectstage === "on"){
             return <Checkbox defaultChecked/>;
         }else{
             return <Checkbox />;
@@ -71,7 +71,7 @@ const Myplant=()=>{
 
     function Icon(props){
         const selectstage = props;
-        if (selectstage == "on"){
+        if (selectstage === "on"){
             return <CheckBoxIcon sx={{ color: grey[50] }}/>;
         }
     }
@@ -105,7 +105,7 @@ const Myplant=()=>{
     };
     const handleClickStage = (props) => {
         const selectstage = props
-        if (selectstage == "on"){
+        if (selectstage === "on"){
             return setNewSelectstage("off");
         }else{
             return setNewSelectstage("on");
@@ -150,7 +150,7 @@ const Myplant=()=>{
                 selectstage: newselectstage
             },{ withCredentials: true }).then((result)=>{
             setPlantsList(plantsList.map((val)=>{
-                return val.id == id? 
+                return val.id === id? 
                 {
                     id: val.id, 
                     plantname: val.plantname,
@@ -176,7 +176,7 @@ const Myplant=()=>{
         Axios.delete(`http://localhost:3001/delete/${id}`,{ withCredentials: true }).then((result)=>{
             setPlantsList(
                 plantsList.filter((val)=>{
-                    return val.id != id;
+                    return val.id !== id;
                 })
             )
         }).catch(err=>console.log(err))
@@ -221,24 +221,24 @@ const Myplant=()=>{
                 )
             })}
 
-            {updateplantsList.map((val,key)=>{
+            {updateplantsList.map((value,key)=>{
                 return(
                         <Dialog PaperProps={{ sx: { width: "100%", height: "77%" } }} open={open} onClose={handleClose}>
                             <DialogTitle className="Dialog-Title">Edit Information</DialogTitle>
                             <DialogContent>
                             
-                                <h3>{val.plantname}</h3> 
-                                <p>Stage : {val.stage}</p>
-                                <p>open time - close time : <TextField id="time" label="Open time" type="time" name="opentime" defaultValue={val.opentime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewOpentime(e.target.value)} />-<TextField id="time" label="Close time" type="time" name="closetime" defaultValue={val.closetime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewClosetime(e.target.value)}/></p>
-                                <p>Temperature : <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.lowertemp} onChange={(e) => setNewLowertemp(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.highertemp} onChange={(e) => setNewHighertemp(e.target.value)}/> °C</p>
-                                <p>Humidity : <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.lowerhumid} onChange={(e) => setNewLowerhumid(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.higherhumid} onChange={(e) => setNewHigherhumid(e.target.value)}/> %</p>
-                                <p>pH : <TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.lowerpH} onChange={(e) => setNewLowerpH(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.higherpH} onChange={(e) => setNewHigherpH(e.target.value)}/></p>
-                                <FormControlLabel onClick={()=>handleClickStage(val.selectstage)}  control={checkorigin(val.selectstage)} label="The plant is in this stage" labelPlacement="The plant is in this stage" />
+                                <h3>{value.plantname}</h3> 
+                                <p>Stage : {value.stage}</p>
+                                <p>open time - close time : <TextField id="time" label="Open time" type="time" name="opentime" defaultValue={value.opentime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewOpentime(e.target.value)} />-<TextField id="time" label="Close time" type="time" name="closetime" defaultValue={value.closetime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewClosetime(e.target.value)}/></p>
+                                <p>Temperature : <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={value.lowertemp} onChange={(e) => setNewLowertemp(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={value.highertemp} onChange={(e) => setNewHighertemp(e.target.value)}/> °C</p>
+                                <p>Humidity : <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={value.lowerhumid} onChange={(e) => setNewLowerhumid(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={value.higherhumid} onChange={(e) => setNewHigherhumid(e.target.value)}/> %</p>
+                                <p>pH : <TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={value.lowerpH}  onChange={(e) => setNewLowerpH(e.target.value)}/>-<TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={value.higherpH}  onChange={(e) => setNewHigherpH(e.target.value)}/></p>
+                                <FormControlLabel onClick={()=>handleClickStage(value.selectstage)}  control={checkorigin(value.selectstage)} label="The plant is in this stage" labelPlacement="The plant is in this stage" />
                             
                             </DialogContent>
                             <DialogActions >
                                 <Button onClick={handleClose}>Cancel</Button>
-                                <Button onClick={()=>handleUpdate(val.id)}>Save</Button>
+                                <Button onClick={()=>handleUpdate(value.id)}>Save</Button>
                             </DialogActions>
                         </Dialog>
                     
