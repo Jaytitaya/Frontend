@@ -56,7 +56,7 @@ const Myplant=()=>{
       ];
     const handleChange = (event) => {
         setPlantname(event.target.value);
-        console.log(plantname)
+        //console.log(plantname)
     };
     const handleNewChange = (event) => {
         setNewStage(event.target.value);
