@@ -117,10 +117,19 @@ const Myplant=()=>{
         }
         
     };
-    //useEffect(()=>{
+    let [ posts, setPosts ] = useState([])
+    useEffect(()=>{
+    async function getResults() {
+      const results = await Axios('http://localhost:3001/plants');
+      setPosts(results.data);
+    }
+    getResults()
+  
+
         //Axios.get('http://localhost:3001/plants', { withCredentials: true }).then((response)=>{
-        //    setPname(response.result);
-        //    console.log(pname)
+            //console.log(response.result)
+            //setPname(response.result);
+            //console.log(pname)
             
             //for (let index = 0; index < pname.length; index++) {
             //        plantnames.push(pname[index].plantname)
@@ -129,7 +138,8 @@ const Myplant=()=>{
             
         //});
         //console.log(plantnames)
-    //},[]); 
+    },[]); 
+    console.log(posts)
 
     const getPlants = () =>{
         Axios.post('http://localhost:3001/stage', {
@@ -193,9 +203,9 @@ const Myplant=()=>{
             <h2 className="app-front" style={{color:'#008000'}}>My Plant</h2>
             <Grid container spacing={3} direction="row" justifyContent="center" alignItems="center">
             <Grid item xs={3} md={2} >
-                <FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Stage</InputLabel>
-                    <Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={stage} label="Stage" input={<OutlinedInput label="Stage" />}onChange={handleChange}>
-                        {plantstage.map((plantstage) => (<MenuItem key={plantstage} value={plantstage}>{plantstage}</MenuItem>))}
+                <FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Plant name</InputLabel>
+                    <Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={stage} label="plantname" input={<OutlinedInput label="plantname" />}onChange={handleChange}>
+                        {posts.map((posts) => (<MenuItem key={posts} value={posts}>{posts}</MenuItem>))}
                     </Select>
                 </FormControl>
             </Grid>
