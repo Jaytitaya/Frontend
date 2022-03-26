@@ -32,7 +32,7 @@ const Myplant=()=>{
     //const {username} = useContext(LoginContext);
     const [plantsList, setPlantsList] = useState([]);
     const [updateplantsList, setUpdatePlantsList] = useState([]);
-    const plantnames = [];
+    const [plantname,setPlantname]=useState("")
     const [stage,setStage]=useState("")
     const [pname, setPname] = useState([]);
     const [names, setNames] = useState("");
@@ -55,7 +55,8 @@ const Myplant=()=>{
         'Lateflowering',
       ];
     const handleChange = (event) => {
-        setStage(event.target.value);
+        setPlantname(event.target.value);
+        console.log(plantname)
     };
     const handleNewChange = (event) => {
         setNewStage(event.target.value);
@@ -142,8 +143,8 @@ const Myplant=()=>{
     console.log(posts)
 
     const getPlants = () =>{
-        Axios.post('http://localhost:3001/stage', {
-            stage : stage
+        Axios.post('http://localhost:3001/plantname', {
+            plantname : plantname
          },{ withCredentials: true }).then((response)=>{
             setPlantsList(response.data);
             
@@ -204,7 +205,7 @@ const Myplant=()=>{
             <Grid container spacing={3} direction="row" justifyContent="center" alignItems="center">
             <Grid item xs={3} md={2} >
                 <FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Plant name</InputLabel>
-                    <Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={stage} label="plantname" input={<OutlinedInput label="plantname" />}onChange={handleChange}>
+                    <Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={plantname} label="plantname" input={<OutlinedInput label="plantname" />}onChange={handleChange}>
                         {posts.map((posts) => (<MenuItem key={posts} value={posts}>{posts}</MenuItem>))}
                     </Select>
                 </FormControl>
