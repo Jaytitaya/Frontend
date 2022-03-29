@@ -44,10 +44,10 @@ const Menuset=()=>{
            <Paper elevation={0} style={paperStyle}>
            <Grid container spacing={6} >
                 <Grid item xs={12}>
-                    <Button >Plant</Button>
+                    <Button onClick={()=>{navigate("/plantsetting")}} >Plant</Button>
                 </Grid>
                 <Grid item xs={12}>
-                    <Button >Farm</Button>
+                    <Button onClick={()=>{navigate("/farmsetting")}}>Farm</Button>
                 </Grid>
                 <Grid item xs={12}>
                     <ButtonP onClick={()=>{navigate("/addnewplant")}} >Parameter</ButtonP>
