@@ -21,6 +21,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import YardIcon from '@mui/icons-material/Yard';
 //import {Avatar} from '@material-ui/core';
 //import { LoginContext } from '../App';
 //import SvgIcon from '@mui/material/SvgIcon';
@@ -36,7 +37,7 @@ const Myplant=()=>{
     const [stage,setStage]=useState("")
     const [pname, setPname] = useState([]);
     const [names, setNames] = useState("");
-    const [newselectstage,setNewSelectstage]= useState("off")
+    const [newselectstage,setNewSelectstage]= useState(false)
     const [newPlantname,setNewPlantname]= useState("");
     const [newStage,setNewStage]= useState("");
     const [newOpentime,setNewOpentime]= useState("");
@@ -62,18 +63,25 @@ const Myplant=()=>{
         setNewStage(event.target.value);
     };
 
+    const  handleChangeselectstage =(event)=>{
+        setNewSelectstage(event.target.checked)
+    }
+    //console.log({newselectstage})
+
     function checkorigin(props){
         const selectstage = props;
-        if (selectstage === "on"){
-            return <Checkbox defaultChecked/>;
+        if (selectstage === true || selectstage === "1"){
+            
+            return <Checkbox defaultChecked onChange={handleChangeselectstage} />;
         }else{
-            return <Checkbox />;
+            return <Checkbox onChange={handleChangeselectstage} />;
         }
     }
 
     function Icon(props){
         const selectstage = props;
-        if (selectstage === "on"){
+        
+        if (selectstage === true || selectstage === "1"){
             return <CheckBoxIcon sx={{ color: grey[50] }}/>;
         }
     }
@@ -121,7 +129,7 @@ const Myplant=()=>{
     let [ posts, setPosts ] = useState([])
     useEffect(()=>{
     async function getResults() {
-      const results = await Axios('http://localhost:3001/plants');
+      const results = await Axios('http://localhost:3001/plants',{ withCredentials: true });
       setPosts(results.data);
     }
     getResults()
@@ -140,7 +148,7 @@ const Myplant=()=>{
         //});
         //console.log(plantnames)
     },[]); 
-    console.log(posts)
+    //console.log(posts)
 
     const getPlants = () =>{
         Axios.post('http://localhost:3001/plantname', {
@@ -229,6 +237,7 @@ const Myplant=()=>{
             
                     <div className="btn">
                         <p>{Icon(val.selectstage)}</p>
+                        
                         <IconButton onClick={()=>handleClickOpen(val.id)}><EditIcon sx={{ color: grey[50] }}/></IconButton>
                         <IconButton onClick={()=>deleteData(val.id)}><DeleteIcon sx={{ color: grey[50] }}/></IconButton>
                     </div>
@@ -242,10 +251,10 @@ const Myplant=()=>{
                                 <h3>{val.plantname}</h3> 
                                 <p>Stage : {val.stage}</p>
                                 <p>open time - close time : <TextField id="time" label="Open time" type="time" name="opentime" defaultValue={val.opentime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewOpentime(e.target.value)} /> - <TextField id="time" label="Close time" type="time" name="closetime" defaultValue={val.closetime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewClosetime(e.target.value)}/></p>
-                                <p>Temperature : <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.lowertemp} onChange={(e) => setNewLowertemp(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.highertemp} onChange={(e) => setNewHighertemp(e.target.value)}/> °C</p>
-                                <p>Humidity : <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.lowerhumid} onChange={(e) => setNewLowerhumid(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.higherhumid} onChange={(e) => setNewHigherhumid(e.target.value)}/> %</p>
+                                <p>Temperature : <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.lowertemp} onChange={(e) => setNewLowertemp(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.highertemp} onChange={(e) => setNewHighertemp(e.target.value)}/> °C </p>
+                                <p>Humidity : <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.lowerhumid} onChange={(e) => setNewLowerhumid(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.higherhumid} onChange={(e) => setNewHigherhumid(e.target.value)}/> % </p>
                                 <p>pH : <TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.lowerpH}  onChange={(e) => setNewLowerpH(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.higherpH}  onChange={(e) => setNewHigherpH(e.target.value)}/></p>
-                                <FormControlLabel onClick={()=>handleClickStage(val.selectstage)}  control={checkorigin(val.selectstage)} label="The plant is in this stage" labelPlacement="The plant is in this stage" />
+                                <FormControlLabel control={checkorigin(val.selectstage)} onChange={handleChangeselectstage} label="The plant is in this stage" />
                             
                             </DialogContent>
                             <DialogActions >

@@ -8,20 +8,20 @@ import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Switch from '@mui/material/Switch';
 import Axios from 'axios';
 
 function Light(){
     const paperStyle={padding:20,height:'90vh',width:700,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const paperStyle2={padding:30,height:'20vh',width:380,margin:"10px auto",backgroundColor: '#f5f5f5'}
-    const [plantname,setPlantname]=useState("")
+    const [plantname,setPlantname]=useState("");
     const [plantsList, setPlantsList] = useState([]);
-    let [ posts, setPosts ] = useState([])
+    const [manualcontrol,setManualControl]=useState(false);
+    let [ posts, setPosts ] = useState([]);
 
     useEffect(()=>{
     async function getResults() {
-      const results = await Axios('http://localhost:3001/plants');
+      const results = await Axios('http://localhost:3001/plants',{ withCredentials: true });
       setPosts(results.data);
     }
     getResults()
@@ -40,6 +40,21 @@ function Light(){
             setPlantsList(response.data);
             
         });
+    }
+
+    console.log({manualcontrol})
+    const  handleChangecontrol =(event)=>{
+        setManualControl(event.target.checked)
+    }
+
+    function checkorigin(){
+        //const selectstage = props;
+        if (manualcontrol === true || manualcontrol === "1"){
+            
+            return <FormControlLabel control={<Switch  />} label="" />;
+        }else{
+            return <FormControlLabel disabled control={<Switch />} label="Disabled" />;
+        }
     }
 
     return(
@@ -70,14 +85,14 @@ function Light(){
                 
                     <Grid container spacing={2} direction="row" justifyContent="center" alignItems="center" >
                     <Grid item xs={4} className="clight">Auto control</Grid>
-                    <Grid item xs={1} ><Switch /></Grid>
+                    <Grid item xs={1} ><FormControlLabel value="Manual" control={<Switch />} label="" onChange={handleChangecontrol}/></Grid>
                     <Grid item xs={6} className="clight" >Manual control</Grid>
                     </Grid>
                     
                     <Grid  container spacing={5} direction="row" justifyContent="center" alignItems="center" >
                         <Grid className="clight" item xs={2} >Light</Grid>
                         <Grid item xs={2} className="clight">Off</Grid>
-                        <Switch />
+                        <Switch/>
                         <Grid item xs={2} className="clight" >On</Grid>
                     </Grid>
 
