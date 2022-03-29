@@ -34,7 +34,7 @@ const  Farmsetting=()=>{
            <Navbar/>
            <Paper elevation={0} style={paperStyle}>
                 <h2 className="app-front" style={{color:'#008000'}}>Farm</h2>
-                <Paper elevation={5} style={papergreen}>
+                
                     <Grid container spacing={2}>
                         <Grid item xs={12} ><TextField id="outlined-basic" label="Farm name" variant="outlined" onChange={(e) => setPlantname(e.target.value)}/></Grid>
                         <Grid item xs={12} ><TextField id="outlined-basic" label="Location" variant="outlined"/></Grid>
@@ -42,7 +42,7 @@ const  Farmsetting=()=>{
                     {plantstage.map((plantstage) => (<MenuItem key={plantstage} value={plantstage}>{plantstage}</MenuItem>))}</Select></FormControl></Grid>
                         <Grid item xs={12}><Button variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '225px' }}>Save</Button></Grid>
                     </Grid> 
-                </Paper>
+                
            </Paper>
         </Grid>
     )
