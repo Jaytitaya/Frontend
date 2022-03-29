@@ -52,20 +52,24 @@ export default function Farmsetting() {
             backgroundPosition: 'center',
           }}
         />
-        <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
+        <Grid item xs={12} align='center' sm={8} md={6} component={Paper} elevation={6} square>
+        <h2 className="app-front" style={{color:'#008000'}}>Farm</h2>
           <Box
             sx={{
-              my: 8,
+              my: 2,
               mx: 4,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
             }}
           >
-            <h2 className="app-front" style={{color:'#008000'}}>Farm</h2>
+            
             <Grid container spacing={2} align='center'>
                 <Grid item xs={12} ><TextField id="outlined-basic" label="Farm name" variant="outlined" onChange={(e) => setPlantname(e.target.value)}/></Grid>
+                <Grid item xs={12} ><FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Plant name</InputLabel><Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={stage} label="Stage" input={<OutlinedInput label="Stage" />} onChange={handleChange}>
+                    {plantstage.map((plantstage) => (<MenuItem key={plantstage} value={plantstage}>{plantstage}</MenuItem>))}</Select></FormControl></Grid>
                 <Grid item xs={12} ><TextField id="outlined-basic" label="Location" variant="outlined"/></Grid>
+                <Grid item xs={12} ><TextField id="outlined-basic" label="Plant amount / Farm" variant="outlined"/></Grid>
                 <Grid item xs={12} ><FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Stage</InputLabel><Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={stage} label="Stage" input={<OutlinedInput label="Stage" />} onChange={handleChange}>
                     {plantstage.map((plantstage) => (<MenuItem key={plantstage} value={plantstage}>{plantstage}</MenuItem>))}</Select></FormControl></Grid>
                 <Grid item xs={12}><Button variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '225px' }}>Save</Button></Grid>
