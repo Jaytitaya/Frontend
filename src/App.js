@@ -13,6 +13,7 @@ import Temp from './Pages/Temp';
 import Humid from './Pages/Humid';
 import PH from './Pages/PH';
 import Menuset from './Pages/Menuset';
+import Menuinfo from './Pages/Menuinfo';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
 const LoginContext = React.createContext();
@@ -40,6 +41,7 @@ function App() {
         <Route exact path="/myplant" element={<Myplant/>}/>
         <Route exact path="/card" element={<Card/>}/>
         <Route exact path="/menuset" element={<Menuset/>}/>
+        <Route exact path="/menuinfo" element={<Menuinfo/>}/>
       </Routes>
      </BrowserRouter> 
      </div>

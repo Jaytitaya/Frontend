@@ -19,10 +19,10 @@ function Navbar(){
                             <a href="#" onClick={()=>{navigate("/Home")}}>Home</a>
                         </li>
                         <li className="menu-link" onClick={closeMobileMenu}>
-                            <a href="#" onClick={()=>{navigate("/Addnewplant")}}>Add new plant</a>
+                            <a href="#" onClick={()=>{navigate("/menuset")}}>Setting</a>
                         </li>
                         <li className="menu-link" onClick={closeMobileMenu}>
-                            <a href="#" onClick={()=>{navigate("/myplant")}}>My plant</a>
+                            <a href="#" onClick={()=>{navigate("/menuinfo")}}>Information</a>
                         </li>
                         <li className="menu-link" onClick={closeMobileMenu}>
                             <a href="#" onClick={()=>{navigate("/login")}}>Log out</a>

@@ -32,7 +32,7 @@ const BP = styled.button`
         color: white;
     }`
 
-const Menuset=()=>{
+const Menuinfo=()=>{
     const paperStyle={padding:20,height:'50vh',width:400,margin:"100px auto",backgroundColor: '#f5f5f5'}
     const navigate = useNavigate();
     const Button = BB
@@ -50,7 +50,7 @@ const Menuset=()=>{
                     <Button >Farm</Button>
                 </Grid>
                 <Grid item xs={12}>
-                    <ButtonP onClick={()=>{navigate("/addnewplant")}} >Parameter</ButtonP>
+                    <ButtonP onClick={()=>{navigate("/myplant")}} >Parameter</ButtonP>
                 </Grid>
            </Grid>
            </Paper>
@@ -58,4 +58,4 @@ const Menuset=()=>{
     )
 }
 
-export default Menuset
+export default Menuinfo
