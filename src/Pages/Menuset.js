@@ -33,7 +33,7 @@ const BP = styled.button`
     }`
 
 const Menuset=()=>{
-    const paperStyle={padding:20,height:'50vh',width:400,margin:"100px auto",backgroundColor: '#f5f5f5'}
+    const paperStyle={padding:20,height:'50vh',width:400,margin:"40px auto",backgroundColor: '#f5f5f5'}
     const navigate = useNavigate();
     const Button = BB
     const ButtonP = BP
@@ -41,6 +41,7 @@ const Menuset=()=>{
     return(
         <Grid align='center'>
            <Navbar/>
+           <h2 className="app-front" style={{color:'#008000'}}>Setting</h2>
            <Paper elevation={0} style={paperStyle}>
            <Grid container spacing={6} >
                 <Grid item xs={12}>

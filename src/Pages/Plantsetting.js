@@ -5,7 +5,6 @@ import Button from '@mui/material/Button';
 import {useNavigate} from "react-router-dom";
 import Axios from 'axios';
 
-
 const  Plantsetting=()=>{
     const paperStyle={padding:20,height:'70vh',width:700,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const papergreen={padding:20,height:'50vh',width:400,margin:"10px auto",backgroundColor: '#8FBC8F'}
