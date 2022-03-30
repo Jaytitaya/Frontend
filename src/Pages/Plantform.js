@@ -149,10 +149,11 @@ const Plantform=()=>{
     //console.log(posts)
 
     const getPlants = () =>{
-        Axios.post('http://localhost:3001/showparameter', {
+        Axios.post('http://localhost:3001/showplant', {
             plantname : plantname
          },{ withCredentials: true }).then((response)=>{
             setPlantsList(response.data);
+            //console.log(plantsList)
             
         });
     }
@@ -223,18 +224,18 @@ const Plantform=()=>{
                  <div className='card-container'>
                     <div className="card-content">
                         <div className="card-title">
-                            <h3>{val.plantname}</h3>
+                        
                         </div>
                         <div className="card-body">
-                            <p>Stage : {val.stage}</p>
-                            <p>open time - close time : {val.opentime} - {val.closetime}</p>
-                            <p>Temperature : {val.lowertemp} - {val.highertemp} °C</p>
-                            <p>Humidity : {val.lowerhumid} - {val.higherhumid} %</p>
-                            <p>pH : {val.lowerpH} - {val.higherpH}</p>
+                            <p>Plant name (Thai) : {val.plants_name}</p>
+                            <p>Plant name (English) : {val.plants_engname}</p>
+                            <p>Life cycle : {val.plants_lifecycle} days</p>
+                            <p>Utilization : {val.plants_utilization}</p>
+                            
                         </div>
             
                     <div className="btn">
-                        <p>{Icon(val.selectstage)}</p>
+                        
                         
                         <IconButton onClick={()=>handleClickOpen(val.id)}><EditIcon sx={{ color: grey[50] }}/></IconButton>
                         <IconButton onClick={()=>deleteData(val.id)}><DeleteIcon sx={{ color: grey[50] }}/></IconButton>
@@ -246,13 +247,12 @@ const Plantform=()=>{
                             <DialogTitle className="Dialog-Title">Edit Information</DialogTitle>
                             <DialogContent>
                             
-                                <h3>{val.plantname}</h3> 
-                                <p>Stage : {val.stage}</p>
-                                <p>open time - close time : <TextField id="time" label="Open time" type="time" name="opentime" defaultValue={val.opentime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewOpentime(e.target.value)} /> - <TextField id="time" label="Close time" type="time" name="closetime" defaultValue={val.closetime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewClosetime(e.target.value)}/></p>
-                                <p>Temperature : <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.lowertemp} onChange={(e) => setNewLowertemp(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.highertemp} onChange={(e) => setNewHighertemp(e.target.value)}/> °C </p>
-                                <p>Humidity : <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.lowerhumid} onChange={(e) => setNewLowerhumid(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.higherhumid} onChange={(e) => setNewHigherhumid(e.target.value)}/> % </p>
-                                <p>pH : <TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.lowerpH}  onChange={(e) => setNewLowerpH(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.higherpH}  onChange={(e) => setNewHigherpH(e.target.value)}/></p>
-                                <FormControlLabel control={checkorigin(val.selectstage)} onChange={handleChangeselectstage} label="The plant is in this stage" />
+                                <h3>{val.plants_name}</h3> 
+                                <p>Plant name (English) : <TextField style ={{width: '60%'}}  id="outlined-required" label="Plant name (English)" defaultValue={val.plants_engname} onChange={(e) => setNewOpentime(e.target.value)} /> </p>
+                                <p>Life cycle : <TextField style ={{width: '20%'}}  id="outlined-required" label="Life cycle" defaultValue={val.plants_lifecycle} onChange={(e) => setNewLowertemp(e.target.value)}/> days</p>
+                                <p>Utilization : <TextField style ={{width: '20%'}}  id="outlined-required" label="Utilization" defaultValue={val.plants_utilization} onChange={(e) => setNewLowerhumid(e.target.value)}/> </p>
+                                
+                                
                             
                             </DialogContent>
                             <DialogActions >
