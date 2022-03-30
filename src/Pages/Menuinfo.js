@@ -46,7 +46,7 @@ const Menuinfo=()=>{
            
            <Grid container spacing={6} >
                 <Grid item xs={12}>
-                    <Button >Plant</Button>
+                    <Button onClick={()=>{navigate("/plantform")}}>Plant</Button>
                 </Grid>
                 <Grid item xs={12}>
                     <Button >Farm</Button>
