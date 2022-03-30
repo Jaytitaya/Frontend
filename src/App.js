@@ -17,6 +17,7 @@ import Menuinfo from './Pages/Menuinfo';
 import Plantsetting from './Pages/Plantsetting';
 import Farmsetting from './Pages/Farmsetting';
 import Plantform from './Pages/Plantform';
+import Farminfo from './Pages/Farminfo';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
 const LoginContext = React.createContext();
@@ -48,6 +49,7 @@ function App() {
         <Route exact path="/plantsetting" element={<Plantsetting/>}/>
         <Route exact path="/farmsetting" element={<Farmsetting/>}/>
         <Route exact path="/plantform" element={<Plantform/>}/>
+        <Route exact path="/farminfo" element={<Farminfo/>}/>
       </Routes>
      </BrowserRouter> 
      </div>

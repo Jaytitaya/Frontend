@@ -49,7 +49,7 @@ const Menuinfo=()=>{
                     <Button onClick={()=>{navigate("/plantform")}}>Plant</Button>
                 </Grid>
                 <Grid item xs={12}>
-                    <Button >Farm</Button>
+                    <Button onClick={()=>{navigate("/farminfo")}}>Farm</Button>
                 </Grid>
                 <Grid item xs={12}>
                     <ButtonP onClick={()=>{navigate("/myplant")}} >Parameter</ButtonP>

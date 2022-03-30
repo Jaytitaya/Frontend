@@ -225,53 +225,48 @@ const Myplant=()=>{
             </Grid>
             <Grid item xs={3} md={2}><Button onClick={getPlants} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show information</Button></Grid>
             </Grid>
-            {plantsList.map((val,key)=>{
-            return(
-                <div className='card-container'>
-                    <div className="card-content">
-                        <div className="card-title">
-                            <h3>{val.plantname}</h3>
-                        </div>
-                        <div className="card-body">
-                            <p>Stage : {val.stage}</p>
-                            <p>open time - close time : {val.opentime} - {val.closetime}</p>
-                            <p>Temperature : {val.lowertemp} - {val.highertemp} °C</p>
-                            <p>Humidity : {val.lowerhumid} - {val.higherhumid} %</p>
-                            <p>pH : {val.lowerpH} - {val.higherpH}</p>
-                        </div>
             
-                    <div className="btn">
-                        <p>{Icon(val.selectstage)}</p>
+            
+                <TableContainer sx={{ width: "max-content" }} component={Paper}>
+                    <Table sx={{ tableLayout: "auto" }}  aria-label="simple table">
+                        <TableHead>
+                            <TableRow sx={{backgroundColor: "green"}}>
+                                <TableCell sx={{color: "white"}}>Plant name</TableCell>
+                                <TableCell sx={{color: "white"}} align="right">Stage</TableCell>
+                                <TableCell sx={{color: "white"}} align="right">open time - close time</TableCell>
+                                <TableCell sx={{color: "white"}} align="right">Temperature&nbsp;(°C)</TableCell>
+                                <TableCell sx={{color: "white"}} align="right">Humidity&nbsp;(%)</TableCell>
+                                <TableCell sx={{color: "white"}} align="right">pH</TableCell>
+                                <TableCell sx={{color: "white"}} align="right">Action</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        {plantsList.map((val)=>(
+                        <TableBody>
+                            <TableRow 
+                            key={val.plantname}
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                            <TableCell component="th" scope="row">
+                                {val.plantname}
+                            </TableCell>
+                            <TableCell align="right">{val.stage}</TableCell>
+                            <TableCell align="right">{val.opentime} - {val.closetime}</TableCell>
+                            <TableCell align="right">{val.lowertemp} - {val.highertemp}</TableCell>
+                            <TableCell align="right">{val.lowerhumid} - {val.higherhumid}</TableCell>
+                            <TableCell align="right">{val.lowerpH} - {val.higherpH}</TableCell>
+                            <TableCell align="right">
+                                <IconButton onClick={()=>handleClickOpen(val.id)}><EditIcon /></IconButton>
+                                <IconButton onClick={()=>deleteData(val.id)}><DeleteIcon /></IconButton>
+                            </TableCell>
+                            </TableRow>
                         
-                        <IconButton onClick={()=>handleClickOpen(val.id)}><EditIcon sx={{ color: grey[50] }}/></IconButton>
-                        <IconButton onClick={()=>deleteData(val.id)}><DeleteIcon sx={{ color: grey[50] }}/></IconButton>
-                    </div>
-                </div>
+                        </TableBody>
+                        ))}
+                    </Table>
+                </TableContainer>
                 
-               
-                <Dialog PaperProps={{ sx: { width: "100%", height: "77%" } }} open={val.id===state} onClose={handleClose}>
-                            <DialogTitle className="Dialog-Title">Edit Information</DialogTitle>
-                            <DialogContent>
-                            
-                                <h3>{val.plantname}</h3> 
-                                <p>Stage : {val.stage}</p>
-                                <p>open time - close time : <TextField id="time" label="Open time" type="time" name="opentime" defaultValue={val.opentime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewOpentime(e.target.value)} /> - <TextField id="time" label="Close time" type="time" name="closetime" defaultValue={val.closetime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewClosetime(e.target.value)}/></p>
-                                <p>Temperature : <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.lowertemp} onChange={(e) => setNewLowertemp(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.highertemp} onChange={(e) => setNewHighertemp(e.target.value)}/> °C </p>
-                                <p>Humidity : <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.lowerhumid} onChange={(e) => setNewLowerhumid(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.higherhumid} onChange={(e) => setNewHigherhumid(e.target.value)}/> % </p>
-                                <p>pH : <TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.lowerpH}  onChange={(e) => setNewLowerpH(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.higherpH}  onChange={(e) => setNewHigherpH(e.target.value)}/></p>
-                                <FormControlLabel control={checkorigin(val.selectstage)} onChange={handleChangeselectstage} label="The plant is in this stage" />
-                            
-                            </DialogContent>
-                            <DialogActions >
-                                <Button onClick={handleClose}>Cancel</Button>
-                                <Button onClick={()=>handleUpdate(val.id)}>Save</Button>
-                            </DialogActions>
-                        </Dialog>
                 
-                </div>
-                
-                )
-            })}
+           
 
             
                 
