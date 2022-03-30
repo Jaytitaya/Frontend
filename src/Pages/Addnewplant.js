@@ -122,7 +122,7 @@ function Addnewplant(){
         <Grid align='center'>
            <Navbar/>
             <Paper elevation={0} style={paperStyle}>
-                <h2 className="app-front" style={{color:'#008000'}}>Add New Plant</h2>
+                <h2 className="app-front" style={{color:'#008000'}}>Parameters</h2>
                 <Grid container spacing={3}>
                     <Grid item xs={12} ><FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Plant name</InputLabel>
                     <Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={plantname} label="plantname" input={<OutlinedInput label="plantname" />}onChange={handlePlantChange}>

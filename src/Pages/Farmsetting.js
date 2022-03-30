@@ -25,6 +25,7 @@ export default function Farmsetting() {
     const [location,setLocation]=useState("");
     const [plantamount,setPlantamount]=useState("");
     const [stage,setStage]=useState("");
+    const [registerfarmStatus, setRegisterFarmStatus]=useState("")
     const plantstage = [
       {name:'Seeding stage', val:'seed'},
       {name:'Vegetation period', val:'veget'},
@@ -47,6 +48,28 @@ export default function Farmsetting() {
     }
     getResults()
     },[]); 
+
+    const addFarm = () => {
+      Axios.post('http://localhost:3001/farmregister',{
+          farmname: farmname,
+          plantname: plantname,
+          location: location,
+          plantamount: plantamount,
+          stage: stage
+      },{ withCredentials: true })
+        .then((response)=>{
+            if(response.data.message){
+                setRegisterFarmStatus(response.data.message);
+                
+            }else{
+                //navigate("/myplant")
+            }
+      },{ withCredentials: true })
+      .then((response)=>{
+          //navigate("/signup");
+          //console.log(response);
+      })
+    }
     
 
   return (
@@ -92,7 +115,8 @@ export default function Farmsetting() {
                 <Grid item xs={12} ><TextField id="outlined-basic" label="Plant amount / Farm" variant="outlined" onChange={(e) => setPlantamount(e.target.value)}/></Grid>
                 <Grid item xs={12} ><FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Stage</InputLabel><Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={stage} label="Stage" input={<OutlinedInput label="Stage" />} onChange={handleChange}>
                     {plantstage.map((plantstage) => (<MenuItem key={plantstage.name} value={plantstage.val}>{plantstage.name}</MenuItem>))}</Select></FormControl></Grid>
-                <Grid item xs={12}><Button variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '225px' }}>Save</Button></Grid>
+                <Grid item xs={12}><b>{registerfarmStatus}</b></Grid>
+                <Grid item xs={12}><Button onClick={addFarm} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '225px' }}>Save</Button></Grid>
             </Grid>
           </Box>
         </Grid>

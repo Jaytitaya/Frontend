@@ -22,9 +22,8 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import YardIcon from '@mui/icons-material/Yard';
-//import {Avatar} from '@material-ui/core';
 //import { LoginContext } from '../App';
-//import SvgIcon from '@mui/material/SvgIcon';
+
 
 const Myplant=()=>{
     const avatarStyle={backgroundColor:'green', width:40, height:56}
@@ -129,7 +128,7 @@ const Myplant=()=>{
     let [ posts, setPosts ] = useState([])
     useEffect(()=>{
     async function getResults() {
-      const results = await Axios('http://localhost:3001/plants',{ withCredentials: true });
+      const results = await Axios('http://localhost:3001/plantname',{ withCredentials: true });
       setPosts(results.data);
     }
     getResults()
@@ -151,7 +150,7 @@ const Myplant=()=>{
     //console.log(posts)
 
     const getPlants = () =>{
-        Axios.post('http://localhost:3001/plantname', {
+        Axios.post('http://localhost:3001/showparameter', {
             plantname : plantname
          },{ withCredentials: true }).then((response)=>{
             setPlantsList(response.data);
@@ -160,7 +159,7 @@ const Myplant=()=>{
     }
 
     const handleUpdate = (id) => {
-        Axios.put("http://localhost:3001/update",
+        Axios.put("http://localhost:3001/updateparameter",
             {
                 id:id, 
                 opentime: newOpentime,
@@ -197,7 +196,7 @@ const Myplant=()=>{
 
     const deleteData=(id)=>{
         //event.preventDefault();
-        Axios.delete(`http://localhost:3001/delete/${id}`,{ withCredentials: true }).then((result)=>{
+        Axios.delete(`http://localhost:3001/deleteparameter/${id}`,{ withCredentials: true }).then((result)=>{
             setPlantsList(
                 plantsList.filter((val)=>{
                     return val.id !== id;
@@ -209,7 +208,7 @@ const Myplant=()=>{
     return(
         <Grid align='center'>
             <Navbar/>
-            <h2 className="app-front" style={{color:'#008000'}}>My Plant</h2>
+            <h2 className="app-front" style={{color:'#008000'}}>Parameters</h2>
             <Grid container spacing={3} direction="row" justifyContent="center" alignItems="center">
             <Grid item xs={3} md={2} >
                 <FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Plant name</InputLabel>
@@ -228,7 +227,7 @@ const Myplant=()=>{
                             <h3>{val.plantname}</h3>
                         </div>
                         <div className="card-body">
-                            <p>Stage : {val.stage}</p>
+                            
                             <p>open time - close time : {val.opentime} - {val.closetime}</p>
                             <p>Temperature : {val.lowertemp} - {val.highertemp} °C</p>
                             <p>Humidity : {val.lowerhumid} - {val.higherhumid} %</p>
@@ -249,7 +248,7 @@ const Myplant=()=>{
                             <DialogContent>
                             
                                 <h3>{val.plantname}</h3> 
-                                <p>Stage : {val.stage}</p>
+                                
                                 <p>open time - close time : <TextField id="time" label="Open time" type="time" name="opentime" defaultValue={val.opentime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewOpentime(e.target.value)} /> - <TextField id="time" label="Close time" type="time" name="closetime" defaultValue={val.closetime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewClosetime(e.target.value)}/></p>
                                 <p>Temperature : <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.lowertemp} onChange={(e) => setNewLowertemp(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.highertemp} onChange={(e) => setNewHighertemp(e.target.value)}/> °C </p>
                                 <p>Humidity : <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.lowerhumid} onChange={(e) => setNewLowerhumid(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.higherhumid} onChange={(e) => setNewHigherhumid(e.target.value)}/> % </p>
