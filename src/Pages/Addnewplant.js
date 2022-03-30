@@ -37,7 +37,7 @@ function Addnewplant(){
         {name:'Flowering period', val:'flowr'},
         {name:'Lateflowering', val:'late'},
       ];
-    const [shortstage,setShortStage]=useState("")
+    
     
     console.log({selectstage})
     const  handleChangeselectstage =(event)=>{
