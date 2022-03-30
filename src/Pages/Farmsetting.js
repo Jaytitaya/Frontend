@@ -32,6 +32,15 @@ export default function Farmsetting() {
     const handleChange = (event) => {
         setStage(event.target.value);
     };
+
+    let [ posts, setPosts ] = useState([])
+    useEffect(()=>{
+    async function getResults() {
+      const results = await Axios('http://localhost:3001/plantname',{ withCredentials: true });
+      setPosts(results.data);
+    }
+    getResults()
+    },[]); 
     
 
   return (
@@ -66,8 +75,11 @@ export default function Farmsetting() {
             
             <Grid container spacing={2} align='center'>
                 <Grid item xs={12} ><TextField id="outlined-basic" label="Farm name" variant="outlined" onChange={(e) => setPlantname(e.target.value)}/></Grid>
-                <Grid item xs={12} ><FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Plant name</InputLabel><Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={stage} label="Stage" input={<OutlinedInput label="Stage" />} onChange={handleChange}>
-                    {plantstage.map((plantstage) => (<MenuItem key={plantstage} value={plantstage}>{plantstage}</MenuItem>))}</Select></FormControl></Grid>
+                <Grid item xs={12} ><FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Plant name</InputLabel>
+                    <Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={plantname} label="plantname" input={<OutlinedInput label="plantname" />}onChange={handleChange}>
+                        {posts.map((posts) => (<MenuItem key={posts} value={posts}>{posts}</MenuItem>))}
+                    </Select>
+                </FormControl></Grid>
                 <Grid item xs={12} ><TextField id="outlined-basic" label="Location" variant="outlined"/></Grid>
                 <Grid item xs={12} ><TextField id="outlined-basic" label="Plant amount / Farm" variant="outlined"/></Grid>
                 <Grid item xs={12} ><FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Stage</InputLabel><Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={stage} label="Stage" input={<OutlinedInput label="Stage" />} onChange={handleChange}>
