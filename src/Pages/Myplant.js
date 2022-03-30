@@ -214,7 +214,7 @@ const Myplant=()=>{
     return(
         <Grid align='center'>
             <Navbar/>
-            <h2 className="app-front" style={{color:'#008000'}}>Parameters</h2>
+            <h2 className="app-front" style={{color:'#008000'}}>Parameter</h2>
             <Grid container spacing={3} direction="row" justifyContent="center" alignItems="center">
             <Grid item xs={3} md={2} >
                 <FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Plant name</InputLabel>
@@ -225,30 +225,47 @@ const Myplant=()=>{
             </Grid>
             <Grid item xs={3} md={2}><Button onClick={getPlants} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show information</Button></Grid>
             </Grid>
-            {plantsList.map((val,key)=>{
-            return(
-                <div className='card-container'>
-                    <div className="card-content">
-                        <div className="card-title">
-                            <h3>{val.plantname}</h3>
-                        </div>
-                        <div className="card-body">
-                            <p>Stage : {val.stage}</p>
-                            <p>open time - close time : {val.opentime} - {val.closetime}</p>
-                            <p>Temperature : {val.lowertemp} - {val.highertemp} °C</p>
-                            <p>Humidity : {val.lowerhumid} - {val.higherhumid} %</p>
-                            <p>pH : {val.lowerpH} - {val.higherpH}</p>
-                        </div>
             
-                    <div className="btn">
-                        <p>{Icon(val.selectstage)}</p>
+            
+                <TableContainer sx={{ width: "max-content" }} component={Paper}>
+                    <Table sx={{ tableLayout: "auto" }}  aria-label="simple table">
+                        <TableHead>
+                            <TableRow sx={{backgroundColor: "green"}}>
+                                <TableCell sx={{color: "white"}}>Plant name</TableCell>
+                                <TableCell sx={{color: "white"}} align="right">Stage</TableCell>
+                                <TableCell sx={{color: "white"}} align="right">open time - close time</TableCell>
+                                <TableCell sx={{color: "white"}} align="right">Temperature&nbsp;(°C)</TableCell>
+                                <TableCell sx={{color: "white"}} align="right">Humidity&nbsp;(%)</TableCell>
+                                <TableCell sx={{color: "white"}} align="right">pH</TableCell>
+                                <TableCell sx={{color: "white"}} align="right">Action</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        {plantsList.map((val)=>(
+                        <TableBody>
+                            <TableRow 
+                            key={val.plantname}
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                            <TableCell component="th" scope="row">
+                                {val.plantname}
+                            </TableCell>
+                            <TableCell align="right">{val.stage}</TableCell>
+                            <TableCell align="right">{val.opentime} - {val.closetime}</TableCell>
+                            <TableCell align="right">{val.lowertemp} - {val.highertemp}</TableCell>
+                            <TableCell align="right">{val.lowerhumid} - {val.higherhumid}</TableCell>
+                            <TableCell align="right">{val.lowerpH} - {val.higherpH}</TableCell>
+                            <TableCell align="right">
+                                <IconButton onClick={()=>handleClickOpen(val.id)}><EditIcon /></IconButton>
+                                <IconButton onClick={()=>deleteData(val.id)}><DeleteIcon /></IconButton>
+                            </TableCell>
+                            </TableRow>
                         
-                        <IconButton onClick={()=>handleClickOpen(val.id)}><EditIcon sx={{ color: grey[50] }}/></IconButton>
-                        <IconButton onClick={()=>deleteData(val.id)}><DeleteIcon sx={{ color: grey[50] }}/></IconButton>
-                    </div>
-                </div>
+                        </TableBody>
+                        ))}
+                    </Table>
+                </TableContainer>
                 
-               
+                {plantsList.map((val)=>(
                 <Dialog PaperProps={{ sx: { width: "100%", height: "77%" } }} open={val.id===state} onClose={handleClose}>
                             <DialogTitle className="Dialog-Title">Edit Information</DialogTitle>
                             <DialogContent>
@@ -267,11 +284,7 @@ const Myplant=()=>{
                                 <Button onClick={()=>handleUpdate(val.id)}>Save</Button>
                             </DialogActions>
                         </Dialog>
-                
-                </div>
-                
-                )
-            })}
+                ))}
 
             
                 
