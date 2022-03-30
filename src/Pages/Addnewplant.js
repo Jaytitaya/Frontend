@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Navbar from '../Components/Navbar';
 import {useNavigate} from "react-router-dom";
 import {Grid, TextField, Paper, Typography} from '@material-ui/core'
@@ -15,11 +15,10 @@ import Checkbox from '@mui/material/Checkbox';
 //import 'antd/dist/antd.css';
 
 function Addnewplant(){
-    const format = 'HH:mm';
     const navigate = useNavigate();
     const paperStyle={padding:20,height:'90vh',width:900,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const paperinside={height:'60vh',width:600,margin:"10px auto",backgroundColor: '#f5f5f5'}
-    const [inputtime,setInputtime]=useState([{opentime:'',closetime:''},])
+    //const [inputtime,setInputtime]=useState([{opentime:'',closetime:''},])
     const [plantname,setPlantname]=useState("")
     const [stage,setStage]=useState("")
     const [opentime,setOpentime]=useState("")
@@ -33,19 +32,32 @@ function Addnewplant(){
     const [selectstage,setSelectstage]= useState(false)
     const [registerplantStatus, setRegisterPlantStatus]=useState("")
     const plantstage = [
-        'Seeding stage',
-        'Vegetation period',
-        'Flowering period',
-        'Lateflowering',
+        {name:'Seeding stage', val:'seed'},
+        {name:'Vegetation period', val:'veget'},
+        {name:'Flowering period', val:'flowr'},
+        {name:'Lateflowering', val:'late'},
       ];
+    const [shortstage,setShortStage]=useState("")
     
     console.log({selectstage})
     const  handleChangeselectstage =(event)=>{
         setSelectstage(event.target.checked)
     }
     const handleChange = (event) => {
-    setStage(event.target.value);
-  };
+        setStage(event.target.value);
+    };
+    const handlePlantChange = (event) => {
+        setPlantname(event.target.value);
+    };
+
+  let [ posts, setPosts ] = useState([])
+  useEffect(()=>{
+  async function getResults() {
+    const results = await Axios('http://localhost:3001/plantname',{ withCredentials: true });
+    setPosts(results.data);
+  }
+  getResults()
+  },[]); 
   
   //const handleClickStage = () => {
   //  setSelectstage("on");
@@ -66,19 +78,17 @@ function Addnewplant(){
   //}
     const [plantsList, setPlantsList] = useState([])
     const addPlant = () => {
-        Axios.post('http://localhost:3001/createplant',{
+        Axios.post('http://localhost:3001/plantparameter',{
             plantname: plantname,
             stage: stage,
             opentime: opentime,
             closetime: closetime,
-            inputtime: inputtime,
             lowertemp: lowertemp,
             highertemp: highertemp,
             lowerhumid: lowerhumid,
             higherhumid: higherhumid,
             lowerpH: lowerpH,
-            higherpH: higherpH,
-            selectstage: selectstage
+            higherpH: higherpH
             
         },{ withCredentials: true })
         .then((response)=>{
@@ -97,18 +107,14 @@ function Addnewplant(){
                 stage: stage,
                 opentime: opentime,
                 closetime: closetime,
-                inputtime: inputtime,
                 lowertemp: lowertemp,
                 highertemp: highertemp,
                 lowerhumid: lowerhumid,
                 higherhumid: higherhumid,
                 lowerpH: lowerpH,
-                higherpH: higherpH,
-                selectstage: selectstage
+                higherpH: higherpH
             }
             ])
-            console.log("inputtime",inputtime);
-            
         })
     }
     return(
@@ -118,22 +124,26 @@ function Addnewplant(){
             <Paper elevation={0} style={paperStyle}>
                 <h2 className="app-front" style={{color:'#008000'}}>Add New Plant</h2>
                 <Grid container spacing={3}>
-                    <Grid item xs={12} ><TextField id="outlined-basic" label="Plant name" variant="outlined" onChange={(e) => setPlantname(e.target.value)}/></Grid>
+                    <Grid item xs={12} ><FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Plant name</InputLabel>
+                    <Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={plantname} label="plantname" input={<OutlinedInput label="plantname" />}onChange={handlePlantChange}>
+                        {posts.map((posts) => (<MenuItem key={posts} value={posts}>{posts}</MenuItem>))}
+                    </Select>
+                  </FormControl></Grid>
                     <Grid item xs={12} ><FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Stage</InputLabel><Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={stage} label="Stage" input={<OutlinedInput label="Stage" />}onChange={handleChange}>
-                    {plantstage.map((plantstage) => (<MenuItem key={plantstage} value={plantstage}>{plantstage}</MenuItem>))}</Select></FormControl></Grid>
+                    {plantstage.map((plantstage) => (<MenuItem key={plantstage.name} value={plantstage.val}>{plantstage.name}</MenuItem>))}</Select></FormControl></Grid>
                 </Grid> 
                 <Paper elevation={0} style={paperinside}>
                 <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
                     <Grid item xs={3} ><img className="homephoto" src="/light.png" /></Grid>
-                    <form onSubmit={addPlant}>{inputtime.map((inputtime,index)=>(
-                    <div key={index}>
+                    <form onSubmit={addPlant}>
+                    
                     <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
                     <Grid item xs={5} md={6}> <TextField id="time" label="Open time" type="time" name="opentime"  InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setOpentime(e.target.value)}/></Grid>
                     <Grid item xs={1} ><Typography style={{color:'#008000'}}>-</Typography></Grid>
                     <Grid item xs={5} md={4}> <TextField id="time" label="Close time" type="time" name="closetime"  InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }}  onChange={(e) => setClosetime(e.target.value)}/></Grid>
                     
                     </Grid>
-                    </div>))}
+                    
                     </form>
                 </Grid>
                 <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
