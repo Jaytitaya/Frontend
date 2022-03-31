@@ -45,14 +45,10 @@ const Myplant=()=>{
     const [newselectstage,setNewSelectstage]= useState(false)
     const [newPlantname,setNewPlantname]= useState("");
     const [newStage,setNewStage]= useState("");
-    const [newOpentime,setNewOpentime]= useState("");
-    const [newClosetime,setNewClosetime]= useState("");
-    const [newLowertemp,setNewLowertemp]= useState("");
-    const [newHighertemp,setNewHighertemp]= useState("");
-    const [newLowerhumid,setNewLowerhumid]= useState("");
-    const [newHigherhumid,setNewHigherhumid]= useState("");
-    const [newLowerpH,setNewLowerpH]= useState("");
-    const [newHigherpH,setNewHigherpH]= useState("");
+    const [newFarmname,setNewFarmname]= useState("");
+    const [newLocation,setNewLocation]= useState("");
+    const [newPlantamount,setNewPlantamount]= useState("");
+    const [newstage,setNewstage]= useState("");
     const [state,setState]= useState("");
     const plantstage = [
         'Seeding stage',
@@ -99,15 +95,12 @@ const Myplant=()=>{
         plantsList.map((val) => {
             const isSelected = val.id === id
             if (isSelected) {
-              setNewOpentime(val.opentime)
-              setNewClosetime(val.closetime)
-              setNewLowertemp(val.lowertemp)
-              setNewHighertemp(val.highertemp)
-              setNewLowerhumid(val.lowerhumid)
-              setNewHigherhumid(val.higherhumid)
-              setNewLowerpH(val.lowerpH)
-              setNewHigherpH(val.higherpH)
-              setNewSelectstage(val.selectstage)
+              setNewFarmname(val.farm_name)
+              setNewLocation(val.farm_location)
+              setNewPlantamount(val.plant_amount)
+              setNewstage(val.farm_stage)
+              
+              
             }
         })
        //console.log(updateplantsList);
@@ -138,25 +131,11 @@ const Myplant=()=>{
       setPosts(results.data);
     }
     getResults()
-  
-
-        //Axios.get('http://localhost:3001/plants', { withCredentials: true }).then((response)=>{
-            //console.log(response.result)
-            //setPname(response.result);
-            //console.log(pname)
-            
-            //for (let index = 0; index < pname.length; index++) {
-            //        plantnames.push(pname[index].plantname)
-            //}
-            //let unique = [...new Set(plantnames)]
-            
-        //});
-        //console.log(plantnames)
     },[]); 
     //console.log(posts)
 
-    const getPlants = () =>{
-        Axios.post('http://localhost:3001/showparameter', {
+    const getFarm = () =>{
+        Axios.post('http://localhost:3001/showfarm', {
             plantname : plantname
          },{ withCredentials: true }).then((response)=>{
             setPlantsList(response.data);
@@ -165,34 +144,24 @@ const Myplant=()=>{
     }
 
     const handleUpdate = (id) => {
-        Axios.put("http://localhost:3001/updateparameter",
+        Axios.put("http://localhost:3001/updatefarm",
             {
                 id:id, 
-                opentime: newOpentime,
-                closetime: newClosetime,
-                lowertemp: newLowertemp,
-                highertemp: newHighertemp,
-                lowerhumid: newLowerhumid,
-                higherhumid: newHigherhumid,
-                lowerpH: newLowerpH,
-                higherpH: newHigherpH,
-                selectstage: newselectstage
+                farmname: newFarmname,
+                location: newLocation,
+                plantamount: newPlantamount,
+                stage: newstage,
+                
             },{ withCredentials: true }).then((result)=>{
             setPlantsList(plantsList.map((val)=>{
                 return val.id === id? 
                 {
                     id: val.id, 
-                    plantname: val.plantname,
-                    stage: val.stage, 
-                    opentime: newOpentime,
-                    closetime: newClosetime,
-                    lowertemp: newLowertemp,
-                    highertemp: newHighertemp,
-                    lowerhumid: newLowerhumid,
-                    higherhumid: newHigherhumid,
-                    lowerpH: newLowerpH,
-                    higherpH: newHigherpH,
-                    selectstage: newselectstage,
+                    farmname: newFarmname,
+                    location: newLocation,
+                    plantamount: newPlantamount,
+                    stage: newstage,
+                    
                 }
                 : val;
             }))
@@ -202,7 +171,7 @@ const Myplant=()=>{
 
     const deleteData=(id)=>{
         //event.preventDefault();
-        Axios.delete(`http://localhost:3001/deleteparameter/${id}`,{ withCredentials: true }).then((result)=>{
+        Axios.delete(`http://localhost:3001/deletefarm/${id}`,{ withCredentials: true }).then((result)=>{
             setPlantsList(
                 plantsList.filter((val)=>{
                     return val.id !== id;
@@ -214,7 +183,7 @@ const Myplant=()=>{
     return(
         <Grid align='center'>
             <Navbar/>
-            <h2 className="app-front" style={{color:'#008000'}}>Parameter</h2>
+            <h2 className="app-front" style={{color:'#008000'}}>Farm</h2>
             <Grid container spacing={3} direction="row" justifyContent="center" alignItems="center">
             <Grid item xs={3} md={2} >
                 <FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Plant name</InputLabel>
@@ -223,7 +192,7 @@ const Myplant=()=>{
                     </Select>
                 </FormControl>
             </Grid>
-            <Grid item xs={3} md={2}><Button onClick={getPlants} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show information</Button></Grid>
+            <Grid item xs={3} md={2}><Button onClick={getFarm} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show information</Button></Grid>
             </Grid>
             
             
@@ -231,30 +200,27 @@ const Myplant=()=>{
                     <Table sx={{ tableLayout: "auto" }}  aria-label="simple table">
                         <TableHead>
                             <TableRow sx={{backgroundColor: "green"}}>
-                                <TableCell sx={{color: "white"}}>Plant name</TableCell>
-                                <TableCell sx={{color: "white"}} align="right">Stage</TableCell>
-                                <TableCell sx={{color: "white"}} align="right">open time - close time</TableCell>
-                                <TableCell sx={{color: "white"}} align="right">Temperature&nbsp;(°C)</TableCell>
-                                <TableCell sx={{color: "white"}} align="right">Humidity&nbsp;(%)</TableCell>
-                                <TableCell sx={{color: "white"}} align="right">pH</TableCell>
-                                <TableCell sx={{color: "white"}} align="right">Action</TableCell>
+                                <TableCell sx={{color: "white"}}>Farm name</TableCell>
+                                <TableCell sx={{color: "white"}} align="center">Location</TableCell>
+                                <TableCell sx={{color: "white"}} align="center">Plant amount/Farm</TableCell>
+                                <TableCell sx={{color: "white"}} align="center">Farm stage</TableCell>
+                                <TableCell sx={{color: "white"}} align="center">Action</TableCell>
+                                
                             </TableRow>
                         </TableHead>
                         {plantsList.map((val)=>(
                         <TableBody>
                             <TableRow 
-                            key={val.plantname}
+                            key={val.farm_name}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                             <TableCell component="th" scope="row">
-                                {val.plantname}
+                                {val.farm_name}
                             </TableCell>
-                            <TableCell align="right">{val.stage}</TableCell>
-                            <TableCell align="right">{val.opentime} - {val.closetime}</TableCell>
-                            <TableCell align="right">{val.lowertemp} - {val.highertemp}</TableCell>
-                            <TableCell align="right">{val.lowerhumid} - {val.higherhumid}</TableCell>
-                            <TableCell align="right">{val.lowerpH} - {val.higherpH}</TableCell>
-                            <TableCell align="right">
+                            <TableCell align="center">{val.farm_location}</TableCell>
+                            <TableCell align="center">{val.plant_amount}</TableCell>
+                            <TableCell align="center">{val.farm_stage}</TableCell>
+                            <TableCell align="center">
                                 <IconButton onClick={()=>handleClickOpen(val.id)}><EditIcon /></IconButton>
                                 <IconButton onClick={()=>deleteData(val.id)}><DeleteIcon /></IconButton>
                             </TableCell>
@@ -270,13 +236,12 @@ const Myplant=()=>{
                             <DialogTitle className="Dialog-Title">Edit Information</DialogTitle>
                             <DialogContent>
                             
-                                <h3>{val.plantname}</h3> 
-                                <p>Stage : {val.stage}</p>
-                                <p>open time - close time : <TextField id="time" label="Open time" type="time" name="opentime" defaultValue={val.opentime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewOpentime(e.target.value)} /> - <TextField id="time" label="Close time" type="time" name="closetime" defaultValue={val.closetime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewClosetime(e.target.value)}/></p>
-                                <p>Temperature : <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.lowertemp} onChange={(e) => setNewLowertemp(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.highertemp} onChange={(e) => setNewHighertemp(e.target.value)}/> °C </p>
-                                <p>Humidity : <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.lowerhumid} onChange={(e) => setNewLowerhumid(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.higherhumid} onChange={(e) => setNewHigherhumid(e.target.value)}/> % </p>
-                                <p>pH : <TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.lowerpH}  onChange={(e) => setNewLowerpH(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.higherpH}  onChange={(e) => setNewHigherpH(e.target.value)}/></p>
-                               
+                                
+                                <p>Farm name : <TextField style ={{width: '60%'}}  id="outlined-required" label="Farm name" defaultValue={val.farm_name} onChange={(e) => setNewFarmname(e.target.value)}/></p>
+                                <p>Location : <TextField style ={{width: '60%'}}  id="outlined-required" label="Location" defaultValue={val.farm_location} onChange={(e) => setNewLocation(e.target.value)}/> </p>
+                                <p>Plant amount/Farm : <TextField style ={{width: '20%'}}  id="outlined-required" label="Plant amount" defaultValue={val.plant_amount} onChange={(e) => setNewPlantamount(e.target.value)}/> </p>
+                                <p>Stage : <TextField style ={{width: '20%'}}  id="outlined-required" label="Stage" defaultValue={val.farm_stage}  onChange={(e) => setNewstage(e.target.value)}/></p>
+                                
                             
                             </DialogContent>
                             <DialogActions >
