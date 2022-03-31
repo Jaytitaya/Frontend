@@ -234,13 +234,14 @@ const Myplant=()=>{
                             <DialogTitle className="Dialog-Title">Edit Information</DialogTitle>
                             <DialogContent>
                             
+                            <Grid container spacing={3} direction="row" justifyContent="center" alignItems="center">
+                                <Grid item xs={12}></Grid>
+                                <Grid item xs={12}>Farm name : <TextField style ={{width: '60%'}}  id="outlined-required" label="Farm name" defaultValue={val.farm_name} onChange={(e) => setNewFarmname(e.target.value)}/></Grid>
+                                <Grid item xs={12}>Location : <TextField style ={{width: '60%'}}  id="outlined-required" label="Location" defaultValue={val.farm_location} onChange={(e) => setNewLocation(e.target.value)}/> </Grid>
+                                <Grid item xs={12}>Plant amount/Farm : <TextField style ={{width: '20%'}}  id="outlined-required" label="Plant amount" defaultValue={val.plant_amount} onChange={(e) => setNewPlantamount(e.target.value)}/> </Grid>
+                                <Grid item xs={12}>Stage : <TextField style ={{width: '20%'}}  id="outlined-required" label="Stage" defaultValue={val.farm_stage}  onChange={(e) => setNewstage(e.target.value)}/></Grid>
                                 
-                                <p>Farm name : <TextField style ={{width: '60%'}}  id="outlined-required" label="Farm name" defaultValue={val.farm_name} onChange={(e) => setNewFarmname(e.target.value)}/></p>
-                                <p>Location : <TextField style ={{width: '60%'}}  id="outlined-required" label="Location" defaultValue={val.farm_location} onChange={(e) => setNewLocation(e.target.value)}/> </p>
-                                <p>Plant amount/Farm : <TextField style ={{width: '20%'}}  id="outlined-required" label="Plant amount" defaultValue={val.plant_amount} onChange={(e) => setNewPlantamount(e.target.value)}/> </p>
-                                <p>Stage : <TextField style ={{width: '20%'}}  id="outlined-required" label="Stage" defaultValue={val.farm_stage}  onChange={(e) => setNewstage(e.target.value)}/></p>
-                                
-                            
+                            </Grid>
                             </DialogContent>
                             <DialogActions >
                                 <Button onClick={handleClose}>Cancel</Button>

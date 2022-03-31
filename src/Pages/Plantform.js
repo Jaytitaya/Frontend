@@ -146,18 +146,18 @@ const Plantform=()=>{
             </Grid>
             <Grid item xs={3} md={2}><Button onClick={getPlants} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show information</Button></Grid>
             </Grid>
-            {plantsList.map((val,key)=>{
+            {plantsList.map((val,i)=>{
             return(
                  <div className='card-container'>
                     <div className="card-content">
                         <div className="card-title">
                         
                         </div>
-                        <div className="card-body">
-                            <p>Plant name (Thai) : {val.plants_name}</p>
-                            <p>Plant name (English) : {val.plants_engname}</p>
-                            <p>Life cycle : {val.plants_lifecycle} days</p>
-                            <p>Utilization : {val.plants_utilization}</p>
+                        <div  className="card-body">
+                            <p >Plant name (Thai) : {val.plants_name}</p>
+                            <p >Plant name (English) : {val.plants_engname}</p>
+                            <p >Life cycle : {val.plants_lifecycle} days</p>
+                            <p >Utilization : {val.plants_utilization}</p>
                             
                         </div>
             
@@ -171,22 +171,25 @@ const Plantform=()=>{
                 
                
                 <Dialog PaperProps={{ sx: { width: "100%", height: "77%" } }} open={val.id===state} onClose={handleClose}>
+                        
                             <DialogTitle className="Dialog-Title">Edit Information</DialogTitle>
                             <DialogContent>
-                            
-                                <h3>{val.plants_name}</h3> 
-                                <p>Plant name (English) : <TextField style ={{width: '60%'}}  id="outlined-required" label="Plant name (English)" defaultValue={val.plants_engname} onChange={(e) => setNewPlantnameEng(e.target.value)} /> </p>
-                                <p>Life cycle : <TextField style ={{width: '20%'}}  id="outlined-required" label="Life cycle" defaultValue={val.plants_lifecycle} onChange={(e) => setNewLifecycle(e.target.value)}/> days</p>
-                                <p>Utilization : <TextField style ={{width: '60%'}}  id="outlined-required" label="Utilization" defaultValue={val.plants_utilization} onChange={(e) =>  setNewUtilization(e.target.value)}/> </p>
+                            <Grid container spacing={3} direction="row" justifyContent="center" alignItems="center">
+                                <Grid item xs={12}></Grid>
+                                <Grid item xs={12} className="headcard">{val.plants_name}</Grid> 
+                                <Grid item xs={12}>Plant name (English) : <TextField style ={{width: '60%'}}  id="outlined-required" label="Plant name (English)" defaultValue={val.plants_engname} onChange={(e) => setNewPlantnameEng(e.target.value)} /> </Grid>
+                                <Grid item xs={12}>Life cycle : <TextField style ={{width: '20%'}}  id="outlined-required" label="Life cycle" defaultValue={val.plants_lifecycle} onChange={(e) => setNewLifecycle(e.target.value)}/> days</Grid>
+                                <Grid item xs={12}>Utilization : <TextField style ={{width: '60%'}}  id="outlined-required" label="Utilization" defaultValue={val.plants_utilization} onChange={(e) =>  setNewUtilization(e.target.value)}/> </Grid>
                                 
                                 
-                            
+                            </Grid>
                             </DialogContent>
+                        
                             <DialogActions >
                                 <Button onClick={handleClose}>Cancel</Button>
                                 <Button onClick={()=>handleUpdate(val.id)}>Save</Button>
                             </DialogActions>
-                        </Dialog>
+                </Dialog>
                 
                 </div>
                 

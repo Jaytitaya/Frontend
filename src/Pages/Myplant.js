@@ -269,15 +269,16 @@ const Myplant=()=>{
                 <Dialog PaperProps={{ sx: { width: "100%", height: "77%" } }} open={val.id===state} onClose={handleClose}>
                             <DialogTitle className="Dialog-Title">Edit Information</DialogTitle>
                             <DialogContent>
-                            
-                                <h3>{val.plantname}</h3> 
-                                <p>Stage : {val.stage}</p>
-                                <p>open time - close time : <TextField id="time" label="Open time" type="time" name="opentime" defaultValue={val.opentime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewOpentime(e.target.value)} /> - <TextField id="time" label="Close time" type="time" name="closetime" defaultValue={val.closetime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewClosetime(e.target.value)}/></p>
-                                <p>Temperature : <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.lowertemp} onChange={(e) => setNewLowertemp(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.highertemp} onChange={(e) => setNewHighertemp(e.target.value)}/> °C </p>
-                                <p>Humidity : <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.lowerhumid} onChange={(e) => setNewLowerhumid(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.higherhumid} onChange={(e) => setNewHigherhumid(e.target.value)}/> % </p>
-                                <p>pH : <TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.lowerpH}  onChange={(e) => setNewLowerpH(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.higherpH}  onChange={(e) => setNewHigherpH(e.target.value)}/></p>
+                                <Grid container spacing={3} direction="row" justifyContent="center" alignItems="center">
+                                    <Grid item xs={12}></Grid>
+                                    <Grid item xs={12}>{val.plantname}</Grid> 
+                                    <Grid item xs={12}>Stage : {val.stage}</Grid>
+                                    <Grid item xs={12}>open time - close time : <TextField id="time" label="Open time" type="time" name="opentime" defaultValue={val.opentime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewOpentime(e.target.value)} /> - <TextField id="time" label="Close time" type="time" name="closetime" defaultValue={val.closetime} InputLabelProps={{shrink: true,}} inputProps={{step: 300,}} sx={{ width: 150 }} onChange={(e) => setNewClosetime(e.target.value)}/></Grid>
+                                    <Grid item xs={12}>Temperature : <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.lowertemp} onChange={(e) => setNewLowertemp(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="Temperature" defaultValue={val.highertemp} onChange={(e) => setNewHighertemp(e.target.value)}/> °C </Grid>
+                                    <Grid item xs={12}>Humidity : <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.lowerhumid} onChange={(e) => setNewLowerhumid(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="Humidity" defaultValue={val.higherhumid} onChange={(e) => setNewHigherhumid(e.target.value)}/> % </Grid>
+                                    <Grid item xs={12}>pH : <TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.lowerpH}  onChange={(e) => setNewLowerpH(e.target.value)}/> - <TextField style ={{width: '20%'}}  id="outlined-required" label="pH" defaultValue={val.higherpH}  onChange={(e) => setNewHigherpH(e.target.value)}/></Grid>
                                
-                            
+                                </Grid>
                             </DialogContent>
                             <DialogActions >
                                 <Button onClick={handleClose}>Cancel</Button>
