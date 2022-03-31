@@ -30,22 +30,11 @@ const Plantform=()=>{
     //const {username} = localStorage.username;
     //const {username} = useContext(LoginContext);
     const [plantsList, setPlantsList] = useState([]);
-    const [updateplantsList, setUpdatePlantsList] = useState([]);
     const [plantname,setPlantname]=useState("")
-    const [stage,setStage]=useState("")
-    const [pname, setPname] = useState([]);
-    const [names, setNames] = useState("");
-    const [newselectstage,setNewSelectstage]= useState(false)
     const [newPlantname,setNewPlantname]= useState("");
-    const [newStage,setNewStage]= useState("");
-    const [newOpentime,setNewOpentime]= useState("");
-    const [newClosetime,setNewClosetime]= useState("");
-    const [newLowertemp,setNewLowertemp]= useState("");
-    const [newHighertemp,setNewHighertemp]= useState("");
-    const [newLowerhumid,setNewLowerhumid]= useState("");
-    const [newHigherhumid,setNewHigherhumid]= useState("");
-    const [newLowerpH,setNewLowerpH]= useState("");
-    const [newHigherpH,setNewHigherpH]= useState("");
+    const [newplantnameEng,setNewPlantnameEng]=useState("")
+    const [newlifecycle,setNewLifecycle]=useState("")
+    const [newutilization, setNewUtilization]=useState("")
     const [state,setState]= useState("");
     const plantstage = [
         'Seeding stage',
@@ -57,32 +46,13 @@ const Plantform=()=>{
         setPlantname(event.target.value);
         //console.log(plantname)
     };
-    const handleNewChange = (event) => {
-        setNewStage(event.target.value);
-    };
 
-    const  handleChangeselectstage =(event)=>{
-        setNewSelectstage(event.target.checked)
-    }
+    
     //console.log({newselectstage})
 
-    function checkorigin(props){
-        const selectstage = props;
-        if (selectstage === true || selectstage === "1"){
-            
-            return <Checkbox defaultChecked onChange={handleChangeselectstage} />;
-        }else{
-            return <Checkbox onChange={handleChangeselectstage} />;
-        }
-    }
+    
 
-    function Icon(props){
-        const selectstage = props;
-        
-        if (selectstage === true || selectstage === "1"){
-            return <CheckBoxIcon sx={{ color: grey[50] }}/>;
-        }
-    }
+    
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = (props) => {
@@ -92,15 +62,9 @@ const Plantform=()=>{
         plantsList.map((val) => {
             const isSelected = val.id === id
             if (isSelected) {
-              setNewOpentime(val.opentime)
-              setNewClosetime(val.closetime)
-              setNewLowertemp(val.lowertemp)
-              setNewHighertemp(val.highertemp)
-              setNewLowerhumid(val.lowerhumid)
-              setNewHigherhumid(val.higherhumid)
-              setNewLowerpH(val.lowerpH)
-              setNewHigherpH(val.higherpH)
-              setNewSelectstage(val.selectstage)
+              setNewPlantnameEng(val.plants_engname)
+              setNewLifecycle(val.plants_lifecycle)
+              setNewUtilization(val.plants_utilization)
             }
         })
        //console.log(updateplantsList);
@@ -115,15 +79,7 @@ const Plantform=()=>{
         setOpen(false);
         setState("");
     };
-    const handleClickStage = (props) => {
-        const selectstage = props
-        if (selectstage === "on"){
-            return setNewSelectstage("off");
-        }else{
-            return setNewSelectstage("on");
-        }
-        
-    };
+    
     let [ posts, setPosts ] = useState([])
     useEffect(()=>{
     async function getResults() {
@@ -159,34 +115,21 @@ const Plantform=()=>{
     }
 
     const handleUpdate = (id) => {
-        Axios.put("http://localhost:3001/updateparameter",
+        Axios.put("http://localhost:3001/updateplant",
             {
                 id:id, 
-                opentime: newOpentime,
-                closetime: newClosetime,
-                lowertemp: newLowertemp,
-                highertemp: newHighertemp,
-                lowerhumid: newLowerhumid,
-                higherhumid: newHigherhumid,
-                lowerpH: newLowerpH,
-                higherpH: newHigherpH,
-                selectstage: newselectstage
+                plantnameEng: newplantnameEng,
+                lifecycle: newlifecycle,
+                utilization: newutilization,
+                
             },{ withCredentials: true }).then((result)=>{
             setPlantsList(plantsList.map((val)=>{
                 return val.id === id? 
                 {
                     id: val.id, 
-                    plantname: val.plantname,
-                    stage: val.stage, 
-                    opentime: newOpentime,
-                    closetime: newClosetime,
-                    lowertemp: newLowertemp,
-                    highertemp: newHighertemp,
-                    lowerhumid: newLowerhumid,
-                    higherhumid: newHigherhumid,
-                    lowerpH: newLowerpH,
-                    higherpH: newHigherpH,
-                    selectstage: newselectstage,
+                    plantnameEng: newplantnameEng,
+                    lifecycle: newlifecycle, 
+                    utilization: newutilization,
                 }
                 : val;
             }))
@@ -196,7 +139,7 @@ const Plantform=()=>{
 
     const deleteData=(id)=>{
         //event.preventDefault();
-        Axios.delete(`http://localhost:3001/deleteparameter/${id}`,{ withCredentials: true }).then((result)=>{
+        Axios.delete(`http://localhost:3001/deleteplant/${id}`,{ withCredentials: true }).then((result)=>{
             setPlantsList(
                 plantsList.filter((val)=>{
                     return val.id !== id;
@@ -238,7 +181,7 @@ const Plantform=()=>{
                         
                         
                         <IconButton onClick={()=>handleClickOpen(val.id)}><EditIcon sx={{ color: grey[50] }}/></IconButton>
-                        <IconButton onClick={()=>deleteData(val.id)}><DeleteIcon sx={{ color: grey[50] }}/></IconButton>
+                        
                     </div>
                 </div>
                 
@@ -248,9 +191,9 @@ const Plantform=()=>{
                             <DialogContent>
                             
                                 <h3>{val.plants_name}</h3> 
-                                <p>Plant name (English) : <TextField style ={{width: '60%'}}  id="outlined-required" label="Plant name (English)" defaultValue={val.plants_engname} onChange={(e) => setNewOpentime(e.target.value)} /> </p>
-                                <p>Life cycle : <TextField style ={{width: '20%'}}  id="outlined-required" label="Life cycle" defaultValue={val.plants_lifecycle} onChange={(e) => setNewLowertemp(e.target.value)}/> days</p>
-                                <p>Utilization : <TextField style ={{width: '20%'}}  id="outlined-required" label="Utilization" defaultValue={val.plants_utilization} onChange={(e) => setNewLowerhumid(e.target.value)}/> </p>
+                                <p>Plant name (English) : <TextField style ={{width: '60%'}}  id="outlined-required" label="Plant name (English)" defaultValue={val.plants_engname} onChange={(e) => setNewPlantnameEng(e.target.value)} /> </p>
+                                <p>Life cycle : <TextField style ={{width: '20%'}}  id="outlined-required" label="Life cycle" defaultValue={val.plants_lifecycle} onChange={(e) => setNewLifecycle(e.target.value)}/> days</p>
+                                <p>Utilization : <TextField style ={{width: '60%'}}  id="outlined-required" label="Utilization" defaultValue={val.plants_utilization} onChange={(e) =>  setNewUtilization(e.target.value)}/> </p>
                                 
                                 
                             

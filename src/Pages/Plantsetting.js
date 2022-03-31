@@ -1,4 +1,5 @@
 import React, {useState,useEffect} from 'react'
+import {useNavigate} from "react-router-dom";
 import Navbar from '../Components/Navbar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,6 +13,7 @@ import Axios from 'axios';
 const theme = createTheme();
 
 export default function Plantsetting() {
+  const navigate = useNavigate();
   const [plantname,setPlantname]=useState("")
   const [plantnameEng,setPlantnameEng]=useState("")
   //const [username,setUsername]=useState("")
@@ -31,14 +33,14 @@ export default function Plantsetting() {
               setRegisterPlantStatus(response.data.message);
               
           }else{
-              //navigate("/myplant")
+              navigate("/plantform")
           }
     },{ withCredentials: true })
     .then((response)=>{
         //navigate("/signup");
         //console.log(response);
     })
-}
+  }
 
   return (
     <ThemeProvider theme={theme}>

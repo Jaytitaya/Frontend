@@ -62,7 +62,7 @@ export default function Farmsetting() {
                 setRegisterFarmStatus(response.data.message);
                 
             }else{
-                //navigate("/myplant")
+                navigate("/farminfo")
             }
       },{ withCredentials: true })
       .then((response)=>{
