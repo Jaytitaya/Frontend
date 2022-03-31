@@ -35,11 +35,8 @@ const Myplant=()=>{
     //const {username} = localStorage.username;
     //const {username} = useContext(LoginContext);
     const [plantsList, setPlantsList] = useState([]);
-    const [updateplantsList, setUpdatePlantsList] = useState([]);
     const [plantname,setPlantname]=useState("")
     const [stage,setStage]=useState("")
-    const [pname, setPname] = useState([]);
-    const [names, setNames] = useState("");
     const [newselectstage,setNewSelectstage]= useState(false)
     const [newPlantname,setNewPlantname]= useState("");
     const [newStage,setNewStage]= useState("");
@@ -49,10 +46,10 @@ const Myplant=()=>{
     const [newstage,setNewstage]= useState("");
     const [state,setState]= useState("");
     const plantstage = [
-        'Seeding stage',
-        'Vegetation period',
-        'Flowering period',
-        'Lateflowering',
+        {name:'Seeding stage', val:'seed'},
+        {name:'Vegetation period', val:'veget'},
+        {name:'Flowering period', val:'flowr'},
+        {name:'Lateflowering', val:'late'},
       ];
     const handleChange = (event) => {
         setPlantname(event.target.value);
@@ -239,8 +236,11 @@ const Myplant=()=>{
                                 <Grid item xs={12}>Farm name : <TextField style ={{width: '60%'}}  id="outlined-required" label="Farm name" defaultValue={val.farm_name} onChange={(e) => setNewFarmname(e.target.value)}/></Grid>
                                 <Grid item xs={12}>Location : <TextField style ={{width: '60%'}}  id="outlined-required" label="Location" defaultValue={val.farm_location} onChange={(e) => setNewLocation(e.target.value)}/> </Grid>
                                 <Grid item xs={12}>Plant amount/Farm : <TextField style ={{width: '20%'}}  id="outlined-required" label="Plant amount" defaultValue={val.plant_amount} onChange={(e) => setNewPlantamount(e.target.value)}/> </Grid>
-                                <Grid item xs={12}>Stage : <TextField style ={{width: '20%'}}  id="outlined-required" label="Stage" defaultValue={val.farm_stage}  onChange={(e) => setNewstage(e.target.value)}/></Grid>
-                                
+                                <Grid item xs={12} >Stage : <FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Stage</InputLabel>
+                                    <Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={newstage} defaultValue={val.farm_stage} label="Stage" input={<OutlinedInput label="Stage" />} onChange={(e) => setNewstage(e.target.value)}>
+                                        {plantstage.map((plantstage) => (<MenuItem key={plantstage.name} value={plantstage.val}>{plantstage.name}</MenuItem>))}
+                                    </Select></FormControl>
+                                </Grid>
                             </Grid>
                             </DialogContent>
                             <DialogActions >

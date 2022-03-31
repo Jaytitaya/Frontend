@@ -29,7 +29,7 @@ function Addnewplant(){
     const [higherhumid,setHigherhumid]=useState("")
     const [lowerpH,setLowerpH]=useState("")
     const [higherpH,setHigherpH]=useState("")
-    const [selectstage,setSelectstage]= useState(false)
+    
     const [registerplantStatus, setRegisterPlantStatus]=useState("")
     const plantstage = [
         {name:'Seeding stage', val:'seed'},
@@ -39,10 +39,8 @@ function Addnewplant(){
       ];
     
     
-    console.log({selectstage})
-    const  handleChangeselectstage =(event)=>{
-        setSelectstage(event.target.checked)
-    }
+    
+    
     const handleChange = (event) => {
         setStage(event.target.value);
     };
