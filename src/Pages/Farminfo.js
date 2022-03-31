@@ -19,12 +19,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -157,10 +155,10 @@ const Myplant=()=>{
                 return val.id === id? 
                 {
                     id: val.id, 
-                    farmname: newFarmname,
-                    location: newLocation,
-                    plantamount: newPlantamount,
-                    stage: newstage,
+                    farm_name: newFarmname,
+                    farm_location: newLocation,
+                    plant_amount: newPlantamount,
+                    farm_stage: newstage,
                     
                 }
                 : val;

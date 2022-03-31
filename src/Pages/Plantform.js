@@ -1,7 +1,6 @@
 import React,{Component,useState,useContext,useEffect} from 'react';
 import Navbar from '../Components/Navbar';
 import {Grid, Paper} from '@material-ui/core';
-import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {useNavigate} from "react-router-dom";
 import Button from '@mui/material/Button';
@@ -12,15 +11,13 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { grey } from '@mui/material/colors';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+
 //import { LoginContext } from '../App';
 
 
@@ -87,20 +84,6 @@ const Plantform=()=>{
       setPosts(results.data);
     }
     getResults()
-  
-
-        //Axios.get('http://localhost:3001/plants', { withCredentials: true }).then((response)=>{
-            //console.log(response.result)
-            //setPname(response.result);
-            //console.log(pname)
-            
-            //for (let index = 0; index < pname.length; index++) {
-            //        plantnames.push(pname[index].plantname)
-            //}
-            //let unique = [...new Set(plantnames)]
-            
-        //});
-        //console.log(plantnames)
     },[]); 
     //console.log(posts)
 
@@ -127,9 +110,10 @@ const Plantform=()=>{
                 return val.id === id? 
                 {
                     id: val.id, 
-                    plantnameEng: newplantnameEng,
-                    lifecycle: newlifecycle, 
-                    utilization: newutilization,
+                    plants_name:val.plants_name,
+                    plants_engname: newplantnameEng,
+                    plants_lifecycle: newlifecycle, 
+                    plants_utilization: newutilization,
                 }
                 : val;
             }))
