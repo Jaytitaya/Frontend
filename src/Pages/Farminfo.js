@@ -215,6 +215,7 @@ const Myplant=()=>{
                             <TableCell align="center">{val.farm_location}</TableCell>
                             <TableCell align="center">{val.plant_amount}</TableCell>
                             <TableCell align="center">{val.farm_stage}</TableCell>
+                            
                             <TableCell align="center">
                                 <IconButton onClick={()=>handleClickOpen(val.id)}><EditIcon /></IconButton>
                                 <IconButton onClick={()=>deleteData(val.id)}><DeleteIcon /></IconButton>
