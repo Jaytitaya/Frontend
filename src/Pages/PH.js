@@ -67,7 +67,7 @@ function PH() {
   };
   useEffect(() => {
     async function getResults() {
-      const results = await Axios("http://localhost:3001/plantname");
+      const results = await Axios("http://localhost:3001/plantname",{ withCredentials: true });
       setPosts(results.data);
     }
     getResults();
