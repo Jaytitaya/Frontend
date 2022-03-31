@@ -16,6 +16,7 @@ function Light(){
     const paperStyle={padding:20,height:'90vh',width:700,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const paperStyle2={padding:30,height:'20vh',width:380,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const [plantname,setPlantname]=useState("")
+    const [farmname,setFarmname]=useState("")
     const [plantsList, setPlantsList] = useState([])
     const [checked1, setChecked1] = useState(false);
     const [checked2, setChecked2] = useState(false);
@@ -26,7 +27,7 @@ function Light(){
 
     useEffect(()=>{
     async function getResults() {
-      const results = await Axios('http://localhost:3001/plants');
+      const results = await Axios('http://localhost:3001/farmname',{ withCredentials: true });
       setPosts(results.data);
     }
     getResults()
@@ -34,7 +35,7 @@ function Light(){
     console.log(posts)
 
     const handleChange = (event) => {
-        setPlantname(event.target.value);
+        setFarmname(event.target.value);
         //console.log(plantname)
     };
 
@@ -79,8 +80,8 @@ function Light(){
             </Grid>
             <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center" >
             <Grid item xs={12} md={4}>
-                <FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Plant name</InputLabel>
-                    <Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={plantname} label="plantname" input={<OutlinedInput label="plantname" />}onChange={handleChange}>
+                <FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Farn name</InputLabel>
+                    <Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={plantname} label="Farm name" input={<OutlinedInput label="Farm name" />}onChange={handleChange}>
                         {posts.map((posts) => (<MenuItem key={posts} value={posts}>{posts}</MenuItem>))}
                     </Select>
                 </FormControl>

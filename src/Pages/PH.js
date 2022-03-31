@@ -15,7 +15,7 @@ function PH() {
 
   const paperStyle = {padding: 20,height: "120vh",width: 700,margin: "10px auto",backgroundColor: "#f5f5f5"};
   const paperStyle2 = {padding: 30,height: "20vh",width: 380,margin: "10px auto",backgroundColor: "#f5f5f5"};
-
+  const [farmname,setFarmname]=useState("")
   const [sensorread_Temp, setsensorread_Temp] = useState(8);
   const [plantname, setPlantname] = useState("");
   const [Range, setRange] = useState([]);
@@ -63,11 +63,11 @@ function PH() {
 
   const handleChangeManual = (event) => {setChecked1(event.target.checked)};
   const handleChangeControll = (event) => {setChecked2(event.target.checked)};
-  const handleChange = (event) => {setPlantname(event.target.value);//console.log(plantname)
+  const handleChange = (event) => {setFarmname(event.target.value);//console.log(plantname)
   };
   useEffect(() => {
     async function getResults() {
-      const results = await Axios("http://localhost:3001/plantname",{ withCredentials: true });
+      const results = await Axios("http://localhost:3001/farmname",{ withCredentials: true });
       setPosts(results.data);
     }
     getResults();
@@ -85,8 +85,8 @@ function PH() {
         <Grid container rowSpacing={4} direction="row" justifyContent="center" alignItems="center">
           <Grid item xs={12} md={4}>
             <FormControl sx={{ minWidth: 120 }}>
-              <InputLabel id="demo-simple-select-label">Plant name</InputLabel>
-              <Select style={{ minWidth: "220px" }} labelId="demo-multiple-name-label" id="demo-multiple-name" value={plantname} label="plantname" input={<OutlinedInput label="plantname" />} onChange={handleChange}>
+              <InputLabel id="demo-simple-select-label">Farm name</InputLabel>
+              <Select style={{ minWidth: "220px" }} labelId="demo-multiple-name-label" id="demo-multiple-name" value={farmname} label="farmname" input={<OutlinedInput label="farmname" />} onChange={handleChange}>
                 {posts.map((posts) => (<MenuItem key={posts} value={posts}>{posts}</MenuItem>))}
               </Select>
             </FormControl>
