@@ -14,7 +14,7 @@ import Switch from "@mui/material/Switch";
 function Humid() {
 
   const paperStyle = {padding: 20,height: "120vh",width: 700,margin: "10px auto",backgroundColor: "#f5f5f5"};
-  const paperStyle2 = {padding: 30,height: "20vh",width: 380,margin: "10px auto",backgroundColor: "#f5f5f5"};
+  const paperStyle2 = {padding: 30,height: "25vh",width: 380,margin: "10px auto",backgroundColor: "#f5f5f5"};
   const [farmname,setFarmname]=useState("")
   const [sensorread_Temp, setsensorread_Temp] = useState(8);
   const [plantname, setPlantname] = useState("");
@@ -98,33 +98,10 @@ function Humid() {
           </Grid>
         </Grid>
 
-        <c>Humid Controller</c>
-        <Paper elevation={6} style={paperStyle2}>
-          <Grid container spacing={2} direction="row" justifyContent="center" alignItems="center">
-            <Grid item xs={4} className="clight">Auto control</Grid>
-            <Grid item xs={1}><Switch onClick={handleChangeManual} checked={checked1} /></Grid>
-            <Grid item xs={6} className="clight">Manual control</Grid>
-          </Grid>
-
-          <Grid container spacing={5} direction="row" justifyContent="center" alignItems="center">
-            <Grid className="clight" item xs={2}>Fan</Grid>
-            <Grid item xs={2} className="clight">Off</Grid>
-            <Switch onClick={handleChangeControll} checked={checked2} disabled={!checked1}/>
-            <Grid item xs={2} className="clight">On</Grid>
-          </Grid>
-
-          <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center">
-            <Button variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{ minWidth: "100px" }} onClick={pushControllerStatus}>
-              Save
-            </Button>
-          </Grid>
-
-        </Paper>
-        
         <ReactSpeedometer
           value={sensorread_Temp}
           width={400}
-          height={400}
+          height={250}
           minValue={Lowertemp + (Lowertemp - Highertemp)}
           maxValue={Highertemp + (Highertemp - Lowertemp)}
           valueTextFontSize={20}
@@ -156,6 +133,36 @@ function Humid() {
             },
           ]}
         />
+
+        <Grid item xs={12} className="headcard">Humidity Controller</Grid>
+        <Paper elevation={6} style={paperStyle2}>
+          <Grid container spacing={2} direction="row" justifyContent="center" alignItems="center">
+            <Grid item xs={4} className="clight">Auto control</Grid>
+            <Grid item xs={1}><Switch onClick={handleChangeManual} checked={checked1} /></Grid>
+            <Grid item xs={6} className="clight">Manual control</Grid>
+          </Grid>
+
+          <Grid container spacing={5} direction="row" justifyContent="center" alignItems="center">
+            <Grid className="clight" item xs={5}>Fan</Grid>
+            <Grid item xs={2} className="clight">Off</Grid>
+            <Switch onClick={handleChangeControll} checked={checked2} disabled={!checked1}/>
+            <Grid item xs={2} className="clight">On</Grid>
+          </Grid>
+
+          <Grid container spacing={5} direction="row" justifyContent="center" alignItems="center">
+            <Grid className="clight" item xs={5}>Fog machine</Grid>
+            <Grid item xs={2} className="clight">Off</Grid>
+            <Switch onClick={handleChangeControll} checked={checked2} disabled={!checked1}/>
+            <Grid item xs={2} className="clight">On</Grid>
+          </Grid>
+
+          <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center">
+            <Button variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{ minWidth: "100px" }} onClick={pushControllerStatus}>
+              Save
+            </Button>
+          </Grid>
+
+        </Paper>
       </Paper>
     </Grid>
   );

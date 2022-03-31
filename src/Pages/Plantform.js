@@ -154,7 +154,7 @@ const Plantform=()=>{
                         
                         </div>
                         <div  className="card-body">
-                            <p >Plant name (Thai) : {val.plants_name}</p>
+                            <p >Plant name : {val.plants_name}</p>
                             <p >Plant name (English) : {val.plants_engname}</p>
                             <p >Life cycle : {val.plants_lifecycle} days</p>
                             <p >Utilization : {val.plants_utilization}</p>

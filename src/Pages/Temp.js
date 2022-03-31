@@ -14,7 +14,7 @@ import Switch from "@mui/material/Switch";
 function Temp() {
 
   const paperStyle = {padding: 20,height: "120vh",width: 700,margin: "10px auto",backgroundColor: "#f5f5f5"};
-  const paperStyle2 = {padding: 30,height: "20vh",width: 380,margin: "10px auto",backgroundColor: "#f5f5f5"};
+  const paperStyle2 = {padding: 30,height: "25vh",width: 380,margin: "10px auto",backgroundColor: "#f5f5f5"};
   const [farmname,setFarmname]=useState("")
   const [sensorread_Temp, setsensorread_Temp] = useState(8);
   const [plantname, setPlantname] = useState("");
@@ -137,7 +137,7 @@ function Temp() {
           ]}
         />
 
-        <c>Temp Controller</c>
+        <Grid item xs={12} className="headcard">Temperature Controller</Grid>
         <Paper elevation={6} style={paperStyle2}>
           <Grid container spacing={2} direction="row" justifyContent="center" alignItems="center">
             <Grid item xs={4} className="clight">Auto control</Grid>
@@ -146,7 +146,14 @@ function Temp() {
           </Grid>
 
           <Grid container spacing={5} direction="row" justifyContent="center" alignItems="center">
-            <Grid className="clight" item xs={4}>HeatLight</Grid>
+            <Grid className="clight" item xs={5}>Fan</Grid>
+            <Grid item xs={2} className="clight">Off</Grid>
+            <Switch onClick={handleChangeControll} checked={checked2} disabled={!checked1}/>
+            <Grid item xs={2} className="clight">On</Grid>
+          </Grid>
+
+          <Grid container spacing={5} direction="row" justifyContent="center" alignItems="center">
+            <Grid className="clight" item xs={5}>Heating Light</Grid>
             <Grid item xs={2} className="clight">Off</Grid>
             <Switch onClick={handleChangeControll} checked={checked2} disabled={!checked1}/>
             <Grid item xs={2} className="clight">On</Grid>

@@ -93,7 +93,7 @@ export default function Plantsetting() {
             <Grid item xs={12} >
               <TextField 
                 id="outlined-basic" 
-                label="Life cycle" 
+                label="Life cycle (day)" 
                 variant="outlined"
                 value={lifecycle} 
                 onChange={(e) => setLifecycle(e.target.value)}
