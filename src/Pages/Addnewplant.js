@@ -96,7 +96,7 @@ function Addnewplant(){
                 setRegisterPlantStatus(response.data.message);
                 
             }else{
-                //navigate("/myplant")
+                navigate("/myplant")
             }
         },{ withCredentials: true })
         .then(() => {
