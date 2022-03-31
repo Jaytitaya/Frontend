@@ -8,20 +8,25 @@ import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import Switch from '@mui/material/Switch';
 import Axios from 'axios';
 
 function Light(){
     const paperStyle={padding:20,height:'90vh',width:700,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const paperStyle2={padding:30,height:'20vh',width:380,margin:"10px auto",backgroundColor: '#f5f5f5'}
-    const [plantname,setPlantname]=useState("");
-    const [plantsList, setPlantsList] = useState([]);
-    const [manualcontrol,setManualControl]=useState(false);
-    let [ posts, setPosts ] = useState([]);
+    const [plantname,setPlantname]=useState("")
+    const [plantsList, setPlantsList] = useState([])
+    const [checked1, setChecked1] = useState(false);
+    const [checked2, setChecked2] = useState(false);
+    let [ posts, setPosts ] = useState([])
+
+    const handleChangeManual = (event) => {setChecked1(event.target.checked)};
+    const handleChangeControll = (event) => {setChecked2(event.target.checked)};
 
     useEffect(()=>{
     async function getResults() {
-      const results = await Axios('http://localhost:3001/plantname',{ withCredentials: true });
+      const results = await Axios('http://localhost:3001/plants');
       setPosts(results.data);
     }
     getResults()
@@ -42,20 +47,22 @@ function Light(){
         });
     }
 
-    console.log({manualcontrol})
-    const  handleChangecontrol =(event)=>{
-        setManualControl(event.target.checked)
-    }
+    const getControllerStatus = () => {
+        Axios.post("http://localhost:3001/getControllerHumid",{plantname: plantname},{ withCredentials: true }).then((response) => {
+          setChecked1(response.data[0].lightcontrolstrategy);
+          setChecked2(response.data[0].lightcontrolstatus);
+        });
+      }
 
-    function checkorigin(){
-        //const selectstage = props;
-        if (manualcontrol === true || manualcontrol === "1"){
-            
-            return <FormControlLabel control={<Switch  />} label="" />;
-        }else{
-            return <FormControlLabel disabled control={<Switch />} label="Disabled" />;
+    const pushControllerStatus = () => {
+        if (checked1 == true) {
+          Axios.post("http://localhost:3001/pushControllerTemp",{ plantname: plantname, lightcontrolstrategy: checked1 },{ withCredentials: true })
         }
-    }
+        else {
+          Axios.post("http://localhost:3001/pushControllerTemp",{ plantname: plantname, lightcontrolstrategy: checked1},{ withCredentials: true })
+          Axios.post("http://localhost:3001/manualpushControllerTemp",{ plantname: plantname, lightcontrolstatus: checked2},{ withCredentials: true })
+        }
+      }
 
     return(
         
@@ -78,26 +85,26 @@ function Light(){
                     </Select>
                 </FormControl>
             </Grid>
-            <Grid item xs={12} md={4}><Button onClick={getPlants} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show information</Button></Grid>
+            <Grid item xs={12} md={4}><Button onClick={getControllerStatus} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show information</Button></Grid>
             
                 <c>State :</c>
                 <Paper elevation={6} style={paperStyle2} >
                 
                     <Grid container spacing={2} direction="row" justifyContent="center" alignItems="center" >
                     <Grid item xs={4} className="clight">Auto control</Grid>
-                    <Grid item xs={1} ><FormControlLabel value="Manual" control={<Switch />} label="" onChange={handleChangecontrol}/></Grid>
+                    <Grid item xs={1} ><Switch onClick={handleChangeManual} checked={checked1} /></Grid>
                     <Grid item xs={6} className="clight" >Manual control</Grid>
                     </Grid>
                     
                     <Grid  container spacing={5} direction="row" justifyContent="center" alignItems="center" >
                         <Grid className="clight" item xs={2} >Light</Grid>
                         <Grid item xs={2} className="clight">Off</Grid>
-                        <Switch/>
+                        <Switch onClick={handleChangeControll} checked={checked2} disabled={!checked1} />
                         <Grid item xs={2} className="clight" >On</Grid>
                     </Grid>
 
                     <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center" >
-                        <Button variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '100px' }}>Save</Button>
+                        <Button onClick={pushControllerStatus} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '100px' }}>Save</Button>
                     </Grid>
                  
                 </Paper>

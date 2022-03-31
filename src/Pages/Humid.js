@@ -80,7 +80,7 @@ function Humid() {
 
         <Grid container spacing={2} justifyContent="center">
           <Grid item xs={2}><img className="homephoto" src="/Humidity.png" /></Grid>
-          <Grid item xs={6}><h2 className="app-front" style={{ color: "#008000" }}>Humid</h2></Grid>
+          <Grid item xs={3}><h2 className="app-front" style={{ color: "#008000" }}>Humidity</h2></Grid>
         </Grid>
 
         <Grid container rowSpacing={4} direction="row" justifyContent="center" alignItems="center">

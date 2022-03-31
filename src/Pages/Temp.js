@@ -80,7 +80,7 @@ function Temp() {
 
         <Grid container spacing={2} justifyContent="center">
           <Grid item xs={2}><img className="homephoto" src="/Temp.png" /></Grid>
-          <Grid item xs={6}><h2 className="app-front" style={{ color: "#008000" }}>Temp</h2></Grid>
+          <Grid item xs={6}><h2 className="app-front" style={{ color: "#008000" }}>Temperature</h2></Grid>
         </Grid>
 
         <Grid container rowSpacing={4} direction="row" justifyContent="center" alignItems="center">
@@ -99,33 +99,12 @@ function Temp() {
           </Grid>
         </Grid>
 
-        <c>Temp Controller</c>
-        <Paper elevation={6} style={paperStyle2}>
-          <Grid container spacing={2} direction="row" justifyContent="center" alignItems="center">
-            <Grid item xs={4} className="clight">Auto control</Grid>
-            <Grid item xs={1}><Switch onClick={handleChangeManual} checked={checked1} /></Grid>
-            <Grid item xs={6} className="clight">Manual control</Grid>
-          </Grid>
-
-          <Grid container spacing={5} direction="row" justifyContent="center" alignItems="center">
-            <Grid className="clight" item xs={2}>HeatLight</Grid>
-            <Grid item xs={2} className="clight">Off</Grid>
-            <Switch onClick={handleChangeControll} checked={checked2} disabled={!checked1}/>
-            <Grid item xs={2} className="clight">On</Grid>
-          </Grid>
-
-          <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center">
-            <Button variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{ minWidth: "100px" }} onClick={pushControllerStatus}>
-              Save
-            </Button>
-          </Grid>
-
-        </Paper>
+        
         
         <ReactSpeedometer
           value={sensorread_Temp}
           width={400}
-          height={400}
+          height={250}
           minValue={Lowertemp + (Lowertemp - Highertemp)}
           maxValue={Highertemp + (Highertemp - Lowertemp)}
           valueTextFontSize={20}
@@ -157,6 +136,29 @@ function Temp() {
             },
           ]}
         />
+
+        <c>Temp Controller</c>
+        <Paper elevation={6} style={paperStyle2}>
+          <Grid container spacing={2} direction="row" justifyContent="center" alignItems="center">
+            <Grid item xs={4} className="clight">Auto control</Grid>
+            <Grid item xs={1}><Switch onClick={handleChangeManual} checked={checked1} /></Grid>
+            <Grid item xs={6} className="clight">Manual control</Grid>
+          </Grid>
+
+          <Grid container spacing={5} direction="row" justifyContent="center" alignItems="center">
+            <Grid className="clight" item xs={4}>HeatLight</Grid>
+            <Grid item xs={2} className="clight">Off</Grid>
+            <Switch onClick={handleChangeControll} checked={checked2} disabled={!checked1}/>
+            <Grid item xs={2} className="clight">On</Grid>
+          </Grid>
+
+          <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center">
+            <Button variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{ minWidth: "100px" }} onClick={pushControllerStatus}>
+              Save
+            </Button>
+          </Grid>
+
+        </Paper>
       </Paper>
     </Grid>
   );
