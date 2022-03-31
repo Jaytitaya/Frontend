@@ -112,7 +112,7 @@ function Temp() {
           needleTransitionDuration={2222}
           needleTransition="easeElastic"
           segments={3}
-          paddingVertical={10}
+          paddingVertical={60}
           segmentColors={["#b3ff66", "#00b300", "#e6b800"]}
           forceRender={1}
           customSegmentLabels={[
