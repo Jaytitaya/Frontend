@@ -21,7 +21,7 @@ function Light(){
 
     useEffect(()=>{
     async function getResults() {
-      const results = await Axios('http://localhost:3001/plants',{ withCredentials: true });
+      const results = await Axios('http://localhost:3001/plantname',{ withCredentials: true });
       setPosts(results.data);
     }
     getResults()

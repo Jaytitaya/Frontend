@@ -67,7 +67,7 @@ function Humid() {
   };
   useEffect(() => {
     async function getResults() {
-      const results = await Axios("http://localhost:3001/plants");
+      const results = await Axios("http://localhost:3001/plantname");
       setPosts(results.data);
     }
     getResults();
