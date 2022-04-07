@@ -19,50 +19,50 @@ function Temp() {
   const [sensorread_Temp, setsensorread_Temp] = useState(8);
   const [plantname, setPlantname] = useState("");
   const [Range, setRange] = useState([]);
-  const [Lowertemp, setLowertemp] = useState(6);
-  const [Highertemp, setHighertemp] = useState(9);
+  const [Lowertemp, setLowertemp] = useState(20);
+  const [Highertemp, setHighertemp] = useState(29);
   let [posts, setPosts] = useState([]);
-  const getTemp = () => {
-    setInterval(() =>{
-      Axios.post("http://localhost:3001/getpH",{plantname: plantname},{ withCredentials: true }).then((response) => {
-        setsensorread_Temp(response.data[0].Temp);
-      });
-    },1000);
-  };
+  
+  const getT = () => {
+    Axios .get(`http://localhost:3001/getTemp/${farmname}`,{ withCredentials: true })
+          .then((response) => {setsensorread_Temp(response.data[0].iot_temp)})
+  }
   const getRange = () => {
-    Axios.post("http://localhost:3001/getrangepH",{plantname: plantname},{ withCredentials: true }).then((response) => {
+    Axios.get(`http://localhost:3001/getrangeTemp/${farmname}`,{plantname: plantname},{ withCredentials: true }).then((response) => {
       setRange(response.data);
       console.log(response.data);
     });
   };
   const getControllerStatus = () => {
-    Axios.post("http://localhost:3001/getControllerpH",{plantname: plantname},{ withCredentials: true }).then((response) => {
-      setChecked1(response.data[0].tempcontrolstrategy);
-      setChecked2(response.data[0].tempcontrolstatus);
+    Axios.get(`http://localhost:3001/getControllerTemp/${farmname}`,{plantname: plantname},{ withCredentials: true }).then((response) => {
+      setChecked_MC(response.data[0].temp_MC);
+      setChecked_Fan(response.data[0].fan);
+      setChecked_HL(response.data[0].heatlight)
     });
   }
   const pushControllerStatus = () => {
-    if (checked1 == true) {
-      Axios.post("http://localhost:3001/pushControllerTemp",{ plantname: plantname, tempcontrolstrategy: checked1 },{ withCredentials: true })
-    }
-    else {
-      Axios.post("http://localhost:3001/pushControllerTemp",{ plantname: plantname, tempcontrolstrategy: checked1},{ withCredentials: true })
-      Axios.post("http://localhost:3001/manualpushControllerTemp",{ plantname: plantname, tempcontrolstatus: checked2},{ withCredentials: true })
+    Axios.post("http://localhost:3001/pushControllerTemp",{ plantname: plantname, temp_MC: checked_MC },{ withCredentials: true })
+    if (checked_MC == false) {
+      Axios.post("http://localhost:3001/manualpushControllerTemp",{ plantname: plantname, fan: checked_fan, heatlight: checked_HL},{ withCredentials: true })
     }
   }
   const WrapperFn = () => {
-    getTemp();
+    clearInterval();
+    setInterval(getT(),1000);
     getRange();
     setLowertemp(Range[0].lowertemp);
     setHighertemp(Range[0].highertemp);
     getControllerStatus();
+    pushControllerStatus();
   };
 
-  const [checked1, setChecked1] = useState(false);
-  const [checked2, setChecked2] = useState(false);
+  const [checked_MC, setChecked_MC] = useState(false);
+  const [checked_fan, setChecked_Fan] = useState(false);
+  const [checked_HL, setChecked_HL] = useState(false);
 
-  const handleChangeManual = (event) => {setChecked1(event.target.checked)};
-  const handleChangeControll = (event) => {setChecked2(event.target.checked)};
+  const handleChangeManual = (event) => {setChecked_MC(event.target.checked)};
+  const handleChangeControl_Fan = (event) => {setChecked_Fan(event.target.checked)};
+  const handleChangeControl_HL = (event) => {setChecked_HL(event.target.checked)};
   const handleChange = (event) => {setFarmname(event.target.value)};
 
   useEffect(() => {
@@ -104,7 +104,7 @@ function Temp() {
         <ReactSpeedometer
           value={sensorread_Temp}
           width={400}
-          height={250}
+          height={245}
           minValue={Lowertemp + (Lowertemp - Highertemp)}
           maxValue={Highertemp + (Highertemp - Lowertemp)}
           valueTextFontSize={20}
@@ -114,7 +114,6 @@ function Temp() {
           segments={3}
           paddingVertical={60}
           segmentColors={["#b3ff66", "#00b300", "#e6b800"]}
-          forceRender={1}
           customSegmentLabels={[
             {
               text: "Low Temp",
@@ -141,26 +140,26 @@ function Temp() {
         <Paper elevation={6} style={paperStyle2}>
           <Grid container spacing={2} direction="row" justifyContent="center" alignItems="center">
             <Grid item xs={4} className="clight">Auto control</Grid>
-            <Grid item xs={1}><Switch onClick={handleChangeManual} checked={checked1} /></Grid>
+            <Grid item xs={1}><Switch onClick={handleChangeManual} checked={checked_MC} /></Grid>
             <Grid item xs={6} className="clight">Manual control</Grid>
           </Grid>
 
           <Grid container spacing={5} direction="row" justifyContent="center" alignItems="center">
             <Grid className="clight" item xs={5}>Fan</Grid>
             <Grid item xs={2} className="clight">Off</Grid>
-            <Switch onClick={handleChangeControll} checked={checked2} disabled={!checked1}/>
+            <Switch onClick={handleChangeControl_Fan} checked={checked_fan} disabled={!checked_MC}/>
             <Grid item xs={2} className="clight">On</Grid>
           </Grid>
 
           <Grid container spacing={5} direction="row" justifyContent="center" alignItems="center">
-            <Grid className="clight" item xs={5}>Heating Light</Grid>
+            <Grid className="clight" item xs={5}>HeatLight</Grid>
             <Grid item xs={2} className="clight">Off</Grid>
-            <Switch onClick={handleChangeControll} checked={checked2} disabled={!checked1}/>
+            <Switch onClick={handleChangeControl_HL} checked={checked_HL} disabled={!checked_MC}/>
             <Grid item xs={2} className="clight">On</Grid>
           </Grid>
 
           <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center">
-            <Button variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{ minWidth: "100px" }} onClick={pushControllerStatus}>
+            <Button variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{ minWidth: "100px" }} onClick={WrapperFn}>
               Save
             </Button>
           </Grid>
