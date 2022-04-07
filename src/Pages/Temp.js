@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Components/Navbar";
-import { Grid, TextField, Paper, Typography } from "@material-ui/core";
+import { Grid,Paper } from "@material-ui/core";
 import ReactSpeedometer from "react-d3-speedometer";
 import Axios from "axios";
 import Button from "@mui/material/Button";
@@ -26,7 +26,7 @@ function Temp() {
   const getT = () => {
     Axios .get(`http://localhost:3001/getTemp/${farmname}`,{ withCredentials: true })
           .then((response) => {setsensorread_Temp(response.data[0].iot_temp)})
-  }
+  };
   const getRange = () => {
     Axios.get(`http://localhost:3001/getrangeTemp/${farmname}`,{plantname: plantname},{ withCredentials: true }).then((response) => {
       setRange(response.data);
@@ -47,8 +47,8 @@ function Temp() {
     }
   }
   const WrapperFn = () => {
-    clearInterval();
-    setInterval(getT(),1000);
+    clearInterval(getT);
+    setInterval(getT,1000);
     getRange();
     setLowertemp(Range[0].lowertemp);
     setHighertemp(Range[0].highertemp);
@@ -72,7 +72,7 @@ function Temp() {
     }
     getResults();
   }, []);
-  console.log(posts);
+  //console.log(posts);
   return (
     <Grid align="center">
       <Navbar />
