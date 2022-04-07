@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Components/Navbar";
-import { Grid,Paper } from "@material-ui/core";
+import { Grid, TextField, Paper, Typography } from "@material-ui/core";
 import ReactSpeedometer from "react-d3-speedometer";
 import Axios from "axios";
 import Button from "@mui/material/Button";
@@ -21,12 +21,13 @@ function Temp() {
   const [Range, setRange] = useState([]);
   const [Lowertemp, setLowertemp] = useState(20);
   const [Highertemp, setHighertemp] = useState(29);
+  const [ID,setID] = useState(0);
   let [posts, setPosts] = useState([]);
   
-  const getT = () => {
+  function getTemp(){
     Axios .get(`http://localhost:3001/getTemp/${farmname}`,{ withCredentials: true })
           .then((response) => {setsensorread_Temp(response.data[0].iot_temp)})
-  };
+  }
   const getRange = () => {
     Axios.get(`http://localhost:3001/getrangeTemp/${farmname}`,{plantname: plantname},{ withCredentials: true }).then((response) => {
       setRange(response.data);
@@ -46,9 +47,19 @@ function Temp() {
       Axios.post("http://localhost:3001/manualpushControllerTemp",{ plantname: plantname, fan: checked_fan, heatlight: checked_HL},{ withCredentials: true })
     }
   }
-  const WrapperFn = () => {
-    clearInterval(getT);
-    setInterval(getT,1000);
+  const clearIV = () => {
+    clearInterval(ID);
+  }
+  const [count,setCount]=useState(1);
+  function WrapperFn(){
+    clearInterval(ID);
+    setID(setInterval(getTemp,1000));
+/*    setCount(count+1);
+    if (count>2){
+      clearInterval(getT);
+      console.log('interval cleared');
+      setCount(1);
+    };*/
     getRange();
     setLowertemp(Range[0].lowertemp);
     setHighertemp(Range[0].highertemp);
@@ -72,7 +83,7 @@ function Temp() {
     }
     getResults();
   }, []);
-  //console.log(posts);
+  console.log(posts);
   return (
     <Grid align="center">
       <Navbar />
@@ -159,8 +170,8 @@ function Temp() {
           </Grid>
 
           <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center">
-            <Button variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{ minWidth: "100px" }} onClick={WrapperFn}>
-              Save
+            <Button variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{ minWidth: "100px" }} onClick={clearIV}>
+              clearIV
             </Button>
           </Grid>
 
