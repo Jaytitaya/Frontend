@@ -67,7 +67,7 @@ function Temp() {
     pushControllerStatus();
   };
 
-  const [checked_MC, setChecked_MC] = useState(false);
+  const [checked_MC, setChecked_MC] = useState(false);  
   const [checked_fan, setChecked_Fan] = useState(false);
   const [checked_HL, setChecked_HL] = useState(false);
 
@@ -82,7 +82,8 @@ function Temp() {
       setPosts(results.data);
     }
     getResults();
-  }, []);
+    return () =>  {clearInterval(ID)};
+  }, [ID]);
   console.log(posts);
   return (
     <Grid align="center">
