@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Components/Navbar";
-import { Grid, TextField, Paper, Typography } from "@material-ui/core";
+import { Grid, Paper } from "@material-ui/core";
 import ReactSpeedometer from "react-d3-speedometer";
 import Axios from "axios";
 import Button from "@mui/material/Button";
@@ -10,62 +10,76 @@ import Select from "@mui/material/Select";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import MenuItem from "@mui/material/MenuItem";
 import Switch from "@mui/material/Switch";
+import {useNavigate} from "react-router-dom";
 
 function Temp() {
 
   const paperStyle = {padding: 20,height: "120vh",width: 700,margin: "10px auto",backgroundColor: "#f5f5f5"};
   const paperStyle2 = {padding: 30,height: "25vh",width: 380,margin: "10px auto",backgroundColor: "#f5f5f5"};
   const [farmname,setFarmname]=useState("")
-  const [sensorread_Temp, setsensorread_Temp] = useState(8);
-  const [plantname, setPlantname] = useState("");
-  const [Range, setRange] = useState([]);
+  const [sensorread_Temp, setsensorread_Temp] = useState(25);
   const [Lowertemp, setLowertemp] = useState(20);
   const [Highertemp, setHighertemp] = useState(29);
   const [ID,setID] = useState(0);
+  const [Param,setParam] = useState("temp");
+  const [status, setStatus] = useState("");
   let [posts, setPosts] = useState([]);
-  
-  function getTemp(){
-    Axios .get(`http://localhost:3001/getTemp/${farmname}`,{ withCredentials: true })
-          .then((response) => {setsensorread_Temp(response.data[0].iot_temp)})
+  const navigate = useNavigate();
+  const [showgate, setShowgate] = useState(false);
+  const [forceRender,setForceRender] = useState(true);
+
+  function getSensorVal(){
+    Axios.get(`http://localhost:3001/getSensorVal/${farmname}/${Param}`,{ withCredentials: true })
+         .then((response) => {setsensorread_Temp(response.data[0].iot_temp)
+        if(forceRender === true){setForceRender(false)}})
   }
-  const getRange = () => {
-    Axios.get(`http://localhost:3001/getrangeTemp/${farmname}`,{plantname: plantname},{ withCredentials: true }).then((response) => {
-      setRange(response.data);
-      console.log(response.data);
-    });
+  function getPlant(){
+    Axios.get(`http://localhost:3001/getPlantname/${farmname}`,{ withCredentials: true })
+         .then((response) => {getRange(response.data[0].farm_plant,response.data[0].farm_stage);})
+  }
+  function getRange(plant_name, stage_name){
+    Axios.get(`http://localhost:3001/getRange/${plant_name}/${stage_name}/${Param}`,{ withCredentials: true })
+         .then((response) => {
+           setLowertemp(response.data[0].lowertemp);
+           setHighertemp(response.data[0].highertemp);
+          })
+          .catch(err => console.log(err))
   };
   const getControllerStatus = () => {
-    Axios.get(`http://localhost:3001/getControllerTemp/${farmname}`,{plantname: plantname},{ withCredentials: true }).then((response) => {
-      setChecked_MC(response.data[0].temp_MC);
-      setChecked_Fan(response.data[0].fan);
-      setChecked_HL(response.data[0].heatlight)
-    });
+    Axios.get(`http://localhost:3001/getController/${farmname}/${Param}`,{ withCredentials: true }).then((response) => {
+      setChecked_MC(response.data[0].temp_MC === 1? true : false);
+      setChecked_Fan(response.data[0].fan === 1? true : false);
+      setChecked_HL(response.data[0].heatlight === 1? true : false);
+    })
   }
   const pushControllerStatus = () => {
-    Axios.post("http://localhost:3001/pushControllerTemp",{ plantname: plantname, temp_MC: checked_MC },{ withCredentials: true })
-    if (checked_MC == false) {
-      Axios.post("http://localhost:3001/manualpushControllerTemp",{ plantname: plantname, fan: checked_fan, heatlight: checked_HL},{ withCredentials: true })
-    }
+    Axios.put(`http://localhost:3001/pushController/${farmname}/${Param}`,{ temp_MC: checked_MC, fan: checked_fan, heatlight: checked_HL },{ withCredentials: true })
+         .then((response) => {setStatus(response.data.message)})
   }
-  const clearIV = () => {
+
+  function BtnFn(){
+    setForceRender(true)
     clearInterval(ID);
-  }
-  const [count,setCount]=useState(1);
-  function WrapperFn(){
-    clearInterval(ID);
-    setID(setInterval(getTemp,1000));
-/*    setCount(count+1);
-    if (count>2){
-      clearInterval(getT);
-      console.log('interval cleared');
-      setCount(1);
-    };*/
-    getRange();
-    setLowertemp(Range[0].lowertemp);
-    setHighertemp(Range[0].highertemp);
+    getPlant();
     getControllerStatus();
+    setShowgate(true);
+    setID(setInterval(getSensorVal,1600));
+  }
+
+function checkSession(){
+  let ck = "check"
+  
+/*  if(window.localStorage.getItem("users") != undefined){
+    ck = "check"
+  }*/
+    Axios.get(`http://localhost:3001/session/${ck}`, {withCredentials: true}).then((response) => {
+      console.log(window.localStorage.getItem("users"))
+      if (response.data.loggedIn === false) {navigate("/login")}
+  })
+}
+  function BtnFn2(){
     pushControllerStatus();
-  };
+  }
 
   const [checked_MC, setChecked_MC] = useState(false);  
   const [checked_fan, setChecked_Fan] = useState(false);
@@ -76,15 +90,25 @@ function Temp() {
   const handleChangeControl_HL = (event) => {setChecked_HL(event.target.checked)};
   const handleChange = (event) => {setFarmname(event.target.value)};
 
+
   useEffect(() => {
-    async function getResults() {
-      const results = await Axios("http://localhost:3001/farmname",{ withCredentials: true });
-      setPosts(results.data);
+    checkSession();
+  },[]);
+
+  useEffect(() => {
+    function getResults() {
+      Axios.get("http://localhost:3001/farmname",{ withCredentials: true }).then(res => res.data).then(data => setPosts(data)).catch(err => alert("log in first !"))
     }
+   /* async function checkSS() {
+      const results = await Axios.get(`http://localhost:3001/session/${'check'}`, {withCredentials: true})
+      setss(results.data.loggedIn)
+      console.log(setss)
+    }
+    checkSS(); */
     getResults();
     return () =>  {clearInterval(ID)};
   }, [ID]);
-  console.log(posts);
+
   return (
     <Grid align="center">
       <Navbar />
@@ -95,17 +119,17 @@ function Temp() {
           <Grid item xs={6}><h2 className="app-front" style={{ color: "#008000" }}>Temperature</h2></Grid>
         </Grid>
 
-        <Grid container rowSpacing={4} direction="row" justifyContent="center" alignItems="center">
+        <Grid container rowspacing={4} direction="row" justifyContent="center" alignItems="center">
           <Grid item xs={12} md={4}>
             <FormControl sx={{ minWidth: 120 }}>
               <InputLabel id="demo-simple-select-label">Farm name</InputLabel>
-              <Select style={{ minWidth: "220px" }} labelId="demo-multiple-name-label" id="demo-multiple-name" value={farmname} label="Farm name" input={<OutlinedInput label="plantname" />} onChange={handleChange}>
-                {posts.map((posts) => (<MenuItem key={posts} value={posts}>{posts}</MenuItem>))}
+              <Select defaultValue = "" style={{ minWidth: "220px" }} labelId="demo-multiple-name-label" id="demo-multiple-name" label="Farm name" input={<OutlinedInput label="plantname" />} onChange={handleChange}>
+                {posts.map((post) => (<MenuItem key={post} value={post}>{post}</MenuItem>))}
               </Select>
             </FormControl>
           </Grid>
           <Grid item xs={12} md={4}>
-            <Button onClick={WrapperFn} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{ minWidth: "210px" }}>
+            <Button onClick={BtnFn} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{ minWidth: "210px" }}>
               Show information
             </Button>
           </Grid>
@@ -113,40 +137,42 @@ function Temp() {
 
         
         
-        <ReactSpeedometer
+        {showgate&&<ReactSpeedometer
           value={sensorread_Temp}
           width={400}
           height={245}
           minValue={Lowertemp + (Lowertemp - Highertemp)}
           maxValue={Highertemp + (Highertemp - Lowertemp)}
-          valueTextFontSize={20}
+          valueTextFontSize={"20"}
           needleColor="#662200"
-          needleTransitionDuration={2222}
-          needleTransition="easeElastic"
+          needleTransitionDuration={500}
+          needleTransition="easeCubicOut"
           segments={3}
           paddingVertical={60}
+          currentValueText = "${value}°C"
           segmentColors={["#b3ff66", "#00b300", "#e6b800"]}
-          customSegmentLabels={[
-            {
-              text: "Low Temp",
-              position: "OUTSIDE",
-              color: "#555",
-              fontSize: "16px",
-            },
-            {
-              text: "Normal Temp",
-              position: "OUTSIDE",
-              color: "#555",
-              fontSize: "16px",
-            },
-            {
-              text: "High Temp",
-              position: "OUTSIDE",
-              color: "#555",
-              fontSize: "1ู6px",
-            },
-          ]}
-        />
+          forceRender={forceRender}
+          // customSegmentLabels={[
+          //   {
+          //     text: "Low Temp",
+          //     position: "OUTSIDE",
+          //     color: "#555",
+          //     fontSize: "16px",
+          //   },
+          //   {
+          //     text: "Normal Temp",
+          //     position: "OUTSIDE",
+          //     color: "#555",
+          //     fontSize: "16px",
+          //   },
+          //   {
+          //     text: "High Temp",
+          //     position: "OUTSIDE",
+          //     color: "#555",
+          //     fontSize: "1ู6px",
+          //   },
+          // ]}
+        />}
 
         <Grid item xs={12} className="headcard">Temperature Controller</Grid>
         <Paper elevation={6} style={paperStyle2}>
@@ -171,11 +197,10 @@ function Temp() {
           </Grid>
 
           <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center">
-            <Button variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{ minWidth: "100px" }} onClick={clearIV}>
-              clearIV
+            <Button variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{ minWidth: "100px" }} onClick={BtnFn2}>
+              SAVE
             </Button>
           </Grid>
-
         </Paper>
       </Paper>
     </Grid>

@@ -10,6 +10,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Switch from '@mui/material/Switch';
+import WbIncandescentIcon from '@material-ui/icons/WbIncandescent';
+import { yellow } from '@material-ui/core/colors';
 import Axios from 'axios';
 
 function Light(){
@@ -88,9 +90,14 @@ function Light(){
             </Grid>
             <Grid item xs={12} md={4}><Button onClick={getControllerStatus} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show information</Button></Grid>
             
-                <c>State :</c>
-                <Paper elevation={6} style={paperStyle2} >
                 
+                <Grid item xs={6} ><WbIncandescentIcon style={{ fontSize: 100, color: yellow[700] }}/></Grid>
+                <Grid item xs={6} className="clight">Open</Grid>
+                <Grid item xs={6} ><WbIncandescentIcon style={{ fontSize: 100 }}/></Grid>
+                <Grid item xs={6} className="clight">Close</Grid>
+                
+                <Paper elevation={6} style={paperStyle2} >
+                    
                     <Grid container spacing={2} direction="row" justifyContent="center" alignItems="center" >
                     <Grid item xs={4} className="clight">Auto control</Grid>
                     <Grid item xs={1} ><Switch onClick={handleChangeManual} checked={checked1} /></Grid>

@@ -3,51 +3,55 @@ import Navbar from '../Components/Navbar';
 import {Grid, Paper} from '@material-ui/core'
 import styled from 'styled-components';
 import {useNavigate} from "react-router-dom";
+const B = styled.button`
+background-color:#ffffff;
+border: 4px solid #008000;
+border-radius: 8px;
+padding: 20px 40px;
+cursor: pointer;
+transition: ease background-color 250ms;
+&:hover{
+    background-color:#000000; 
+}`
+const BT = styled.button`
+background-color:#ffffff;
+border: 4px solid #008000;
+border-radius: 8px;
+padding: 20px 35px ;
+cursor: pointer;
+transition: ease background-color 250ms;
+&:hover{
+    background-color:#000000; 
+}`
+const BpH = styled.button`
+background-color:#ffffff;
+border: 4px solid #008000;
+border-radius: 8px;
+margin-top: 2rem;
+padding: 0px 53px ;
+cursor: pointer;
+transition: ease background-color 250ms;
+&:hover{
+    background-color:#000000; 
+}`
+const BH = styled.button`
+background-color:#ffffff;
+border: 4px solid #008000;
+border-radius: 8px;
+margin-top: 2rem;
+padding: 19px 35px;
+cursor: pointer;
+transition: ease background-color 250ms;
+&:hover{
+    background-color:#000000; 
+}`
 const Home=()=>{
     const paperStyle={padding:20,height:'80vh',width:400,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const navigate = useNavigate();
-    const Button = styled.button`
-    background-color:#ffffff;
-    border: 4px solid #008000;
-    border-radius: 8px;
-    padding: 20px 40px;
-    cursor: pointer;
-    transition: ease background-color 250ms;
-    &:hover{
-        background-color:#000000; 
-    }`
-    const ButtonTemp = styled.button`
-    background-color:#ffffff;
-    border: 4px solid #008000;
-    border-radius: 8px;
-    padding: 20px 35px ;
-    cursor: pointer;
-    transition: ease background-color 250ms;
-    &:hover{
-        background-color:#000000; 
-    }`
-    const ButtonpH = styled.button`
-    background-color:#ffffff;
-    border: 4px solid #008000;
-    border-radius: 8px;
-    margin-top: 2rem;
-    padding: 0px 53px ;
-    cursor: pointer;
-    transition: ease background-color 250ms;
-    &:hover{
-        background-color:#000000; 
-    }`
-    const ButtonHumid = styled.button`
-    background-color:#ffffff;
-    border: 4px solid #008000;
-    border-radius: 8px;
-    margin-top: 2rem;
-    padding: 19px 35px;
-    cursor: pointer;
-    transition: ease background-color 250ms;
-    &:hover{
-        background-color:#000000; 
-    }`
+    const Button = B
+    const ButtonTemp = BT
+    const ButtonpH = BpH
+    const ButtonHumid = BH
     return(
         <Grid align='center'>
             <Navbar/>

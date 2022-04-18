@@ -1,12 +1,20 @@
 import React,{useState} from 'react'
 import { FiMenu, FiX } from "react-icons/fi";
 import {useNavigate} from "react-router-dom";
+import Axios from "axios";
+
 
 function Navbar(){
     const [click,setClick]=useState(false);
     const handleClick=()=>setClick(!click);
     const closeMobileMenu=()=>setClick(false);
     const navigate = useNavigate();
+
+    function clearSession(){
+        localStorage.removeItem("users")
+        const sscheck = Axios.get(`http://localhost:3001/session/${'clear'}`, {withCredentials: true})
+    }
+
     return(
         <div className="navbar">
             <div className="container">
@@ -24,7 +32,7 @@ function Navbar(){
                         <li className="menu-link" onClick={closeMobileMenu}>
                             <a href="#" onClick={()=>{navigate("/menuinfo")}}>Information</a>
                         </li>
-                        <li className="menu-link" onClick={closeMobileMenu}>
+                        <li className="menu-link" onClick={clearSession}>
                             <a href="#" onClick={()=>{navigate("/")}}>Log out</a>
                         </li>
                     </ul>

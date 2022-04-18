@@ -14,7 +14,7 @@ const Login=()=>{
     const {setUserName} = useContext(LoginContext);
     const {username} = useContext(LoginContext);
     useEffect(()=>{
-        if (localStorage.getItem('users')){
+        if (window.localStorage.getItem('users')){
             navigate("/")
         }
     },[]);
@@ -38,8 +38,8 @@ const Login=()=>{
     //        body: JSON.stringify(item)
     //    });
     //    result = await result.json();
-    //    localStorage.setItem("users",JSON.stringify(result))
-    //    console.log(localStorage)    
+    //    window.localStorage.setItem("users",JSON.stringify(result))
+    //    console.log(window.localStorage)    
     //}
 
     async function signin(){
@@ -55,8 +55,7 @@ const Login=()=>{
             body: JSON.stringify(item)
         });
         result = await result.json();
-        //localStorage.setItem("users",JSON.stringify(result))
-        localStorage.setItem("users",JSON.stringify(item.username))
+        //window.localStorage.setItem("users",JSON.stringify(result))
        Axios.post('http://localhost:3001/login',{
            username: username,
            passwords: passwords
@@ -67,6 +66,7 @@ const Login=()=>{
                 setLoginStatus(response.data.message)
             }else{
                 //console.log({username})
+                window.localStorage.setItem("users",JSON.stringify(item.username))
                 setLoginState(response.data.users)
                 console.log(loginState)
                 //document.cookie = "username=" + response.data.users.username
