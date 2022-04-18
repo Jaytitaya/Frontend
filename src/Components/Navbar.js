@@ -25,7 +25,7 @@ function Navbar(){
                             <a href="#" onClick={()=>{navigate("/menuinfo")}}>Information</a>
                         </li>
                         <li className="menu-link" onClick={closeMobileMenu}>
-                            <a href="#" onClick={()=>{navigate("/login")}}>Log out</a>
+                            <a href="#" onClick={()=>{navigate("/")}}>Log out</a>
                         </li>
                     </ul>
                     <div className="mobile-menu" onClick={handleClick}>

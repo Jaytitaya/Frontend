@@ -1,12 +1,10 @@
 
 import React, { useState,createContext } from 'react';
-
 import './App.css';
 import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import Addnewplant from './Pages/Addnewplant';
 import Myplant from './Pages/Myplant';
-import Card from './Components/Card';
 import Home from './Pages/Home';
 import Light from './Pages/Light';
 import Temp from './Pages/Temp';
@@ -19,14 +17,15 @@ import Farmsetting from './Pages/Farmsetting';
 import Plantform from './Pages/Plantform';
 import Farminfo from './Pages/Farminfo';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-
 const LoginContext = React.createContext();
 
 function App() {
+  
   const token = localStorage.getItem("accessToken");
   const [username, setUserName]=useState("");
+  
   //if(!token){
-  //  return<Login/>
+  //  return <Login/>
   //}
 
   return (
@@ -34,7 +33,8 @@ function App() {
      <div className="wrapper" style={{backgroundColor: '#f5f5f5', height:'100%',width:'100%' }}>
      <BrowserRouter>
       <Routes>
-        <Route exact path="/login" element={<Login/>}/>
+        
+        <Route exact path="/" element={<Login/>}/>
         <Route exact path="/signup" element={<Signup/>}/>
         <Route exact path="/addnewplant" element={<Addnewplant/>}/>
         <Route exact path="/home" element={<Home/>}/>
@@ -43,7 +43,6 @@ function App() {
         <Route exact path="/humid" element={<Humid/>}/>
         <Route exact path="/pH" element={<PH/>}/>
         <Route exact path="/myplant" element={<Myplant/>}/>
-        <Route exact path="/card" element={<Card/>}/>
         <Route exact path="/menuset" element={<Menuset/>}/>
         <Route exact path="/menuinfo" element={<Menuinfo/>}/>
         <Route exact path="/plantsetting" element={<Plantsetting/>}/>

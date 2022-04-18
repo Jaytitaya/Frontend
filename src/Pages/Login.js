@@ -15,7 +15,7 @@ const Login=()=>{
     const {username} = useContext(LoginContext);
     useEffect(()=>{
         if (localStorage.getItem('users')){
-            navigate("/login")
+            navigate("/")
         }
     },[]);
     useEffect(()=>{
@@ -63,7 +63,7 @@ const Login=()=>{
         }).then((response)=>{
             console.log(response.data[0]);
             if(response.data.message){
-                navigate("/login")
+                navigate("/")
                 setLoginStatus(response.data.message)
             }else{
                 //console.log({username})
