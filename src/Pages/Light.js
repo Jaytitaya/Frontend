@@ -80,21 +80,21 @@ function Light(){
                     <h2 className="app-front" style={{color:'#008000'}}>Light</h2>
                 </Grid>
             </Grid>
-            <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center" >
+            <Grid container spacing={2} direction="row" justifyContent="center" alignItems="center" >
             <Grid item xs={12} md={4}>
                 <FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Farn name</InputLabel>
-                    <Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={plantname} label="Farm name" input={<OutlinedInput label="Farm name" />}onChange={handleChange}>
+                    <Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={farmname} label="Farm name" input={<OutlinedInput label="Farm name" />}onChange={handleChange}>
                         {posts.map((posts) => (<MenuItem key={posts} value={posts}>{posts}</MenuItem>))}
                     </Select>
                 </FormControl>
             </Grid>
-            <Grid item xs={12} md={4}><Button onClick={getControllerStatus} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show information</Button></Grid>
+            <Grid item xs={12} md={4}><Button onClick={getControllerStatus} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show light state</Button></Grid>
             
                 
-                <Grid item xs={6} ><WbIncandescentIcon style={{ fontSize: 100, color: yellow[700] }}/></Grid>
-                <Grid item xs={6} className="clight">Open</Grid>
-                <Grid item xs={6} ><WbIncandescentIcon style={{ fontSize: 100 }}/></Grid>
-                <Grid item xs={6} className="clight">Close</Grid>
+                <Grid item xs={12} ><WbIncandescentIcon style={{ fontSize: 100, color: yellow[700] }}/></Grid>
+                <Grid item xs={12} className="clight">Open</Grid>
+                <Grid item xs={12} ><WbIncandescentIcon style={{ fontSize: 100 }}/></Grid>
+                <Grid item xs={12} className="clight">Close</Grid>
                 
                 <Paper elevation={6} style={paperStyle2} >
                     
