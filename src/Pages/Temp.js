@@ -130,7 +130,7 @@ function checkSession(){
           </Grid>
           <Grid item xs={12} md={4}>
             <Button onClick={BtnFn} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{ minWidth: "210px" }}>
-              Show information
+              Show parameter
             </Button>
           </Grid>
         </Grid>
