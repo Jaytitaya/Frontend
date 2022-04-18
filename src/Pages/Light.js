@@ -1,20 +1,20 @@
 import React,{useState,useEffect} from 'react';
+import {useNavigate} from "react-router-dom";
 import Navbar from '../Components/Navbar';
-import {Grid, TextField, Paper, Typography} from '@material-ui/core';
+import {Grid,  Paper} from '@material-ui/core';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Switch from '@mui/material/Switch';
 import WbIncandescentIcon from '@material-ui/icons/WbIncandescent';
 import { yellow } from '@material-ui/core/colors';
 import Axios from 'axios';
 
 function Light(){
+    const navigate = useNavigate();
     const paperStyle={padding:20,height:'90vh',width:700,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const paperStyle2={padding:30,height:'20vh',width:380,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const [plantname,setPlantname]=useState("")
@@ -22,18 +22,57 @@ function Light(){
     const [plantsList, setPlantsList] = useState([])
     const [checked1, setChecked1] = useState(false);
     const [checked2, setChecked2] = useState(false);
+    const [lightstate, setLightstate] = useState("1");
+    const [Param,setParam] = useState("light");
+    const [ID,setID] = useState(0);
     let [ posts, setPosts ] = useState([])
 
     const handleChangeManual = (event) => {setChecked1(event.target.checked)};
     const handleChangeControll = (event) => {setChecked2(event.target.checked)};
 
-    useEffect(()=>{
-    async function getResults() {
-      const results = await Axios('http://localhost:3001/farmname',{ withCredentials: true });
-      setPosts(results.data);
+    function lighticon(){
+        if (lightstate === "1"){
+            
+            return <WbIncandescentIcon style={{ fontSize: 100, color: yellow[700] }}/>;
+        }else{
+            return <WbIncandescentIcon style={{ fontSize: 100 }}/>;
+        }
     }
-    getResults()
-    },[]); 
+
+    function lighttext(){
+        if (lightstate === "1"){
+            return "Open";
+        }else{
+            return "Close";
+        }
+    }
+
+    function getSensorVal(){
+        Axios.get(`http://localhost:3001/getSensorVal/${farmname}/${Param}`,{ withCredentials: true })
+             .then((response) => {setLightstate(parseInt(response.data[0].iot_light))})
+        console.log(lightstate)
+    }
+
+    function BtnFn(){
+        clearInterval(ID);
+        //getControllerStatus();
+        setID(setInterval(getSensorVal,1600));
+        //console.log(lightstate);
+    }
+
+    useEffect(() => {
+        function getResults() {
+          Axios.get("http://localhost:3001/farmname",{ withCredentials: true }).then(res => res.data).then(data => setPosts(data)).catch(err => alert("log in first !"))
+        }
+       /* async function checkSS() {
+          const results = await Axios.get(`http://localhost:3001/session/${'check'}`, {withCredentials: true})
+          setss(results.data.loggedIn)
+          console.log(setss)
+        }
+        checkSS(); */
+        getResults();
+        return () =>  {clearInterval(ID)};
+      }, [ID]);
     console.log(posts)
 
     const handleChange = (event) => {
@@ -67,6 +106,22 @@ function Light(){
         }
       }
 
+      function checkSession(){
+        let ck = "check"
+        
+      /*  if(window.localStorage.getItem("users") != undefined){
+          ck = "check"
+        }*/
+          Axios.get(`http://localhost:3001/session/${ck}`, {withCredentials: true}).then((response) => {
+            console.log(window.localStorage.getItem("users"))
+            if (response.data.loggedIn === false) {navigate("/login")}
+        })
+      }
+    
+      useEffect(() => {
+        checkSession();
+      },[]);
+
     return(
         
         <Grid align='center'>
@@ -88,13 +143,11 @@ function Light(){
                     </Select>
                 </FormControl>
             </Grid>
-            <Grid item xs={12} md={4}><Button onClick={getControllerStatus} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show light state</Button></Grid>
+            <Grid item xs={12} md={4}><Button onClick={BtnFn} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show light state</Button></Grid>
             
                 
-                <Grid item xs={12} ><WbIncandescentIcon style={{ fontSize: 100, color: yellow[700] }}/></Grid>
-                <Grid item xs={12} className="clight">Open</Grid>
-                <Grid item xs={12} ><WbIncandescentIcon style={{ fontSize: 100 }}/></Grid>
-                <Grid item xs={12} className="clight">Close</Grid>
+                <Grid item xs={12} >{lighticon()}</Grid>
+                <Grid item xs={12} className="clight">{lighttext()}</Grid>
                 
                 <Paper elevation={6} style={paperStyle2} >
                     
