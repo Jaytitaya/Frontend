@@ -47,10 +47,12 @@ function Light(){
         }
     }
 
-    function getSensorVal(){
-        Axios.get(`http://localhost:3001/getSensorVal/${farmname}/${Param}`,{ withCredentials: true })
-             .then((response) => {setLightstate(parseInt(response.data[0].iot_light))})
-        console.log(lightstate)
+    
+
+    async function getSensorVal(){
+        const results = await Axios.get(`http://localhost:3001/getSensorVal/${farmname}/${Param}`,{ withCredentials: true });
+        setLightstate(parseInt(results.data[0].iot_light));
+        console.log(lightstate);
     }
 
     function BtnFn(){
@@ -58,6 +60,7 @@ function Light(){
         //getControllerStatus();
         setID(setInterval(getSensorVal,1600));
         //console.log(lightstate);
+
     }
 
     useEffect(() => {
