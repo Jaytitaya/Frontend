@@ -36,7 +36,22 @@ function Addnewplant(){
         {name:'Lateflowering', val:'late'},
       ];
     
-    
+      useEffect(() => {
+        checkSession();
+      },[]);
+      
+      function checkSession(){
+        let ck = "check"
+        // if(window.localStorage.getItem("users") != undefined){
+        //   ck = "clear"
+        // }
+          Axios.get(`http://localhost:3001/session/${ck}`, {withCredentials: true}).then((response) => {
+            console.log(localStorage.getItem("users"))
+            if (response.data.loggedIn === false) {
+              alert("Session not found :-( , redirect to login page.")
+              navigate("/login")}
+        })
+      }
     
     
     const handleChange = (event) => {

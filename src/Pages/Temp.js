@@ -21,11 +21,11 @@ function Temp() {
   const [Lowertemp, setLowertemp] = useState(20);
   const [Highertemp, setHighertemp] = useState(29);
   const [ID,setID] = useState(0);
-  const [Param,setParam] = useState("temp");
+  const Param = "temp";
   const [status, setStatus] = useState("");
   let [posts, setPosts] = useState([]);
   const navigate = useNavigate();
-  const [showgate, setShowgate] = useState(false);
+  const [showgate, setShowgate] = useState(true);
   const [forceRender,setForceRender] = useState(true);
 
   function getSensorVal(){
@@ -54,9 +54,8 @@ function Temp() {
   }
   const pushControllerStatus = () => {
     Axios.put(`http://localhost:3001/pushController/${farmname}/${Param}`,{ temp_MC: checked_MC, fan: checked_fan, heatlight: checked_HL },{ withCredentials: true })
-         .then((response) => {setStatus(response.data.message)})
+    .then((response) => {alert(response.data.message)})
   }
-
   function BtnFn(){
     setForceRender(true)
     clearInterval(ID);
@@ -66,17 +65,18 @@ function Temp() {
     setID(setInterval(getSensorVal,1600));
   }
 
-function checkSession(){
-  let ck = "check"
-  
-/*  if(window.localStorage.getItem("users") != undefined){
-    ck = "check"
-  }*/
-    Axios.get(`http://localhost:3001/session/${ck}`, {withCredentials: true}).then((response) => {
-      console.log(window.localStorage.getItem("users"))
-      if (response.data.loggedIn === false) {navigate("/login")}
-  })
-}
+  function checkSession(){
+    let ck = "check"
+    // if(window.localStorage.getItem("users") != undefined){
+    //   ck = "clear"
+    // }
+      Axios.get(`http://localhost:3001/session/${ck}`, {withCredentials: true}).then((response) => {
+        console.log(localStorage.getItem("users"))
+        if (response.data.loggedIn === false) {
+          alert("Session not found :-( , redirect to login page.")
+          navigate("/login")}
+    })
+  }
   function BtnFn2(){
     pushControllerStatus();
   }
@@ -97,7 +97,7 @@ function checkSession(){
 
   useEffect(() => {
     function getResults() {
-      Axios.get("http://localhost:3001/farmname",{ withCredentials: true }).then(res => res.data).then(data => setPosts(data)).catch(err => alert("log in first !"))
+      Axios.get("http://localhost:3001/farmname",{ withCredentials: true }).then(res => res.data).then(data => setPosts(data)).catch(err => console.log(err))
     }
    /* async function checkSS() {
       const results = await Axios.get(`http://localhost:3001/session/${'check'}`, {withCredentials: true})
@@ -130,7 +130,7 @@ function checkSession(){
           </Grid>
           <Grid item xs={12} md={4}>
             <Button onClick={BtnFn} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{ minWidth: "210px" }}>
-              Show parameter
+              Show Parameter
             </Button>
           </Grid>
         </Grid>

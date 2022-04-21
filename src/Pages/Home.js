@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Navbar from '../Components/Navbar';
 import {Grid, Paper} from '@material-ui/core'
 import styled from 'styled-components';
 import {useNavigate} from "react-router-dom";
+import Axios from 'axios';
+
 const B = styled.button`
 background-color:#ffffff;
 border: 4px solid #008000;
@@ -45,6 +47,7 @@ transition: ease background-color 250ms;
 &:hover{
     background-color:#000000; 
 }`
+
 const Home=()=>{
     const paperStyle={padding:20,height:'80vh',width:400,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const navigate = useNavigate();
@@ -52,6 +55,24 @@ const Home=()=>{
     const ButtonTemp = BT
     const ButtonpH = BpH
     const ButtonHumid = BH
+
+    useEffect(() => {
+        checkSession();
+      },[]);
+      
+      function checkSession(){
+        let ck = "check"
+        // if(window.localStorage.getItem("users") != undefined){
+        //   ck = "clear"
+        // }
+          Axios.get(`http://localhost:3001/session/${ck}`, {withCredentials: true}).then((response) => {
+            console.log(localStorage.getItem("users"))
+            if (response.data.loggedIn === false) {
+              alert("Session not found :-( , redirect to login page.")
+              navigate("/login")}
+        })
+      }
+
     return(
         <Grid align='center'>
             <Navbar/>
