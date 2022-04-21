@@ -142,6 +142,9 @@ function PH() {
           height={245}
           minValue={lowerph + (lowerph - higherph)}
           maxValue={higherph + (higherph - lowerph)}
+          //minValue={0}
+          //maxValue={10}
+          //customSegmentStops={[0,lowerph, higherph, 10]}
           valueTextFontSize={"20"}
           needleColor="#662200"
           needleTransitionDuration={500}
