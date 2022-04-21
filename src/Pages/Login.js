@@ -3,19 +3,19 @@ import {Grid, TextField, Typography, Link} from '@material-ui/core';
 import Button from '@mui/material/Button';
 import {useNavigate} from "react-router-dom";
 import Axios from 'axios';
-import { LoginContext } from '../App';
+//import { LoginContext } from '../App';
 
 const Login=()=>{
     const navigate = useNavigate();
-    //const [username, setUserName]=useState("");
+    const [username, setUserName]=useState("");
     const [passwords, setPasswords]=useState("");
     const [loginStatus, setLoginStatus]=useState("");
     const [loginState, setLoginState]=useState("");
-    const {setUserName} = useContext(LoginContext);
-    const {username} = useContext(LoginContext);
+    //const {setUserName} = useContext(LoginContext);
+    //const {username} = useContext(LoginContext);
     useEffect(()=>{
-        if (window.localStorage.getItem('users')){
-            navigate("/")
+        if (localStorage.getItem('users')){
+            navigate("/login")
         }
     },[]);
     useEffect(()=>{
@@ -62,11 +62,11 @@ const Login=()=>{
         }).then((response)=>{
             console.log(response.data[0]);
             if(response.data.message){
-                navigate("/")
+                navigate("/login")
                 setLoginStatus(response.data.message)
             }else{
                 //console.log({username})
-                window.localStorage.setItem("users",JSON.stringify(item.username))
+                localStorage.setItem("users",JSON.stringify(item.username))
                 setLoginState(response.data.users)
                 console.log(loginState)
                 //document.cookie = "username=" + response.data.users.username

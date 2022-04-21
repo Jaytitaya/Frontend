@@ -37,6 +37,23 @@ const Menuinfo=()=>{
     const navigate = useNavigate();
     const Button = BB
     const ButtonP = BP
+
+    useEffect(() => {
+        checkSession();
+      },[]);
+      
+      function checkSession(){
+        let ck = "check"
+        // if(window.localStorage.getItem("users") != undefined){
+        //   ck = "clear"
+        // }
+          Axios.get(`http://localhost:3001/session/${ck}`, {withCredentials: true}).then((response) => {
+            console.log(localStorage.getItem("users"))
+            if (response.data.loggedIn === false) {
+              alert("Session not found :-( , redirect to login page.")
+              navigate("/login")}
+        })
+      }
     
     return(
         <Grid align='center'>
@@ -52,7 +69,7 @@ const Menuinfo=()=>{
                     <Button onClick={()=>{navigate("/farminfo")}}>Farm</Button>
                 </Grid>
                 <Grid item xs={12}>
-                    <ButtonP onClick={()=>{navigate("/myplant")}} >Parameter</ButtonP>
+                    <ButtonP onClick={()=>{navigate("/myplant")}} >Parameters</ButtonP>
                 </Grid>
            </Grid>
            </Paper>

@@ -71,7 +71,7 @@ const Signup=()=>{
                 <Grid item xs={12}><b>{registerStatus}</b></Grid>
                 <Grid item xs={12}>
                     <Typography style={{color:'#a9a9a9'}}>Already have an account?
-                        <Link href="#" onClick={()=>{navigate("/")}} style={{color:'#696969'}}>
+                        <Link href="#" onClick={()=>{navigate("/login")}} style={{color:'#696969'}}>
                             Sign in
                         </Link>
                     </Typography>
