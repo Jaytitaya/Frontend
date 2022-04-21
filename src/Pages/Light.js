@@ -17,55 +17,72 @@ function Light(){
     const navigate = useNavigate();
     const paperStyle={padding:20,height:'90vh',width:700,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const paperStyle2={padding:30,height:'20vh',width:380,margin:"10px auto",backgroundColor: '#f5f5f5'}
-    const [plantname,setPlantname]=useState("")
     const [farmname,setFarmname]=useState("")
-    const [plantsList, setPlantsList] = useState([])
     const [checked1, setChecked1] = useState(false);
     const [checked2, setChecked2] = useState(false);
-    const [lightstate, setLightstate] = useState("1");
-    const [Param,setParam] = useState("light");
+    const [lightstate, setLightstate] = useState(false);
+    const Param = "light";
     const [ID,setID] = useState(0);
-    let [ posts, setPosts ] = useState([])
+    let   [posts, setPosts] = useState([])
 
     const handleChangeManual = (event) => {setChecked1(event.target.checked)};
     const handleChangeControll = (event) => {setChecked2(event.target.checked)};
 
     function lighticon(){
-        if (lightstate === "1"){
-            
-            return <WbIncandescentIcon style={{ fontSize: 100, color: yellow[700] }}/>;
-        }else{
-            return <WbIncandescentIcon style={{ fontSize: 100 }}/>;
-        }
+        if (lightstate === 1){ return <WbIncandescentIcon style={{ fontSize: 100, color: yellow[700] }}/>}
+        else{ return <WbIncandescentIcon style={{ fontSize: 100 }}/>}
     }
 
-    function lighttext(){
-        if (lightstate === "1"){
-            return "Open";
-        }else{
-            return "Close";
-        }
-    }
+    function lighttext() {if(lightstate === 1){return "Open"} else{return "Close"}}
 
-    
-
-    async function getSensorVal(){
-        const results = await Axios.get(`http://localhost:3001/getSensorVal/${farmname}/${Param}`,{ withCredentials: true });
-        setLightstate(parseInt(results.data[0].iot_light));
-        console.log(lightstate);
+    function getSensorVal(){
+        Axios.get(`http://localhost:3001/getSensorVal/${farmname}/${Param}`,{ withCredentials: true })
+             .then((response) => {setLightstate(parseInt(response.data[0].iot_light) === 1? true : false)})
     }
 
     function BtnFn(){
         clearInterval(ID);
-        //getControllerStatus();
+        getControllerStatus();
         setID(setInterval(getSensorVal,1600));
         //console.log(lightstate);
-
     }
 
-    useEffect(() => {
+    const handleChange = (event) => {
+        setFarmname(event.target.value);
+        //console.log(plantname)
+    };
+
+    const getControllerStatus = () => {
+      Axios.get(`http://localhost:3001/getController/${farmname}/${Param}`,{ withCredentials: true }).then((response) => {
+        setChecked1(response.data[0].light_MC === 1? true : false);
+        setChecked2(response.data[0].light === 1? true : false);
+      })
+    }
+    const pushControllerStatus = () => {
+      Axios.put(`http://localhost:3001/pushController/${farmname}/${Param}`,{ light_MC: checked1, light_checked: checked2 },{ withCredentials: true })
+      .then((response) => {alert(response.data.message)})
+    }
+
+    function checkSession(){
+      let ck = "check"
+      // if(window.localStorage.getItem("users") != undefined){
+      //   ck = "clear"
+      // }
+        Axios.get(`http://localhost:3001/session/${ck}`, {withCredentials: true}).then((response) => {
+          console.log(localStorage.getItem("users"))
+          if (response.data.loggedIn === false) {
+            alert("Session not found :-( , redirect to login page.")
+            navigate("/login")}
+      })
+    }
+    
+      useEffect(() => {
+        checkSession();
+      },[]);
+
+      useEffect(() => {
         function getResults() {
-          Axios.get("http://localhost:3001/farmname",{ withCredentials: true }).then(res => res.data).then(data => setPosts(data)).catch(err => alert("log in first !"))
+          Axios.get("http://localhost:3001/farmname",{ withCredentials: true }).then(res => res.data).then(data => setPosts(data)).catch(err => console.error(err))
         }
        /* async function checkSS() {
           const results = await Axios.get(`http://localhost:3001/session/${'check'}`, {withCredentials: true})
@@ -76,54 +93,6 @@ function Light(){
         getResults();
         return () =>  {clearInterval(ID)};
       }, [ID]);
-    console.log(posts)
-
-    const handleChange = (event) => {
-        setFarmname(event.target.value);
-        //console.log(plantname)
-    };
-
-    const getPlants = () =>{
-        Axios.post('http://localhost:3001/plantname', {
-            plantname : plantname
-         },{ withCredentials: true }).then((response)=>{
-            setPlantsList(response.data);
-            
-        });
-    }
-
-    const getControllerStatus = () => {
-        Axios.post("http://localhost:3001/getControllerHumid",{plantname: plantname},{ withCredentials: true }).then((response) => {
-          setChecked1(response.data[0].lightcontrolstrategy);
-          setChecked2(response.data[0].lightcontrolstatus);
-        });
-      }
-
-    const pushControllerStatus = () => {
-        if (checked1 == true) {
-          Axios.post("http://localhost:3001/pushControllerTemp",{ plantname: plantname, lightcontrolstrategy: checked1 },{ withCredentials: true })
-        }
-        else {
-          Axios.post("http://localhost:3001/pushControllerTemp",{ plantname: plantname, lightcontrolstrategy: checked1},{ withCredentials: true })
-          Axios.post("http://localhost:3001/manualpushControllerTemp",{ plantname: plantname, lightcontrolstatus: checked2},{ withCredentials: true })
-        }
-      }
-
-      function checkSession(){
-        let ck = "check"
-        
-      /*  if(window.localStorage.getItem("users") != undefined){
-          ck = "check"
-        }*/
-          Axios.get(`http://localhost:3001/session/${ck}`, {withCredentials: true}).then((response) => {
-            console.log(window.localStorage.getItem("users"))
-            if (response.data.loggedIn === false) {navigate("/login")}
-        })
-      }
-    
-      useEffect(() => {
-        checkSession();
-      },[]);
 
     return(
         
