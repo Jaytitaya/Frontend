@@ -15,7 +15,7 @@ const BB = styled.button`
     font-size: 25px;
     transition: ease background-color 250ms;
     &:hover{
-        background-color:#000000; 
+        background-color:#008000; 
         color: white;
     }`
 const BP = styled.button`
@@ -28,7 +28,7 @@ const BP = styled.button`
     font-size: 25px;
     transition: ease background-color 250ms;
     &:hover{
-        background-color:#000000; 
+        background-color:#008000; 
         color: white;
     }`
 
