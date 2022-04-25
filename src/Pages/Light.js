@@ -115,7 +115,7 @@ function Light(){
                     </Select>
                 </FormControl>
             </Grid>
-            <Grid item xs={12} md={4}><Button onClick={BtnFn} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show light state</Button></Grid>
+            <Grid item xs={12} md={4}><Button onClick={BtnFn} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show information</Button></Grid>
             
                 
                 <Grid item xs={12} >{lighticon()}</Grid>
