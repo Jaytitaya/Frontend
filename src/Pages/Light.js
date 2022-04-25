@@ -19,21 +19,20 @@ function Light(){
     const paperStyle2={padding:30,height:'20vh',width:380,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const [farmname,setFarmname]=useState("")
     const [checked1, setChecked1] = useState(false);
-    const [checked2, setChecked2] = useState(false);
     const [lightstate, setLightstate] = useState(false);
     const Param = "light";
     const [ID,setID] = useState(0);
     let   [posts, setPosts] = useState([])
 
     const handleChangeManual = (event) => {setChecked1(event.target.checked)};
-    const handleChangeControll = (event) => {setChecked2(event.target.checked)};
+    const handleChangeControll = (event) => {setLightstate(event.target.checked)};
 
     function lighticon(){
-        if (lightstate === 1){ return <WbIncandescentIcon style={{ fontSize: 100, color: yellow[700] }}/>}
+        if (lightstate === true){ return <WbIncandescentIcon style={{ fontSize: 100, color: yellow[700] }}/>}
         else{ return <WbIncandescentIcon style={{ fontSize: 100 }}/>}
     }
 
-    function lighttext() {if(lightstate === 1){return "Open"} else{return "Close"}}
+    function lighttext() {if(lightstate === true){return "Open"} else{return "Close"}}
 
     function getSensorVal(){
         Axios.get(`http://localhost:3001/getSensorVal/${farmname}/${Param}`,{ withCredentials: true })
@@ -41,9 +40,9 @@ function Light(){
     }
 
     function BtnFn(){
-        clearInterval(ID);
+        // clearInterval(ID);
+        // setID(setInterval(getSensorVal,1600));
         getControllerStatus();
-        setID(setInterval(getSensorVal,1600));
         //console.log(lightstate);
     }
 
@@ -55,11 +54,12 @@ function Light(){
     const getControllerStatus = () => {
       Axios.get(`http://localhost:3001/getController/${farmname}/${Param}`,{ withCredentials: true }).then((response) => {
         setChecked1(response.data[0].light_MC === 1? true : false);
-        setChecked2(response.data[0].light === 1? true : false);
+        setLightstate(response.data[0].light === 1? true : false);
+        console.log(lightstate)
       })
     }
     const pushControllerStatus = () => {
-      Axios.put(`http://localhost:3001/pushController/${farmname}/${Param}`,{ light_MC: checked1, light_checked: checked2 },{ withCredentials: true })
+      Axios.put(`http://localhost:3001/pushController/${farmname}/${Param}`,{ light_MC: checked1, light_checked: lightstate },{ withCredentials: true })
       .then((response) => {alert(response.data.message)})
     }
 
@@ -132,7 +132,7 @@ function Light(){
                     <Grid  container spacing={5} direction="row" justifyContent="center" alignItems="center" >
                         <Grid className="clight" item xs={2} >Light</Grid>
                         <Grid item xs={2} className="clight">Off</Grid>
-                        <Switch onClick={handleChangeControll} checked={checked2} disabled={!checked1} />
+                        <Switch onClick={handleChangeControll} checked={lightstate} disabled={!checked1} />
                         <Grid item xs={2} className="clight" >On</Grid>
                     </Grid>
 
