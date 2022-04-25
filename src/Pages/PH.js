@@ -17,9 +17,9 @@ function PH() {
   const paperStyle = {padding: 20,height: "120vh",width: 700,margin: "10px auto",backgroundColor: "#f5f5f5"};
   const paperStyle2 = {padding: 30,height: "25vh",width: 380,margin: "10px auto",backgroundColor: "#f5f5f5"};
   const [farmname,setFarmname]=useState("")
-  const [sensorread, setSensorread] = useState(25);
-  const [lowerph, setlowerph] = useState(20);
-  const [higherph, sethigherph] = useState(29);
+  const [sensorread, setSensorread] = useState(6.5);
+  const [lowerph, setlowerph] = useState(4);
+  const [higherph, sethigherph] = useState(7);
   const [ID,setID] = useState(0);
   const Param = "ph";
   const [status, setStatus] = useState("");
@@ -143,8 +143,8 @@ function PH() {
           //minValue={lowerph + (lowerph - higherph)}
           //maxValue={higherph + (higherph - lowerph)}
           minValue={1}
-          maxValue={11}
-          customSegmentStops={[1,lowerph, higherph, 11]}
+          maxValue={14}
+          customSegmentStops={[1,lowerph, higherph, 14]}
           valueTextFontSize={"20"}
           needleColor="#662200"
           needleTransitionDuration={500}
