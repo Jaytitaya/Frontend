@@ -140,11 +140,11 @@ function PH() {
           value={sensorread}
           width={400}
           height={245}
-          minValue={lowerph + (lowerph - higherph)}
-          maxValue={higherph + (higherph - lowerph)}
-          //minValue={0}
-          //maxValue={10}
-          //customSegmentStops={[0,lowerph, higherph, 10]}
+          //minValue={lowerph + (lowerph - higherph)}
+          //maxValue={higherph + (higherph - lowerph)}
+          minValue={1}
+          maxValue={11}
+          customSegmentStops={[1,lowerph, higherph, 11]}
           valueTextFontSize={"20"}
           needleColor="#662200"
           needleTransitionDuration={500}

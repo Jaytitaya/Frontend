@@ -232,7 +232,7 @@ const Myplant=()=>{
     return(
         <Grid align='center'>
             <Navbar/>
-            <h2 className="app-front" style={{color:'#008000'}}>Parameter</h2>
+            <h2 className="app-front" style={{color:'#008000'}}>Parameters</h2>
             <Grid container spacing={3} direction="row" justifyContent="center" alignItems="center">
             <Grid item xs={3} md={2} >
                 <FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Plant name</InputLabel>
