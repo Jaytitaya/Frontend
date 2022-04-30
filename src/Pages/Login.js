@@ -1,4 +1,4 @@
-import React, {useState ,useEffect,useContext} from 'react';
+import React, {useState ,useEffect} from 'react';
 import {Grid, TextField, Typography, Link} from '@material-ui/core';
 import Button from '@mui/material/Button';
 import {useNavigate} from "react-router-dom";
@@ -11,21 +11,24 @@ const Login=()=>{
     const [passwords, setPasswords]=useState("");
     const [loginStatus, setLoginStatus]=useState("");
     const [loginState, setLoginState]=useState("");
+    const url = process.env.REACT_APP_HOST;
+    const port = process.env.REACT_APP_BE_PORT;
     //const {setUserName} = useContext(LoginContext);
     //const {username} = useContext(LoginContext);
     useEffect(()=>{
-        if (localStorage.getItem('users')){
-            navigate("/login")
-        }
+        console.log(process.env)
+        // if (localStorage.getItem('users')){
+        //     navigate("/login")
+        // }
     },[]);
-    useEffect(()=>{
-        Axios.get("http://localhost:3001/login").then((response)=>{
-            if (response.data.loggedInd == true){
-                setLoginState(response.data.users);
-                console.log(response.data.users);
-            };
-        });
-    },[]); 
+    // useEffect(()=>{
+    //     Axios.get(`http://localhost:3001/login`).then((response)=>{
+    //         if (response.data.loggedInd === true){
+    //             setLoginState(response.data.users);
+    //             console.log(response.data.users);
+    //         };
+    //     });
+    // },[]); 
     //async function absignin(){
     //    console.warn(username,passwords)
     //    let item = {username,passwords};
@@ -46,17 +49,17 @@ const Login=()=>{
         Axios.defaults.withCredentials = true
         console.warn(username,passwords)
         let item = {username,passwords};
-        let result = await fetch("http://localhost:3001/login",{
-            method:'POST',
-            headers:{
-                "Content-Type":"application/json",
-                "Accept":'application/json'
-            },
-            body: JSON.stringify(item)
-        });
-        result = await result.json();
-        //window.localStorage.setItem("users",JSON.stringify(result))
-       Axios.post('http://localhost:3001/login',{
+        // let result = await fetch(`http://localhost:3001/login`,{
+        //     method:'POST',
+        //     headers:{
+        //         "Content-Type":"application/json",
+        //         "Accept":'application/json'
+        //     },
+        //     body: JSON.stringify(item)
+        // });
+        // result = await result.json();
+        // //window.localStorage.setItem("users",JSON.stringify(result))
+       Axios.post(`http://${url}:${port}/login`,{
            username: username,
            passwords: passwords
         }).then((response)=>{
@@ -99,7 +102,7 @@ const Login=()=>{
                 </Grid>
                 <Grid item xs={12}><b>{loginStatus}</b></Grid>
                 <Grid item xs={12}>
-                    <img className="app-login-photo" src="/Loginphoto.png" />
+                    <img className="app-login-photo" src="/Loginphoto.png" alt="Login" />
                 </Grid>
             </Grid>
         </Grid>
