@@ -197,14 +197,14 @@ const Myplant=()=>{
             <Navbar/>
             <h2 className="app-front" style={{color:'#008000'}}>Farm</h2>
             <Grid container spacing={3} direction="row" justifyContent="center" alignItems="center">
-            <Grid item xs={3} md={2} >
+            <Grid item xs={6} md={2} >
                 <FormControl sx={{ minWidth: 120 }}><InputLabel id="demo-simple-select-label" >Plant name</InputLabel>
                     <Select style={{minWidth: '220px'}} labelId="demo-multiple-name-label" id="demo-multiple-name" value={plantname} label="plantname" input={<OutlinedInput label="plantname" />}onChange={handleChange}>
                         {posts.map((posts) => (<MenuItem key={posts} value={posts}>{posts}</MenuItem>))}
                     </Select>
                 </FormControl>
             </Grid>
-            <Grid item xs={3} md={2}><Button onClick={getFarm} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show information</Button></Grid>
+            <Grid item xs={6} md={2}><Button onClick={getFarm} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show information</Button></Grid>
             </Grid>
             
             
@@ -226,7 +226,7 @@ const Myplant=()=>{
                             key={val.farm_name}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                            <TableCell component="th" scope="row">
+                            <TableCell component="th" scope="row" >
                                 {val.farm_name}
                             </TableCell>
                             <TableCell align="center">{val.farm_location}</TableCell>
