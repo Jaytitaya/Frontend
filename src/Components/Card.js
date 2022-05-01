@@ -1,19 +1,13 @@
-import React,{useState} from 'react'
+import React from 'react'
 import {Avatar} from '@material-ui/core'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {useNavigate} from "react-router-dom";
-import Axios from 'axios';
 function Card(){
     const avatarStyle={backgroundColor:'green', width:40, height:56, cursor: 'pointer'}
     const navigate = useNavigate();
-    const [plantsList, setPlantsList] = useState([])
-    const getPlants = () =>{
-        Axios.get('http://localhost:3001/plants').then((response)=>{
-            setPlantsList(response.data);
-        });
-    }
-    {plantsList.map((val,key)=>{
+    const plantsList = [];
+    {plantsList.map((val)=>{
     return(
         
         <div className='card-container'>

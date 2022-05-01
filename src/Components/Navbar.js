@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import { FiMenu, FiX } from "react-icons/fi";
-import {useNavigate} from "react-router-dom";
+//import {useNavigate} from "react-router-dom";
 import Axios from "axios";
 
 
@@ -8,11 +8,14 @@ function Navbar(){
     const [click,setClick]=useState(false);
     const handleClick=()=>setClick(!click);
     const closeMobileMenu=()=>setClick(false);
-    const navigate = useNavigate();
+    
+    const url = process.env.REACT_APP_HOST;
+    const port = process.env.REACT_APP_BE_PORT;
+    //const navigate = useNavigate();
 
     function clearSession(){
-        localStorage.removeItem("users")
-        const sscheck = Axios.get(`http://localhost:3001/session/${'clear'}`, {withCredentials: true})
+        window.localStorage.removeItem("users")
+        Axios.get(`http://${url}:${port}/session/${'clear'}`, {withCredentials: true})
     }
 
     return(
@@ -20,20 +23,20 @@ function Navbar(){
             <div className="container">
                 <div className="header-con">
                     <div className="logo-container">
-                        <a href="#">Smart Farm</a>
+                        <a href="/Home">Smart Farm</a>
                     </div>
                     <ul className={click?"menu active":"menu"}>
                         <li className="menu-link" onClick={closeMobileMenu}>
-                            <a href="#" onClick={()=>{navigate("/Home")}}>Home</a>
+                            <a href="/Home" /*onClick={()=>{navigate("/Home")}}*/>Home</a>
                         </li>
                         <li className="menu-link" onClick={closeMobileMenu}>
-                            <a href="#" onClick={()=>{navigate("/menuset")}}>Configuration</a>
+                            <a href="/menuset" /*onClick={()=>{navigate("/menuset")}}*/>Configuration</a>
                         </li>
                         <li className="menu-link" onClick={closeMobileMenu}>
-                            <a href="#" onClick={()=>{navigate("/menuinfo")}}>Information</a>
+                            <a href="/menuinfo" /*onClick={()=>{navigate("/menuinfo")}}*/>Information</a>
                         </li>
                         <li className="menu-link" onClick={clearSession}>
-                            <a href="#" onClick={()=>{navigate("/")}}>Log out</a>
+                            <a href="/login" /*onClick={()=>{navigate("/login")}}*/>Log out</a>
                         </li>
                     </ul>
                     <div className="mobile-menu" onClick={handleClick}>
