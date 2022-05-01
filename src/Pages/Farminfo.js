@@ -1,4 +1,4 @@
-import React,{Component,useState,useContext,useEffect} from 'react';
+import React,{useState,useEffect} from 'react';
 import Navbar from '../Components/Navbar';
 import {Grid, Paper} from '@material-ui/core';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -12,14 +12,11 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import { grey } from '@mui/material/colors';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
-import Checkbox from '@mui/material/Checkbox';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -30,21 +27,22 @@ import TableRow from '@mui/material/TableRow';
 
 
 const Myplant=()=>{
-    const avatarStyle={backgroundColor:'green', width:40, height:56}
     const navigate = useNavigate();
     //const {username} = localStorage.username;
     //const {username} = useContext(LoginContext);
     const [plantsList, setPlantsList] = useState([]);
     const [plantname,setPlantname]=useState("")
-    const [stage,setStage]=useState("")
-    const [newselectstage,setNewSelectstage]= useState(false)
-    const [newPlantname,setNewPlantname]= useState("");
-    const [newStage,setNewStage]= useState("");
+    // const [stage,setStage]=useState("")
+    // const [newselectstage,setNewSelectstage]= useState(false)
+    // const [newPlantname,setNewPlantname]= useState("");
+    // const [newStage,setNewStage]= useState("");
     const [newFarmname,setNewFarmname]= useState("");
     const [newLocation,setNewLocation]= useState("");
     const [newPlantamount,setNewPlantamount]= useState("");
     const [newstage,setNewstage]= useState("");
     const [state,setState]= useState("");
+    const url = process.env.REACT_APP_HOST;
+    const port = process.env.REACT_APP_BE_PORT;
     const plantstage = [
         {name:'Seeding stage', val:'seed'},
         {name:'Vegetation period', val:'veget'},
@@ -55,13 +53,13 @@ const Myplant=()=>{
         setPlantname(event.target.value);
         //console.log(plantname)
     };
-    const handleNewChange = (event) => {
-        setNewStage(event.target.value);
-    };
+    // const handleNewChange = (event) => {
+    //     setNewStage(event.target.value);
+    // };
 
-    const  handleChangeselectstage =(event)=>{
-        setNewSelectstage(event.target.checked)
-    }
+    // const  handleChangeselectstage =(event)=>{
+    //     setNewSelectstage(event.target.checked)
+    // }
     //console.log({newselectstage})
 
     useEffect(() => {
@@ -73,7 +71,7 @@ const Myplant=()=>{
         // if(window.localStorage.getItem("users") != undefined){
         //   ck = "clear"
         // }
-          Axios.get(`http://localhost:3001/session/${ck}`, {withCredentials: true}).then((response) => {
+          Axios.get(`http://${url}:${port}/session/${ck}`, {withCredentials: true}).then((response) => {
             console.log(localStorage.getItem("users"))
             if (response.data.loggedIn === false) {
               alert("Session not found :-( , redirect to login page.")
@@ -81,24 +79,24 @@ const Myplant=()=>{
         })
       }
 
-    function checkorigin(props){
-        const selectstage = props;
-        if (selectstage === true || selectstage === "1"){
+    // function checkorigin(props){
+    //     const selectstage = props;
+    //     if (selectstage === true || selectstage === "1"){
             
-            return <Checkbox defaultChecked onChange={handleChangeselectstage} />;
-        }else{
-            return <Checkbox onChange={handleChangeselectstage} />;
-        }
-    }
+    //         return <Checkbox defaultChecked onChange={handleChangeselectstage} />;
+    //     }else{
+    //         return <Checkbox onChange={handleChangeselectstage} />;
+    //     }
+    // }
 
-    function Icon(props){
-        const selectstage = props;
+    // function Icon(props){
+    //     const selectstage = props;
         
-        if (selectstage === true || selectstage === "1"){
-            return <CheckBoxIcon sx={{ color: grey[50] }}/>;
-        }
-    }
-    const [open, setOpen] = React.useState(false);
+    //     if (selectstage === true || selectstage === "1"){
+    //         return <CheckBoxIcon sx={{ color: grey[50] }}/>;
+    //     }
+    // }
+    // const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = (props) => {
         const id = props;
@@ -124,22 +122,21 @@ const Myplant=()=>{
     };
     //console.log(newOpentime,newClosetime,newLowertemp,newHighertemp)
     const handleClose = () => {
-        setOpen(false);
         setState("");
     };
-    const handleClickStage = (props) => {
-        const selectstage = props
-        if (selectstage === "on"){
-            return setNewSelectstage("off");
-        }else{
-            return setNewSelectstage("on");
-        }
+    // const handleClickStage = (props) => {
+    //     const selectstage = props
+    //     if (selectstage === "on"){
+    //         return setNewSelectstage("off");
+    //     }else{
+    //         return setNewSelectstage("on");
+    //     }
         
-    };
+    // };
     let [ posts, setPosts ] = useState([])
     useEffect(()=>{
     async function getResults() {
-      const results = await Axios('http://localhost:3001/plantname',{ withCredentials: true });
+      const results = await Axios(`http://${url}:${port}/plantname`,{ withCredentials: true });
       setPosts(results.data);
     }
     getResults()
@@ -147,7 +144,7 @@ const Myplant=()=>{
     //console.log(posts)
 
     const getFarm = () =>{
-        Axios.post('http://localhost:3001/showfarm', {
+        Axios.post(`http://${url}:${port}/showfarm`, {
             plantname : plantname
          },{ withCredentials: true }).then((response)=>{
             setPlantsList(response.data);
@@ -156,7 +153,7 @@ const Myplant=()=>{
     }
 
     const handleUpdate = (id) => {
-        Axios.put("http://localhost:3001/updatefarm",
+        Axios.put(`http://${url}:${port}/updatefarm`,
             {
                 id:id, 
                 farmname: newFarmname,
@@ -183,7 +180,7 @@ const Myplant=()=>{
 
     const deleteData=(id)=>{
         //event.preventDefault();
-        Axios.delete(`http://localhost:3001/deletefarm/${id}`,{ withCredentials: true }).then((result)=>{
+        Axios.delete(`http://${url}:${port}/deletefarm/${id}`,{ withCredentials: true }).then((result)=>{
             setPlantsList(
                 plantsList.filter((val)=>{
                     return val.id !== id;

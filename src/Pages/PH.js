@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Components/Navbar";
-import { Grid, TextField, Paper, TypograpHy } from "@material-ui/core";
+import { Grid, Paper } from "@material-ui/core";
 import ReactSpeedometer from "react-d3-speedometer";
 import Axios from "axios";
 import Button from "@mui/material/Button";
@@ -17,28 +17,29 @@ function PH() {
   const paperStyle = {padding: 20,height: "120vh",width: 700,margin: "10px auto",backgroundColor: "#f5f5f5"};
   const paperStyle2 = {padding: 30,height: "25vh",width: 380,margin: "10px auto",backgroundColor: "#f5f5f5"};
   const [farmname,setFarmname]=useState("")
-  const [sensorread, setSensorread] = useState(6.5);
-  const [lowerph, setlowerph] = useState(4);
-  const [higherph, sethigherph] = useState(7);
+  const [sensorread, setSensorread] = useState(25);
+  const [lowerph, setlowerph] = useState(20);
+  const [higherph, sethigherph] = useState(29);
   const [ID,setID] = useState(0);
   const Param = "ph";
-  const [status, setStatus] = useState("");
   let [posts, setPosts] = useState([]);
   const navigate = useNavigate();
   const [showgate, setShowgate] = useState(true);
   const [forceRender,setForceRender] = useState(true);
+  const url = process.env.REACT_APP_HOST;
+  const port = process.env.REACT_APP_BE_PORT;
 
   function getSensorVal(){
-    Axios.get(`http://localhost:3001/getSensorVal/${farmname}/${Param}`,{ withCredentials: true })
+    Axios.get(`http://${url}:${port}/getSensorVal/${farmname}/${Param}`,{ withCredentials: true })
          .then((response) => {setSensorread(response.data[0].iot_ph)
         if(forceRender === true){setForceRender(false)}})
   }
   function getPlant(){
-    Axios.get(`http://localhost:3001/getPlantname/${farmname}`,{ withCredentials: true })
+    Axios.get(`http://${url}:${port}/getPlantname/${farmname}`,{ withCredentials: true })
          .then((response) => {getRange(response.data[0].farm_plant,response.data[0].farm_stage);})
   }
   function getRange(plant_name, stage_name){
-    Axios.get(`http://localhost:3001/getRange/${plant_name}/${stage_name}/${Param}`,{ withCredentials: true })
+    Axios.get(`http://${url}:${port}/getRange/${plant_name}/${stage_name}/${Param}`,{ withCredentials: true })
          .then((response) => {
            setlowerph(response.data[0].lowerph);
            sethigherph(response.data[0].higherph);
@@ -46,14 +47,14 @@ function PH() {
           .catch(err => console.log(err))
   };
   const getControllerStatus = () => {
-    Axios.get(`http://localhost:3001/getController/${farmname}/${Param}`,{ withCredentials: true }).then((response) => {
+    Axios.get(`http://${url}:${port}/getController/${farmname}/${Param}`,{ withCredentials: true }).then((response) => {
       setChecked_MC(response.data[0].pH_MC === 1? true : false);
       setChecked_phlow(response.data[0].phlow === 1? true : false);
       setChecked_phhigh(response.data[0].phhigh === 1? true : false);
     })
   }
   const pushControllerStatus = () => {
-    Axios.put(`http://localhost:3001/pushController/${farmname}/${Param}`,{ ph_MC: checked_MC, phlow: checked_phlow, phhigh: checked_phhigh },{ withCredentials: true })
+    Axios.put(`http://${url}:${port}/pushController/${farmname}/${Param}`,{ ph_MC: checked_MC, phlow: checked_phlow, phhigh: checked_phhigh },{ withCredentials: true })
     .then((response) => {alert(response.data.message)})
   }
 
@@ -71,7 +72,7 @@ function PH() {
     // if(window.localStorage.getItem("users") != undefined){
     //   ck = "clear"
     // }
-      Axios.get(`http://localhost:3001/session/${ck}`, {withCredentials: true}).then((response) => {
+      Axios.get(`http://${url}:${port}/session/${ck}`, {withCredentials: true}).then((response) => {
         console.log(localStorage.getItem("users"))
         if (response.data.loggedIn === false) {
           alert("Session not found :-( , redirect to login page.")
@@ -98,10 +99,10 @@ function PH() {
 
   useEffect(() => {
     function getResults() {
-      Axios.get("http://localhost:3001/farmname",{ withCredentials: true }).then(res => res.data).then(data => setPosts(data)).catch(err => console.log(err))
+      Axios.get(`http://${url}:${port}/farmname`,{ withCredentials: true }).then(res => res.data).then(data => setPosts(data)).catch(err => console.log(err))
     }
    /* async function checkSS() {
-      const results = await Axios.get(`http://localhost:3001/session/${'check'}`, {withCredentials: true})
+      const results = await Axios.get(`http://${url}:${port}/session/${'check'}`, {withCredentials: true})
       setss(results.data.loggedIn)
       console.log(setss)
     }
@@ -140,18 +141,15 @@ function PH() {
           value={sensorread}
           width={400}
           height={245}
-          //minValue={lowerph + (lowerph - higherph)}
-          //maxValue={higherph + (higherph - lowerph)}
-          minValue={0}
-          maxValue={14}
-          customSegmentStops={[0,lowerph, higherph, 14]}
+          minValue={lowerph + (lowerph - higherph)}
+          maxValue={higherph + (higherph - lowerph)}
           valueTextFontSize={"20"}
           needleColor="#662200"
           needleTransitionDuration={500}
           needleTransition="easeCubicOut"
           segments={3}
           paddingVertical={60}
-          currentValueText = "${value}"
+          currentValueText = {`${sensorread}`}
           segmentColors={["#b3ff66", "#00b300", "#e6b800"]}
           forceRender={forceRender}
           // customSegmentLabels={[

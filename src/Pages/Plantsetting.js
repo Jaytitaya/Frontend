@@ -20,9 +20,11 @@ export default function Plantsetting() {
   const [lifecycle,setLifecycle]=useState("")
   const [utilization, setUtilization]=useState("")
   const [registerplantStatus, setRegisterPlantStatus]=useState("")
+  const url = process.env.REACT_APP_HOST;
+  const port = process.env.REACT_APP_BE_PORT;
 
   const addPlant = () => {
-    Axios.post('http://localhost:3001/plantregister',{
+    Axios.post(`http://${url}:${port}/plantregister`,{
         plantname: plantname,
         plantnameEng: plantnameEng,
         lifecycle: lifecycle,
@@ -51,7 +53,7 @@ export default function Plantsetting() {
     // if(window.localStorage.getItem("users") != undefined){
     //   ck = "clear"
     // }
-      Axios.get(`http://localhost:3001/session/${ck}`, {withCredentials: true}).then((response) => {
+      Axios.get(`http://${url}:${port}/session/${ck}`, {withCredentials: true}).then((response) => {
         console.log(localStorage.getItem("users"))
         if (response.data.loggedIn === false) {
           alert("Session not found :-( , redirect to login page.")

@@ -19,26 +19,27 @@ function Light(){
     const paperStyle2={padding:30,height:'20vh',width:380,margin:"10px auto",backgroundColor: '#f5f5f5'}
     const [farmname,setFarmname]=useState("")
     const [checked1, setChecked1] = useState(false);
-    const [checked2, setChecked2] = useState(false);
     const [lightstate, setLightstate] = useState(false);
     const Param = "light";
-    const [ID,setID] = useState(0);
+    const ID = 0;
     let   [posts, setPosts] = useState([])
+    const url = process.env.REACT_APP_HOST;
+    const port = process.env.REACT_APP_BE_PORT;
 
     const handleChangeManual = (event) => {setChecked1(event.target.checked)};
-    const handleChangeControll = (event) => {setChecked2(event.target.checked)};
+    const handleChangeControll = (event) => {setLightstate(event.target.checked)};
 
     function lighticon(){
-        if (lightstate === true){ return <WbIncandescentIcon style={{ fontSize: 100, color: yellow[700] }}/>}
+        if (lightstate === 1){ return <WbIncandescentIcon style={{ fontSize: 100, color: yellow[700] }}/>}
         else{ return <WbIncandescentIcon style={{ fontSize: 100 }}/>}
     }
 
-    function lighttext() {if(lightstate === true){return "Open"} else{return "Close"}}
+    function lighttext() {if(lightstate === 1){return "Open"} else{return "Close"}}
 
-    function getSensorVal(){
-        Axios.get(`http://localhost:3001/getSensorVal/${farmname}/${Param}`,{ withCredentials: true })
-             .then((response) => {setLightstate(parseInt(response.data[0].iot_light) === 1? true : false)})
-    }
+    // function getSensorVal(){
+    //     Axios.get(`http://${url}:${port}/getSensorVal/${farmname}/${Param}`,{ withCredentials: true })
+    //          .then((response) => {setLightstate(parseInt(response.data[0].iot_light) === 1? true : false)})
+    // }
 
     function BtnFn(){
         // clearInterval(ID);
@@ -53,14 +54,13 @@ function Light(){
     };
 
     const getControllerStatus = () => {
-      Axios.get(`http://localhost:3001/getController/${farmname}/${Param}`,{ withCredentials: true }).then((response) => {
+      Axios.get(`http://${url}:${port}/getController/${farmname}/${Param}`,{ withCredentials: true }).then((response) => {
         setChecked1(response.data[0].light_MC === 1? true : false);
         setLightstate(response.data[0].light === 1? true : false);
-        setChecked2(response.data[0].light === 1? true : false);
       })
     }
     const pushControllerStatus = () => {
-      Axios.put(`http://localhost:3001/pushController/${farmname}/${Param}`,{ light_MC: checked1, light_checked: checked2 },{ withCredentials: true })
+      Axios.put(`http://${url}:${port}/pushController/${farmname}/${Param}`,{ light_MC: checked1, light_checked: lightstate },{ withCredentials: true })
       .then((response) => {alert(response.data.message)})
     }
 
@@ -69,7 +69,7 @@ function Light(){
       // if(window.localStorage.getItem("users") != undefined){
       //   ck = "clear"
       // }
-        Axios.get(`http://localhost:3001/session/${ck}`, {withCredentials: true}).then((response) => {
+        Axios.get(`http://${url}:${port}/session/${ck}`, {withCredentials: true}).then((response) => {
           console.log(localStorage.getItem("users"))
           if (response.data.loggedIn === false) {
             alert("Session not found :-( , redirect to login page.")
@@ -83,10 +83,10 @@ function Light(){
 
       useEffect(() => {
         function getResults() {
-          Axios.get("http://localhost:3001/farmname",{ withCredentials: true }).then(res => res.data).then(data => setPosts(data)).catch(err => console.error(err))
+          Axios.get(`http://${url}:${port}/farmname`,{ withCredentials: true }).then(res => res.data).then(data => setPosts(data)).catch(err => console.error(err))
         }
        /* async function checkSS() {
-          const results = await Axios.get(`http://localhost:3001/session/${'check'}`, {withCredentials: true})
+          const results = await Axios.get(`http://${url}:${port}/session/${'check'}`, {withCredentials: true})
           setss(results.data.loggedIn)
           console.log(setss)
         }
@@ -102,7 +102,7 @@ function Light(){
             <Paper elevation={0} style={paperStyle}>
             <Grid container spacing={2} justifyContent="center" >
                 <Grid item xs={2} >
-                    <img className="homephoto" src="/light.png" />
+                    <img className="homephoto" src="/light.png" alt="Light"/>
                 </Grid>
                 <Grid item xs={3} >
                     <h2 className="app-front" style={{color:'#008000'}}>Light</h2>
@@ -116,7 +116,7 @@ function Light(){
                     </Select>
                 </FormControl>
             </Grid>
-            <Grid item xs={12} md={4}><Button onClick={BtnFn} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show information</Button></Grid>
+            <Grid item xs={12} md={4}><Button onClick={BtnFn} variant="contained" color="success" size="large" sx={{ mt: 3, mb: 2 }} style={{minWidth: '210px' }}>Show light state</Button></Grid>
             
                 
                 <Grid item xs={12} >{lighticon()}</Grid>
@@ -133,7 +133,7 @@ function Light(){
                     <Grid  container spacing={5} direction="row" justifyContent="center" alignItems="center" >
                         <Grid className="clight" item xs={2} >Light</Grid>
                         <Grid item xs={2} className="clight">Off</Grid>
-                        <Switch onClick={handleChangeControll} checked={checked2} disabled={!checked1} />
+                        <Switch onClick={handleChangeControll} checked={lightstate} disabled={!checked1} />
                         <Grid item xs={2} className="clight" >On</Grid>
                     </Grid>
 

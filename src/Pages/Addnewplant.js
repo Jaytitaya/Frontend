@@ -27,6 +27,8 @@ function Addnewplant(){
     const [higherhumid,setHigherhumid]=useState("")
     const [lowerpH,setLowerpH]=useState("")
     const [higherpH,setHigherpH]=useState("")
+    const url = process.env.REACT_APP_HOST;
+    const port = process.env.REACT_APP_BE_PORT;
     
     const [registerplantStatus, setRegisterPlantStatus]=useState("")
     const plantstage = [
@@ -45,7 +47,7 @@ function Addnewplant(){
         // if(window.localStorage.getItem("users") != undefined){
         //   ck = "clear"
         // }
-          Axios.get(`http://localhost:3001/session/${ck}`, {withCredentials: true}).then((response) => {
+          Axios.get(`http://${url}:${port}/session/${ck}`, {withCredentials: true}).then((response) => {
             console.log(localStorage.getItem("users"))
             if (response.data.loggedIn === false) {
               alert("Session not found :-( , redirect to login page.")
@@ -64,7 +66,7 @@ function Addnewplant(){
   let [ posts, setPosts ] = useState([])
   useEffect(()=>{
   async function getResults() {
-    const results = await Axios('http://localhost:3001/plantname',{ withCredentials: true });
+    const results = await Axios(`http://${url}:${port}/plantname`,{ withCredentials: true });
     setPosts(results.data);
   }
   getResults()
@@ -89,7 +91,7 @@ function Addnewplant(){
   //}
     const [plantsList, setPlantsList] = useState([])
     const addPlant = () => {
-        Axios.post('http://localhost:3001/plantparameter',{
+        Axios.post(`http://${url}:${port}/plantparameter`,{
             plantname: plantname,
             stage: stage,
             opentime: opentime,
@@ -145,7 +147,7 @@ function Addnewplant(){
                 </Grid> 
                 <Paper elevation={0} style={paperinside}>
                 <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
-                    <Grid item xs={3} ><img className="homephoto" src="/light.png" /></Grid>
+                    <Grid item xs={3} ><img className="homephoto" src="/light.png" alt="Light"/></Grid>
                     <form onSubmit={addPlant}>
                     
                     <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
@@ -158,14 +160,14 @@ function Addnewplant(){
                     </form>
                 </Grid>
                 <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
-                    <Grid item xs={3} ><img className="app-light-photo" src="/Temp.png" /></Grid>
+                    <Grid item xs={3} ><img className="app-light-photo" src="/Temp.png" alt="Temp"/></Grid>
                     <Grid item xs={3} md={3}><TextField id="outlined-basic" label="Temperature" variant="outlined" onChange={(e) => setLowertemp(e.target.value)}/></Grid>
                     <Grid item xs={1}><Typography style={{color:'#008000'}}>-</Typography></Grid>
                     <Grid item xs={3} md={3}><TextField id="outlined-basic" label="Temperature" variant="outlined" onChange={(e) => setHighertemp(e.target.value)}/></Grid>
                     <Grid item xs={2} ><Typography style={{color:'#008000'}}>°C</Typography></Grid> 
                 </Grid>
                 <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
-                    <Grid item xs={3} ><img className="app-light-photo" src="/Humidity.png" /></Grid>
+                    <Grid item xs={3} ><img className="app-light-photo" src="/Humidity.png" alt="Humidity"/></Grid>
                     <Grid item xs={2} md={3}><TextField id="outlined-basic" label="Humidity" variant="outlined" onChange={(e) => setLowerhumid(e.target.value)}/></Grid>
                     <Grid item xs={1}><Typography style={{color:'#008000'}}>-</Typography></Grid>
                     <Grid item xs={2} md={3}><TextField id="outlined-basic" label="Humidity" variant="outlined" onChange={(e) => setHigherhumid(e.target.value)}/></Grid>

@@ -1,6 +1,6 @@
-import React,{Component,useState,useContext,useEffect} from 'react';
+import React,{useState,useEffect} from 'react';
 import Navbar from '../Components/Navbar';
-import {Grid, Paper} from '@material-ui/core';
+import {Grid} from '@material-ui/core';
 import EditIcon from '@mui/icons-material/Edit';
 import {useNavigate} from "react-router-dom";
 import Button from '@mui/material/Button';
@@ -17,29 +17,28 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
-import DeleteIcon from '@mui/icons-material/Delete';
 
 //import { LoginContext } from '../App';
 
 
 const Plantform=()=>{
-    const avatarStyle={backgroundColor:'green', width:40, height:56}
     const navigate = useNavigate();
     //const {username} = localStorage.username;
     //const {username} = useContext(LoginContext);
     const [plantsList, setPlantsList] = useState([]);
     const [plantname,setPlantname]=useState("")
-    const [newPlantname,setNewPlantname]= useState("");
     const [newplantnameEng,setNewPlantnameEng]=useState("")
     const [newlifecycle,setNewLifecycle]=useState("")
     const [newutilization, setNewUtilization]=useState("")
     const [state,setState]= useState("");
-    const plantstage = [
-        'Seeding stage',
-        'Vegetation period',
-        'Flowering period',
-        'Lateflowering',
-      ];
+    const url = process.env.REACT_APP_HOST;
+    const port = process.env.REACT_APP_BE_PORT;
+    // const plantstage = [
+    //     'Seeding stage',
+    //     'Vegetation period',
+    //     'Flowering period',
+    //     'Lateflowering',
+    //   ];
     const handleChange = (event) => {
         setPlantname(event.target.value);
         //console.log(plantname)
@@ -57,16 +56,13 @@ const Plantform=()=>{
         // if(window.localStorage.getItem("users") != undefined){
         //   ck = "clear"
         // }
-          Axios.get(`http://localhost:3001/session/${ck}`, {withCredentials: true}).then((response) => {
+          Axios.get(`http://${url}:${port}/session/${ck}`, {withCredentials: true}).then((response) => {
             console.log(localStorage.getItem("users"))
             if (response.data.loggedIn === false) {
               alert("Session not found :-( , redirect to login page.")
               navigate("/login")}
         })
       }
-
-    
-    const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = (props) => {
         const id = props;
@@ -89,14 +85,13 @@ const Plantform=()=>{
     };
     //console.log(newOpentime,newClosetime,newLowertemp,newHighertemp)
     const handleClose = () => {
-        setOpen(false);
         setState("");
     };
     
     let [ posts, setPosts ] = useState([])
     useEffect(()=>{
     async function getResults() {
-      const results = await Axios('http://localhost:3001/plantname',{ withCredentials: true });
+      const results = await Axios(`http://${url}:${port}/plantname`,{ withCredentials: true });
       setPosts(results.data);
     }
     getResults()
@@ -104,7 +99,7 @@ const Plantform=()=>{
     //console.log(posts)
 
     const getPlants = () =>{
-        Axios.post('http://localhost:3001/showplant', {
+        Axios.post(`http://${url}:${port}/showplant`, {
             plantname : plantname
          },{ withCredentials: true }).then((response)=>{
             setPlantsList(response.data);
@@ -114,7 +109,7 @@ const Plantform=()=>{
     }
 
     const handleUpdate = (id) => {
-        Axios.put("http://localhost:3001/updateplant",
+        Axios.put(`http://${url}:${port}/updateplant`,
             {
                 id:id, 
                 plantnameEng: newplantnameEng,
@@ -137,16 +132,16 @@ const Plantform=()=>{
         setState("");
     };
 
-    const deleteData=(id)=>{
-        //event.preventDefault();
-        Axios.delete(`http://localhost:3001/deleteplant/${id}`,{ withCredentials: true }).then((result)=>{
-            setPlantsList(
-                plantsList.filter((val)=>{
-                    return val.id !== id;
-                })
-            )
-        }).catch(err=>console.log(err))
-    }
+    // const deleteData=(id)=>{
+    //     //event.preventDefault();
+    //     Axios.delete(`http://${url}:${port}/deleteplant/${id}`,{ withCredentials: true }).then((result)=>{
+    //         setPlantsList(
+    //             plantsList.filter((val)=>{
+    //                 return val.id !== id;
+    //             })
+    //         )
+    //     }).catch(err=>console.log(err))
+    // }
 
     return(
         <Grid align='center'>
@@ -181,7 +176,6 @@ const Plantform=()=>{
                         
                         
                         <IconButton onClick={()=>handleClickOpen(val.id)}><EditIcon sx={{ color: grey[50] }}/></IconButton>
-                        <IconButton onClick={()=>deleteData(val.id)}><DeleteIcon sx={{ color: grey[50] }}/></IconButton>
                         
                     </div>
                 </div>

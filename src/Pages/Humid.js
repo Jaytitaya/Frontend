@@ -22,23 +22,24 @@ function Humid() {
   const [Higherhumid, setHigherhumid] = useState(29);
   const [ID,setID] = useState(0);
   const Param = "humid";
-  const [status, setStatus] = useState("");
   let [posts, setPosts] = useState([]);
   const navigate = useNavigate();
   const [showgate, setShowgate] = useState(true);
   const [forceRender,setForceRender] = useState(true);
+  const url = process.env.REACT_APP_HOST;
+  const port = process.env.REACT_APP_BE_PORT;
 
   function getSensorVal(){
-    Axios.get(`http://localhost:3001/getSensorVal/${farmname}/${Param}`,{ withCredentials: true })
+    Axios.get(`http://${url}:${port}/getSensorVal/${farmname}/${Param}`,{ withCredentials: true })
          .then((response) => {setsensorread(response.data[0].iot_humid)
         if(forceRender === true){setForceRender(false)}})
   }
   function getPlant(){
-    Axios.get(`http://localhost:3001/getPlantname/${farmname}`,{ withCredentials: true })
+    Axios.get(`http://${url}:${port}/getPlantname/${farmname}`,{ withCredentials: true })
          .then((response) => {getRange(response.data[0].farm_plant,response.data[0].farm_stage);})
   }
   function getRange(plant_name, stage_name){
-    Axios.get(`http://localhost:3001/getRange/${plant_name}/${stage_name}/${Param}`,{ withCredentials: true })
+    Axios.get(`http://${url}:${port}/getRange/${plant_name}/${stage_name}/${Param}`,{ withCredentials: true })
          .then((response) => {
            setLowerhumid(response.data[0].lowerhumid);
            setHigherhumid(response.data[0].higherhumid);
@@ -46,14 +47,14 @@ function Humid() {
           .catch(err => console.log(err))
   };
   const getControllerStatus = () => {
-    Axios.get(`http://localhost:3001/getController/${farmname}/${Param}`,{ withCredentials: true }).then((response) => {
+    Axios.get(`http://${url}:${port}/getController/${farmname}/${Param}`,{ withCredentials: true }).then((response) => {
       setChecked_MC(response.data[0].humid_MC === 1? true : false);
       setChecked_Fan(response.data[0].fan === 1? true : false);
       setChecked_fog(response.data[0].fog === 1? true : false);
     })
   }
   const pushControllerStatus = () => {
-    Axios.put(`http://localhost:3001/pushController/${farmname}/${Param}`,{ humid_MC: checked_MC, fan: checked_fan, fog: checked_fog },{ withCredentials: true })
+    Axios.put(`http://${url}:${port}/pushController/${farmname}/${Param}`,{ humid_MC: checked_MC, fan: checked_fan, fog: checked_fog },{ withCredentials: true })
     .then((response) => {alert(response.data.message)})
   }
 
@@ -71,7 +72,7 @@ function Humid() {
     // if(window.localStorage.getItem("users") != undefined){
     //   ck = "clear"
     // }
-      Axios.get(`http://localhost:3001/session/${ck}`, {withCredentials: true}).then((response) => {
+      Axios.get(`http://${url}:${port}/session/${ck}`, {withCredentials: true}).then((response) => {
         console.log(localStorage.getItem("users"))
         if (response.data.loggedIn === false) {
           alert("Session not found :-( , redirect to login page.")
@@ -99,10 +100,10 @@ function Humid() {
 
   useEffect(() => {
     function getResults() {
-      Axios.get("http://localhost:3001/farmname",{ withCredentials: true }).then(res => res.data).then(data => setPosts(data)).catch(err => console.log(err))
+      Axios.get(`http://${url}:${port}/farmname`,{ withCredentials: true }).then(res => res.data).then(data => setPosts(data)).catch(err => console.log(err))
     }
    /* async function checkSS() {
-      const results = await Axios.get(`http://localhost:3001/session/${'check'}`, {withCredentials: true})
+      const results = await Axios.get(`http://${url}:${port}/session/${'check'}`, {withCredentials: true})
       setss(results.data.loggedIn)
       console.log(setss)
     }
@@ -117,7 +118,7 @@ function Humid() {
       <Paper elevation={0} style={paperStyle}>
 
         <Grid container spacing={2} justifyContent="center">
-          <Grid item xs={2}><img className="homephoto" src="/Humidity.png" /></Grid>
+          <Grid item xs={2}><img className="homephoto" src="/Humidity.png" alt="Humidity"/></Grid>
           <Grid item xs={6}><h2 className="app-front" style={{ color: "#008000" }}>Humidity</h2></Grid>
         </Grid>
 
@@ -143,16 +144,15 @@ function Humid() {
           value={sensorread}
           width={400}
           height={245}
-          minValue={0}
-          maxValue={100}
-          customSegmentStops={[0,Lowerhumid, Higherhumid, 100]}
+          minValue={Lowerhumid + (Lowerhumid - Higherhumid)}
+          maxValue={Higherhumid + (Higherhumid - Lowerhumid)}
           valueTextFontSize={"20"}
           needleColor="#662200"
           needleTransitionDuration={500}
           needleTransition="easeCubicOut"
           segments={3}
           paddingVertical={60}
-          currentValueText = '${value}%'
+          currentValueText = {`${sensorread}%`}
           segmentColors={["#b3ff66", "#00b300", "#e6b800"]}
           forceRender={forceRender}
           // customSegmentLabels={[
