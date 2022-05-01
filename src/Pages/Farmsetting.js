@@ -26,6 +26,8 @@ export default function Farmsetting() {
     const [plantamount,setPlantamount]=useState("");
     const [stage,setStage]=useState("");
     const [registerfarmStatus, setRegisterFarmStatus]=useState("")
+    const url = process.env.REACT_APP_HOST;
+    const port = process.env.REACT_APP_BE_PORT;
     const plantstage = [
       {name:'Seeding stage', val:'seed'},
       {name:'Vegetation period', val:'veget'},
@@ -49,7 +51,7 @@ export default function Farmsetting() {
       // if(window.localStorage.getItem("users") != undefined){
       //   ck = "clear"
       // }
-        Axios.get(`http://localhost:3001/session/${ck}`, {withCredentials: true}).then((response) => {
+        Axios.get(`http://${url}:${port}/session/${ck}`, {withCredentials: true}).then((response) => {
           console.log(localStorage.getItem("users"))
           if (response.data.loggedIn === false) {
             alert("Session not found :-( , redirect to login page.")
@@ -60,14 +62,14 @@ export default function Farmsetting() {
     let [ posts, setPosts ] = useState([])
     useEffect(()=>{
     async function getResults() {
-      const results = await Axios('http://localhost:3001/plantname',{ withCredentials: true });
+      const results = await Axios(`http://${url}:${port}/plantname`,{ withCredentials: true });
       setPosts(results.data);
     }
     getResults()
     },[]); 
 
     const addFarm = () => {
-      Axios.post('http://localhost:3001/farmregister',{
+      Axios.post(`http://${url}:${port}/farmregister`,{
           farmname: farmname,
           plantname: plantname,
           location: location,

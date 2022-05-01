@@ -1,21 +1,20 @@
-import React, {useState,useEffect} from 'react'
+import React, {useEffect} from 'react'
 import Navbar from '../Components/Navbar';
-import {Grid, Paper, Avatar, TextField, Typography, Link} from '@material-ui/core'
+import {Grid, Paper} from '@material-ui/core'
 import styled from 'styled-components';
-import FeedIcon from '@mui/icons-material/Feed';
 import {useNavigate} from "react-router-dom";
 import Axios from 'axios';
 const BB = styled.button`
     background-color:#f5f5f5;
     border: 4px solid #008000;
     border-radius: 8px;
-    padding: 30px 87px;
+    padding: 30px 80px;
     cursor: pointer;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 25px;
     transition: ease background-color 250ms;
     &:hover{
-        background-color:#008000; 
+        background-color:#000000; 
         color: white;
     }`
 const BP = styled.button`
@@ -28,7 +27,7 @@ const BP = styled.button`
     font-size: 25px;
     transition: ease background-color 250ms;
     &:hover{
-        background-color:#008000; 
+        background-color:#000000; 
         color: white;
     }`
 
@@ -37,6 +36,8 @@ const Menuinfo=()=>{
     const navigate = useNavigate();
     const Button = BB
     const ButtonP = BP
+    const url = process.env.REACT_APP_HOST;
+    const port = process.env.REACT_APP_BE_PORT;
 
     useEffect(() => {
         checkSession();
@@ -47,7 +48,7 @@ const Menuinfo=()=>{
         // if(window.localStorage.getItem("users") != undefined){
         //   ck = "clear"
         // }
-          Axios.get(`http://localhost:3001/session/${ck}`, {withCredentials: true}).then((response) => {
+          Axios.get(`http://${url}:${port}/session/${ck}`, {withCredentials: true}).then((response) => {
             console.log(localStorage.getItem("users"))
             if (response.data.loggedIn === false) {
               alert("Session not found :-( , redirect to login page.")

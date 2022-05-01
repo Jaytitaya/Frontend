@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState} from 'react'
 import {Grid, Paper, Avatar, TextField, Typography, Link} from '@material-ui/core'
 import Button from '@mui/material/Button';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -15,9 +15,11 @@ const Signup=()=>{
     const [passwords,setPasswords]=useState("")
     const [userList, setUserList] = useState([])
     const [registerStatus, setRegisterStatus]=useState("")
+    const url = process.env.REACT_APP_HOST;
+    const port = process.env.REACT_APP_BE_PORT;
  
     const addUser = () => {
-        Axios.post('http://localhost:3001/create',{
+        Axios.post(`http://${url}:${port}/create`,{
             firstname: firstname,
             lastname: lastname,
             username: username,

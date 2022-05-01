@@ -12,6 +12,11 @@ import MenuItem from "@mui/material/MenuItem";
 import Switch from "@mui/material/Switch";
 import {useNavigate} from "react-router-dom";
 
+// import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+// import { Pie } from 'react-chartjs-2';
+
+// ChartJS.register(ArcElement, Tooltip, Legend);
+
 function Temp() {
 
   const paperStyle = {padding: 20,height: "120vh",width: 700,margin: "10px auto",backgroundColor: "#f5f5f5"};
@@ -22,23 +27,26 @@ function Temp() {
   const [Highertemp, setHighertemp] = useState(29);
   const [ID,setID] = useState(0);
   const Param = "temp";
-  const [status, setStatus] = useState("");
+  //const [status, setStatus] = useState("");
   let [posts, setPosts] = useState([]);
   const navigate = useNavigate();
   const [showgate, setShowgate] = useState(true);
   const [forceRender,setForceRender] = useState(true);
+  const [plotdata,setPlotdata] = useState([])
+  const url = process.env.REACT_APP_HOST;
+  const port = process.env.REACT_APP_BE_PORT;
 
   function getSensorVal(){
-    Axios.get(`http://localhost:3001/getSensorVal/${farmname}/${Param}`,{ withCredentials: true })
+    Axios.get(`http://${url}:${port}/getSensorVal/${farmname}/${Param}`,{ withCredentials: true })
          .then((response) => {setsensorread_Temp(response.data[0].iot_temp)
         if(forceRender === true){setForceRender(false)}})
   }
   function getPlant(){
-    Axios.get(`http://localhost:3001/getPlantname/${farmname}`,{ withCredentials: true })
+    Axios.get(`http://${url}:${port}/getPlantname/${farmname}`,{ withCredentials: true })
          .then((response) => {getRange(response.data[0].farm_plant,response.data[0].farm_stage);})
   }
   function getRange(plant_name, stage_name){
-    Axios.get(`http://localhost:3001/getRange/${plant_name}/${stage_name}/${Param}`,{ withCredentials: true })
+    Axios.get(`http://${url}:${port}/getRange/${plant_name}/${stage_name}/${Param}`,{ withCredentials: true })
          .then((response) => {
            setLowertemp(response.data[0].lowertemp);
            setHighertemp(response.data[0].highertemp);
@@ -46,23 +54,32 @@ function Temp() {
           .catch(err => console.log(err))
   };
   const getControllerStatus = () => {
-    Axios.get(`http://localhost:3001/getController/${farmname}/${Param}`,{ withCredentials: true }).then((response) => {
+    Axios.get(`http://${url}:${port}/getController/${farmname}/${Param}`,{ withCredentials: true }).then((response) => {
       setChecked_MC(response.data[0].temp_MC === 1? true : false);
       setChecked_Fan(response.data[0].fan === 1? true : false);
       setChecked_HL(response.data[0].heatlight === 1? true : false);
     })
   }
   const pushControllerStatus = () => {
-    Axios.put(`http://localhost:3001/pushController/${farmname}/${Param}`,{ temp_MC: checked_MC, fan: checked_fan, heatlight: checked_HL },{ withCredentials: true })
+    Axios.put(`http://${url}:${port}/pushController/${farmname}/${Param}`,{ temp_MC: checked_MC, fan: checked_fan, heatlight: checked_HL },{ withCredentials: true })
     .then((response) => {alert(response.data.message)})
   }
   function BtnFn(){
-    setForceRender(true)
+    setForceRender(true);
     clearInterval(ID);
     getPlant();
+    getDataToPlot();
     getControllerStatus();
     setShowgate(true);
     setID(setInterval(getSensorVal,1600));
+  }
+
+  function getDataToPlot(){
+    Axios.get(`http://${url}:${port}/getPlot/${farmname}/${Param}`,{ withCredentials: true })
+         .then((response) => {
+           setPlotdata(response.data)
+           console.log(response.data)
+         })
   }
 
   function checkSession(){
@@ -70,7 +87,7 @@ function Temp() {
     // if(window.localStorage.getItem("users") != undefined){
     //   ck = "clear"
     // }
-      Axios.get(`http://localhost:3001/session/${ck}`, {withCredentials: true}).then((response) => {
+      Axios.get(`http://${url}:${port}/session/${ck}`, {withCredentials: true}).then((response) => {
         console.log(localStorage.getItem("users"))
         if (response.data.loggedIn === false) {
           alert("Session not found :-( , redirect to login page.")
@@ -95,12 +112,41 @@ function Temp() {
     checkSession();
   },[]);
 
+  // const data = {
+  //   labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+  //   datasets: [
+  //     {
+  //       label: '# of Votes',
+  //       data: [12, 19, 3, 5, 2, 3],
+  //       backgroundColor: [
+  //         'rgba(255, 99, 132, 0.2)',
+  //         'rgba(54, 162, 235, 0.2)',
+  //         'rgba(255, 206, 86, 0.2)',
+  //         'rgba(75, 192, 192, 0.2)',
+  //         'rgba(153, 102, 255, 0.2)',
+  //         'rgba(255, 159, 64, 0.2)',
+  //       ],
+  //       borderColor: [
+  //         'rgba(255, 99, 132, 1)',
+  //         'rgba(54, 162, 235, 1)',
+  //         'rgba(255, 206, 86, 1)',
+  //         'rgba(75, 192, 192, 1)',
+  //         'rgba(153, 102, 255, 1)',
+  //         'rgba(255, 159, 64, 1)',
+  //       ],
+  //       borderWidth: 1,
+  //     },
+  //   ],
+  // };
+
+
+
   useEffect(() => {
     function getResults() {
-      Axios.get("http://localhost:3001/farmname",{ withCredentials: true }).then(res => res.data).then(data => setPosts(data)).catch(err => console.log(err))
+      Axios.get(`http://${url}:${port}/farmname`,{ withCredentials: true }).then(res => res.data).then(data => setPosts(data)).catch(err => console.log(err))
     }
    /* async function checkSS() {
-      const results = await Axios.get(`http://localhost:3001/session/${'check'}`, {withCredentials: true})
+      const results = await Axios.get(`http://${url}:${port}/session/${'check'}`, {withCredentials: true})
       setss(results.data.loggedIn)
       console.log(setss)
     }
@@ -115,7 +161,7 @@ function Temp() {
       <Paper elevation={0} style={paperStyle}>
 
         <Grid container spacing={2} justifyContent="center">
-          <Grid item xs={2}><img className="homephoto" src="/Temp.png" /></Grid>
+          <Grid item xs={2}><img className="homephoto" src="/Temp.png" alt="Temp"/></Grid>
           <Grid item xs={6}><h2 className="app-front" style={{ color: "#008000" }}>Temperature</h2></Grid>
         </Grid>
 
@@ -135,22 +181,19 @@ function Temp() {
           </Grid>
         </Grid>
 
-        
-        
         {showgate&&<ReactSpeedometer
           value={sensorread_Temp}
           width={400}
           height={245}
-          minValue={0}
-          maxValue={50}
-          customSegmentStops={[0,Lowertemp, Highertemp, 50]}
+          minValue={Lowertemp + (Lowertemp - Highertemp)}
+          maxValue={Highertemp + (Highertemp - Lowertemp)}
           valueTextFontSize={"20"}
           needleColor="#662200"
           needleTransitionDuration={500}
           needleTransition="easeCubicOut"
           segments={3}
           paddingVertical={60}
-          currentValueText = "${value}°C"
+          currentValueText = {`${sensorread_Temp}°C`}
           segmentColors={["#b3ff66", "#00b300", "#e6b800"]}
           forceRender={forceRender}
           // customSegmentLabels={[
@@ -174,6 +217,8 @@ function Temp() {
           //   },
           // ]}
         />}
+
+        {/* <Pie data={data} /> */}
 
         <Grid item xs={12} className="headcard">Temperature Controller</Grid>
         <Paper elevation={6} style={paperStyle2}>
