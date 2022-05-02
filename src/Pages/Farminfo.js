@@ -213,7 +213,7 @@ const Myplant=()=>{
                                 <TableCell sx={{color: "white"}} align="center">Location</TableCell>
                                 <TableCell sx={{color: "white"}} align="center">Plant amount/Farm</TableCell>
                                 <TableCell sx={{color: "white"}} align="center">Farm stage</TableCell>
-                                <TableCell sx={{color: "white"}} align="center">Action</TableCell>
+                                <TableCell sx={{color: "white"}} align="center">Edit/Delete</TableCell>
                                 
                             </TableRow>
                         </TableHead>
