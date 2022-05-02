@@ -235,7 +235,7 @@ const Myplant=()=>{
                                 <TableCell sx={{color: "white"}} align="right">Temperature&nbsp;(°C)</TableCell>
                                 <TableCell sx={{color: "white"}} align="right">Humidity&nbsp;(%)</TableCell>
                                 <TableCell sx={{color: "white"}} align="right">pH</TableCell>
-                                <TableCell sx={{color: "white"}} align="right">Action</TableCell>
+                                <TableCell sx={{color: "white"}} align="right">Edit/Delete</TableCell>
                             </TableRow>
                         </TableHead>
                         {plantsList.map((val)=>(
