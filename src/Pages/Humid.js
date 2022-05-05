@@ -144,8 +144,9 @@ function Humid() {
           value={sensorread}
           width={400}
           height={245}
-          minValue={Lowerhumid + (Lowerhumid - Higherhumid)}
-          maxValue={Higherhumid + (Higherhumid - Lowerhumid)}
+          minValue={0}
+          maxValue={100}
+          customSegmentStops={[0,Lowerhumid, Higherhumid, 100]}
           valueTextFontSize={"20"}
           needleColor="#662200"
           needleTransitionDuration={500}
