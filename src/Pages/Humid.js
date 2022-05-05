@@ -17,7 +17,7 @@ function Humid() {
   const paperStyle = {padding: 20,height: "120vh",width: 700,margin: "10px auto",backgroundColor: "#f5f5f5"};
   const paperStyle2 = {padding: 30,height: "25vh",width: 380,margin: "10px auto",backgroundColor: "#f5f5f5"};
   const [farmname,setFarmname]=useState("")
-  const [sensorread, setsensorread] = useState(25);
+  const [sensorread, setsensorread] = useState(0);
   const [Lowerhumid, setLowerhumid] = useState(20);
   const [Higherhumid, setHigherhumid] = useState(29);
   const [ID,setID] = useState(0);
