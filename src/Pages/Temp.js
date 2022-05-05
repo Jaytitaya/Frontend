@@ -185,8 +185,9 @@ function Temp() {
           value={sensorread_Temp}
           width={400}
           height={245}
-          minValue={Lowertemp + (Lowertemp - Highertemp)}
-          maxValue={Highertemp + (Highertemp - Lowertemp)}
+          minValue={0}
+          maxValue={50}
+          customSegmentStops={[0,Lowertemp, Highertemp, 50]}
           valueTextFontSize={"20"}
           needleColor="#662200"
           needleTransitionDuration={500}
