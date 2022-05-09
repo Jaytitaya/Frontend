@@ -8,7 +8,7 @@ const BB = styled.button`
     background-color:#f5f5f5;
     border: 4px solid #008000;
     border-radius: 8px;
-    padding: 30px 80px;
+    padding: 30px 90px;
     cursor: pointer;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 25px;
