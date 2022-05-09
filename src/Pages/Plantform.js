@@ -132,16 +132,16 @@ const Plantform=()=>{
         setState("");
     };
 
-    // const deleteData=(id)=>{
-    //     //event.preventDefault();
-    //     Axios.delete(`http://${url}:${port}/deleteplant/${id}`,{ withCredentials: true }).then((result)=>{
-    //         setPlantsList(
-    //             plantsList.filter((val)=>{
-    //                 return val.id !== id;
-    //             })
-    //         )
-    //     }).catch(err=>console.log(err))
-    // }
+     const deleteData=(id)=>{
+         //event.preventDefault();
+         Axios.delete(`http://${url}:${port}/deleteplant/${id}`,{ withCredentials: true }).then((result)=>{
+             setPlantsList(
+                 plantsList.filter((val)=>{
+                     return val.id !== id;
+                 })
+             )
+         }).catch(err=>console.log(err))
+     }
 
     return(
         <Grid align='center'>
@@ -176,6 +176,7 @@ const Plantform=()=>{
                         
                         
                         <IconButton onClick={()=>handleClickOpen(val.id)}><EditIcon sx={{ color: grey[50] }}/></IconButton>
+                        <IconButton onClick={()=>deleteData(val.id)}><DeleteIcon sx={{ color: grey[50] }}/></IconButton>
                         
                     </div>
                 </div>
